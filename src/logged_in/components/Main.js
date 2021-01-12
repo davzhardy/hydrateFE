@@ -1,10 +1,16 @@
 import React from "react";
+import Navbar from "./navigation/Navbar";
+import Dashboard from "./dashboard/Dashboard";
 
 function Main() {
   return (
-    <div>
-      Hello 2
-    </div>
+    <>
+      <Navbar />
+      <div>
+        Hello 2
+      </div>
+      <Dashboard />
+    </>
   );
 }
 
