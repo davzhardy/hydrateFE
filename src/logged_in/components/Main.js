@@ -6,9 +6,6 @@ function Main() {
   return (
     <>
       <Navbar />
-      <div>
-        Hello 2
-      </div>
       <Dashboard />
     </>
   );

@@ -1,5 +1,14 @@
 import React, { Fragment } from "react";
-import { TextField } from '@material-ui/core';
+import { TextField, withStyles } from '@material-ui/core';
+
+const styles = theme => ({
+  textInput: {
+    borderRadius: 15,
+    margin: 10,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
 
 function TextFieldInput(props) {
 
@@ -7,21 +16,32 @@ function TextFieldInput(props) {
     id,
     label,
     defaultValue,
+    type,
+    stateSetting,
     helperText,
-    variant
+    variant,
+    classes
   } = props
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    stateSetting(event.target.value);
+  };
 
   return (
     <Fragment>
       <TextField
+          className={classes.textInput}
           id={id}
           label={label}
-          defaultValue={defaultValue}
+          value={defaultValue}
+          type={type}
           helperText={helperText}
+          onChange={handleChange}
           variant={variant}
         />
     </Fragment>
   )
 }
 
-export default TextFieldInput;
+export default withStyles(styles, { withTheme: true })(TextFieldInput);

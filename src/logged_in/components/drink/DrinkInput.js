@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Dialog,
@@ -14,51 +14,44 @@ import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 
 const filter = createFilterOptions();
 
-export default function DrinkInput() {
-  const [value, setValue] = React.useState(null);
-  const [open, toggleOpen] = React.useState(false);
+export default function DrinkInput(props) {
+
+  const {
+    stateSetting,
+    defaultValue,
+  } = props
+
+  const [open, toggleOpen] = useState(false);
 
   const handleClose = () => {
-    setDialogValue({
-      drink: '',
-    });
-
+    setDialogValue('');
     toggleOpen(false);
   };
 
-  const [dialogValue, setDialogValue] = React.useState({
-    drink: '',
-  });
+  const [dialogValue, setDialogValue] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setValue({
-      drink: dialogValue.drink,
-    });
-
+    stateSetting(dialogValue);
     handleClose();
   };
 
   return (
     <React.Fragment>
       <Autocomplete
-        value={value}
+        value={defaultValue}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
             // timeout to avoid instant validation of the dialog's form.
             setTimeout(() => {
               toggleOpen(true);
-              setDialogValue({
-                drink: newValue,
-              });
+              setDialogValue(newValue);
             });
           } else if (newValue && newValue.inputValue) {
             toggleOpen(true);
-            setDialogValue({
-              drink: newValue.inputValue,
-            });
+            setDialogValue(newValue.inputValue);
           } else {
-            setValue(newValue);
+            stateSetting(newValue.drink);
           }
         }}
         filterOptions={(options, params) => {
@@ -119,8 +112,8 @@ export default function DrinkInput() {
               autoFocus
               margin="dense"
               id="name"
-              value={dialogValue.drink}
-              onChange={(event) => setDialogValue({ ...dialogValue, drink: event.target.value })}
+              value={dialogValue}
+              onChange={(event) => setDialogValue(...dialogValue, event.target.value)}
               label="Drink"
               type="text"
             />

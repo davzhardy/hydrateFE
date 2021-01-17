@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Card,
   Typography,
@@ -6,22 +6,43 @@ import {
 } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import DrinkInput from './DrinkInput';
-import TimeInput from './TimeInput';
 import TextFieldInput from './TextFieldInput';
+import currentTime from '../../functions/currentTime'
+import { useDispatch } from 'react-redux'
 
 const styles = theme => ({
   card: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
+    borderRadius: 15,
+    margin: 10,
+    maxWidth: 450,
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
 function AddDrinkArea(props) {
 
   const { classes } = props;
+  const dispatch = useDispatch();
+  const date = currentTime();
+
+  const [drinkType, setDrinkType] = useState('');
+  const [cupsValue, setCupsValue] = useState('');
+  const [volumeValue, setVolumeValue] = useState('');
+  const [time, setTime] = useState(date);
+
+  const payload = {
+    drink: drinkType,
+    cups: +cupsValue,
+    volume: +volumeValue,
+    time: time,
+  }
 
   const addHydrationEvent = useCallback(() => {
-    console.log('OK')
+    dispatch({
+      type: 'ADD_DRINK_EVENT',
+      payload: payload,
+    })
   })
 
   return (
@@ -36,25 +57,34 @@ function AddDrinkArea(props) {
       >
         Add Hydration Event
       </Typography>
-      <DrinkInput />
+      <DrinkInput 
+        defaultValue={drinkType}
+        stateSetting = {setDrinkType}
+      />
       <TextFieldInput 
         id={'cups-drunk'}
         label={'Cups'}
-        defaultValue={'1'}
+        defaultValue={cupsValue}
+        stateSetting = {setCupsValue}
         helperText={'How many cups you drank'}
         variant={'filled'}
       />
-      <TextFieldInput 
+      <TextFieldInput
         id={'volume-drunk'}
         label={'Volume'}
-        defaultValue={'150'}
-        helperText={'How many ml you drank'}
+        defaultValue={volumeValue}
+        stateSetting = {setVolumeValue}
+        helperText={'How many mililitres you drank'}
         variant={'filled'}
       />
-      <TimeInput />
-
-
-
+      <TextFieldInput
+        id={'time-of-drink'}
+        label={'Time'}
+        defaultValue={time}
+        stateSetting = {setTime}
+        type={'datetime-local'}
+        variant={'filled'}
+      />
     </Card>
   )
 }
