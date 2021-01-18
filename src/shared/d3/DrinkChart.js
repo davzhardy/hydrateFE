@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import React from 'react';
-import { useD3 } from '../logged_in/functions/useD3'
+import { useD3 } from '../../logged_in/functions/useD3'
 
 function DrinkChart({ data }) {
 

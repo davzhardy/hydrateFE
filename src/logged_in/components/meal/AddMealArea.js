@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from "react";
 import {
   Card,
+  TextField,
   Typography,
   withStyles
 } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
-import DrinkInput from './DrinkInput';
+import MealInput from './MealInput';
 import TextFieldInput from '../../../shared/TextFieldInput';
 import currentTime from '../../functions/currentTime'
 import { useDispatch } from 'react-redux'
@@ -20,27 +21,27 @@ const styles = theme => ({
   },
 });
 
-function AddDrinkArea(props) {
+function AddMealArea(props) {
 
   const { classes } = props;
   const dispatch = useDispatch();
   const date = currentTime();
 
-  const [drinkType, setDrinkType] = useState('');
-  const [cupsValue, setCupsValue] = useState('');
-  const [volumeValue, setVolumeValue] = useState('');
+  const [description, setDescription] = useState('');
+  const [mealValue, setMealValue] = useState('');
   const [time, setTime] = useState(date);
 
+  const regex = /(,|\n)/g
+
   const payload = {
-    drink: drinkType,
-    cups: +cupsValue,
-    volume: +volumeValue,
+    description: description,
+    meal: mealValue.replace(regex,',').split(','),
     time: time,
   }
 
-  const addHydrationEvent = useCallback(() => {
+  const addEvent = useCallback(() => {
     dispatch({
-      type: 'ADD_DRINK_EVENT',
+      type: 'ADD_MEAL_EVENT',
       payload: payload,
     })
   })
@@ -48,37 +49,31 @@ function AddDrinkArea(props) {
   return (
     <Card className={classes.card}>
       <AddIcon 
-        onClick={addHydrationEvent}
+        onClick={addEvent}
         color="primary"
       />      
       <Typography 
         variant="subtitle1"
         color="primary"
       >
-        Add Hydration Event
+        Add Meal
       </Typography>
-      <DrinkInput 
-        defaultValue={drinkType}
-        stateSetting = {setDrinkType}
+      <MealInput 
+        defaultValue={description}
+        stateSetting = {setDescription}
       />
-      <TextFieldInput 
-        id={'cups-drunk'}
-        label={'Cups'}
-        defaultValue={cupsValue}
-        stateSetting = {setCupsValue}
-        helperText={'How many cups you drank'}
+      <TextFieldInput
+        id={'meals'}
+        label={'Meal'}
+        multiline={true}
+        rows={2}
+        defaultValue={mealValue}
+        stateSetting = {setMealValue}
+        helperText={'Separate each dish with a comma or an enter'}
         variant={'filled'}
       />
       <TextFieldInput
-        id={'volume-drunk'}
-        label={'Volume'}
-        defaultValue={volumeValue}
-        stateSetting = {setVolumeValue}
-        helperText={'How many mililitres you drank'}
-        variant={'filled'}
-      />
-      <TextFieldInput
-        id={'time-of-drink'}
+        id={'time-of-meal'}
         label={'Time'}
         defaultValue={time}
         stateSetting = {setTime}
@@ -89,4 +84,4 @@ function AddDrinkArea(props) {
   )
 }
 
-export default withStyles(styles, { withTheme: true })(AddDrinkArea);
+export default withStyles(styles, { withTheme: true })(AddMealArea);

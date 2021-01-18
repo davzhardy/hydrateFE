@@ -15,20 +15,14 @@ const columns = [
   { id: 'time', label: 'Date', minWidth: 50, 
     format: (value) => `${new Date(value).getDate()} ${new Date(value).toLocaleString('default', { month: 'short' })} ${new Date(value).getFullYear()}`
   },
-  { id: 'drink', label: 'Drink', minWidth: 50 },
+  { id: 'description', label: 'Meal type', minWidth: 50 },
   {
-    id: 'volume',
-    label: 'Volume',
+    id: 'meal',
+    label: 'Meal',
     minWidth: 50,
     align: 'right',
+    format: (value) => value.join(',\n')
   },
-  {
-    id: 'cups',
-    label: 'Cups',
-    minWidth: 50,
-    align: 'right',
-  },
-
 ];
 
 const useStyles = makeStyles({
@@ -40,7 +34,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable({ data }) {
+export default function StickyHeadTable( {data} ) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -53,6 +47,7 @@ export default function StickyHeadTable({ data }) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
 
   return (
     <Paper className={classes.root}>
@@ -79,7 +74,7 @@ export default function StickyHeadTable({ data }) {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.id === 'time' && column.format ? column.format(value) : value}
+                        {column.format ? column.format(value) : value}
                       </TableCell>
                     );
                   })}

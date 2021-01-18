@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "./navigation/Navbar";
-import Dashboard from "./dashboard/Dashboard";
+import Routing from "./Routing";
 
 function Main() {
   return (
     <>
       <Navbar />
-      <Dashboard />
+      <Routing />
     </>
   );
 }

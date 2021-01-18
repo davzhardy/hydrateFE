@@ -20,6 +20,8 @@ function TextFieldInput(props) {
     stateSetting,
     helperText,
     variant,
+    multiline,
+    rows,
     classes
   } = props
 
@@ -36,6 +38,8 @@ function TextFieldInput(props) {
           label={label}
           value={defaultValue}
           type={type}
+          multiline= {multiline}
+          rows = {rows}
           helperText={helperText}
           onChange={handleChange}
           variant={variant}

@@ -17,16 +17,16 @@ const styles = theme => ({
 function DrinkDataArea (props) {
 
   const { classes } = props;
-  const addDrinkEvent = useSelector((state) => state.drink.events);
+  const mealInputs = useSelector((state) => state.meal.events);
 
   return (
     <Fragment>
       <Card className={classes.card}>
-        <PaginationTable data = {addDrinkEvent}/>
+        <PaginationTable data = {mealInputs}/>
       </Card>
-      <Card className={classes.card}>
-        <DrinkChart width={200} height={400} data={addDrinkEvent} />
-      </Card>
+      {/* <Card className={classes.card}>
+        <DrinkChart width={200} height={400} data={mealInputs} />
+      </Card> */}
     </Fragment>
   )
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AppBar,
+  Box,
   Toolbar,
   Typography,
   IconButton,
@@ -23,6 +24,7 @@ const styles = (theme) => ({
   },
   appBarToolbar: {
     display: "flex",
+    justifyContent: "space-between",
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
     [theme.breakpoints.up("sm")]: {
@@ -37,6 +39,10 @@ const styles = (theme) => ({
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
     },
+  menuWrapper: {
+    display: "flex",
+    flexDirection: 'row',
+  },
   },
 });
 
@@ -48,12 +54,22 @@ function Navbar(props) {
   return (
     <AppBar position="sticky" className={classes.appBar}>
       <Toolbar className={classes.appBarToolbar}>
-        <IconButton> 
-          <MenuIcon/>
-        </IconButton>
-        <Typography variant="h6" color="primary">
-          Menu
-        </Typography>
+        <div className={classes.menuWrapper}>
+          <IconButton> 
+            <MenuIcon/>
+          </IconButton>
+          <Typography variant="h6" color="primary">
+            Menu
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="h6" color="primary">
+            Drinks
+          </Typography>
+          <Typography variant="h6" color="primary">
+            Meals
+          </Typography>
+        </div>
       </Toolbar>
     </AppBar>
   );
