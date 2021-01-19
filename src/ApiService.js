@@ -1,5 +1,9 @@
 import React from "react";
-import { useQuery, useQueries } from "react-query";
+import { 
+  useQuery, 
+  // useQueries,
+  useMutation,
+ } from "react-query";
 import { GET_ALL_DRINKS, GET_ALL_MEALS } from './api/queries'
 
 export default function ApiService() {
@@ -39,7 +43,7 @@ export default function ApiService() {
   return (
     <div>
       {data && data.data.getAllDrinks.map(el => <p>{el.drink}</p>)}
-      {data && data1.data.getAllMeals.map(el => <p>{el.meal}</p>)}
+      {data && data1.data.getAllMeals.map(el => <p>{el.meal.join(' ')}</p>)}
     </div>
   )
 
