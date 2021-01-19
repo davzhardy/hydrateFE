@@ -11,10 +11,9 @@ function CREATE_USER (username, password, email) { return { mutation:
   }`
 }};
 
-function POST_DRINK (username, UserId, drink, cups, volume, time) { return { mutation: 
+function POST_DRINK (UserId, drink, cups, volume, time) { return { mutation: 
   `mutation {
     postDrink(
-      username: ${username}, 
       UserId: ${UserId}, 
       drink: ${drink}, 
       cups: ${cups}, 
@@ -29,10 +28,9 @@ function POST_DRINK (username, UserId, drink, cups, volume, time) { return { mut
   }`
 }};
 
-function POST_MEAL (username, UserId, description, meal, time) { return { mutation: 
+function POST_MEAL (UserId, description, meal, time) { return {mutation: 
   `mutation {
     postMeal(
-      username: ${username}, 
       UserId: ${UserId}, 
       description: ${description}, 
       meal: ${meal}, 
