@@ -3,30 +3,32 @@ import {
   useQuery, 
   // useQueries,
   useMutation,
+  useQueryClient
  } from "react-query";
 import { GET_ALL_DRINKS, GET_ALL_MEALS } from './api/queries'
 import { CREATE_USER, POST_DRINK, POST_MEAL } from './api/mutations'
 
+const endpoint = 'http://localhost:4000'
+const UserId = 2;
+
+const getOptions = (func, args) => { 
+  return {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json'},
+  body: JSON.stringify(func(args))
+}}
+
+const mutateOptions = (item) => {
+  return {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json'},
+  body: JSON.stringify(item)
+}}
+
 export default function ApiService() {
 
-  const endpoint = 'http://localhost:4000'
-  const UserId = 2;
-  
-  const getOptions = (func, args) => { 
-    return {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json'},
-    body: JSON.stringify(func(args))
-  }}
+  const queryClient = useQueryClient()
 
-  const mutateOptions = (item) => {
-    console.log(item)
-    return {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json'},
-    body: JSON.stringify(item)
-  }}
-      
   const { data, status, error } = useQuery("drinks", () => 
     fetch(endpoint, getOptions(GET_ALL_DRINKS,UserId))
       .then(res => res.json()))
@@ -37,11 +39,21 @@ export default function ApiService() {
   
   const mealMutation = useMutation((newMeal) => 
     fetch(endpoint, mutateOptions(newMeal))
-      .then(res => res.json()))
+      .then(res => res.json())
+    ,
+    {
+      onSuccess: () => queryClient.invalidateQueries('meals')
+    }
+  )
 
   const drinkMutation = useMutation((newDrink) => 
     fetch(endpoint, mutateOptions(newDrink))
-      .then(res => res.json()))
+      .then(res => res.json())
+      ,
+    {
+      onSuccess: () => queryClient.invalidateQueries('drinks')
+    }
+  )
 
   if ( [status, status1].includes("loading") ) return <p>Loading....</p>
   if ( [status, status1].includes("error") ) return <p>An error has been thrown</p>
@@ -49,8 +61,8 @@ export default function ApiService() {
   return (
     <>
       <div>
-        {data && data.data.getAllDrinks.map(el => <p>{el.drink}</p>)}
-        {data && data1.data.getAllMeals.map(el => <p>{el.meal.join(' ')}</p>)}
+        {data && data.data.getAllDrinks.map((el, index) => <p key={index}>{el.drink}</p>)}
+        {data && data1.data.getAllMeals.map((el, index) => <p key={index}>{el.meal.join(' ')}</p>)}
       </div>
       <div>
         {mealMutation.isLoading ? (
@@ -61,7 +73,6 @@ export default function ApiService() {
               <div>An error occurred: {mealMutation.error.message}</div>
             ) : ''}
   
-            {mealMutation.isSuccess ? <div>{mealMutation.data.data.postMeal.meal} </div> : 'Failed'}
             <button
               onClick={() => {
                 mealMutation.mutate(POST_MEAL({UserId:2, description:'A dsds Breakfast', meal: ['qw', 'jerky'], time:'2019-01-13T17:20'}))
@@ -80,8 +91,6 @@ export default function ApiService() {
             {drinkMutation.isError ? (
               <div>An error occurred: {drinkMutation.error.message}</div>
             ) : ''}
-  
-            {drinkMutation.isSuccess ? <div>{drinkMutation.data.data.postDrink.drink} </div> : 'Failed'}
             <button
               onClick={() => {
                 drinkMutation.mutate(POST_DRINK({UserId:2, drink:"Bloop", cups: 1, time:'2019-01-13T17:20'}))

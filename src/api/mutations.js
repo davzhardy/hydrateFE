@@ -1,15 +1,21 @@
-function CREATE_USER (username, password, email) { return { mutation: 
-  `mutation {
-    createUser(username: ${username}, password: ${password}, email: ${email}) {
-      message,
-      token,
-      status,
-      userData {
-        id
-      },
-    }
-  }`
-}};
+function CREATE_USER(details) {
+  return  {
+    query: `mutation {
+      createUser(
+        username: "${details.username}", 
+        password: "${details.password}", 
+        email: "${details.email}", 
+      ){
+        message,
+        token,
+        status,
+        userData {
+          id
+        },
+      }
+    }`
+  }
+};
 
 function POST_DRINK(details) {
   let cups = null;
