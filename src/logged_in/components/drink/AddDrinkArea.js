@@ -9,6 +9,8 @@ import DrinkInput from './DrinkInput';
 import TextFieldInput from '../../../shared/TextFieldInput';
 import currentTime from '../../functions/currentTime'
 import { useDispatch } from 'react-redux'
+import { useMutation, useQueryClient } from "react-query";
+import { endpoint, mutations, mutateOptions } from '../../../api'
 
 const styles = theme => ({
   card: {
@@ -32,13 +34,26 @@ function AddDrinkArea(props) {
   const [time, setTime] = useState(date);
 
   const payload = {
+    UserId: 2,
     drink: drinkType,
     cups: +cupsValue,
     volume: +volumeValue,
     time: time,
   }
 
+  const queryClient = useQueryClient()
+  
+  const drinkMutation = useMutation((newDrink) => 
+    fetch(endpoint, mutateOptions(newDrink))
+      .then(res => res.json())
+      ,
+    {
+      onSuccess: () => queryClient.invalidateQueries('drinks')
+    }
+  )
+
   const addHydrationEvent = useCallback(() => {
+    drinkMutation.mutate(mutations.POST_DRINK(payload))
     dispatch({
       type: 'ADD_DRINK_EVENT',
       payload: payload,

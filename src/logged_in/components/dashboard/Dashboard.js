@@ -4,8 +4,8 @@ import AddMealArea from "../meal/AddMealArea"
 import DrinkDataArea from "../datavisualisation/drink/DrinkDataArea"
 import MealDataArea from "../datavisualisation/meal/MealDataArea"
 import ApiService from '../../../ApiService'
-import { useQuery, useQueryClient } from "react-query";
-import { endpoint, queries, mutations, getOptions, mutateOptions } from '../../../api'
+import { useQuery } from "react-query";
+import { endpoint, queries, getOptions } from '../../../api'
 
 
 function Dashboard() {
@@ -27,9 +27,9 @@ function Dashboard() {
 
   return (
     <Fragment>
-      <ApiService />
-      {/* <AddDrinkArea />
-      <AddMealArea /> */}
+      {/* <ApiService /> */}
+      <AddDrinkArea />
+      {/* <AddMealArea /> */}
       <DrinkDataArea 
         data={data.data.getAllDrinks}
       />
