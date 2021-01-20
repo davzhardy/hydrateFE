@@ -5,8 +5,7 @@ import {
   useMutation,
   useQueryClient
  } from "react-query";
-import { GET_ALL_DRINKS, GET_ALL_MEALS } from './api/queries'
-import { CREATE_USER, POST_DRINK, POST_MEAL } from './api/mutations'
+import { queries, mutations } from './api'
 
 const endpoint = 'http://localhost:4000'
 const UserId = 2;
@@ -30,11 +29,11 @@ export default function ApiService() {
   const queryClient = useQueryClient()
 
   const { data, status, error } = useQuery("drinks", () => 
-    fetch(endpoint, getOptions(GET_ALL_DRINKS,UserId))
+    fetch(endpoint, getOptions(queries.GET_ALL_DRINKS,UserId))
       .then(res => res.json()))
 
   const { data: data1, status: status1, error: error1 } = useQuery("meals", () => 
-    fetch(endpoint, getOptions(GET_ALL_MEALS,UserId))
+    fetch(endpoint, getOptions(queries.GET_ALL_MEALS,UserId))
       .then(res => res.json()))
   
   const mealMutation = useMutation((newMeal) => 
@@ -75,7 +74,7 @@ export default function ApiService() {
   
             <button
               onClick={() => {
-                mealMutation.mutate(POST_MEAL({UserId:2, description:'A dsds Breakfast', meal: ['qw', 'jerky'], time:'2019-01-13T17:20'}))
+                mealMutation.mutate(mutations.POST_MEAL({UserId:2, description:'A dsds Breakfast', meal: ['qw', 'jerky'], time:'2019-01-13T17:20'}))
               }}
             >
               Create Meal
@@ -93,7 +92,7 @@ export default function ApiService() {
             ) : ''}
             <button
               onClick={() => {
-                drinkMutation.mutate(POST_DRINK({UserId:2, drink:"Bloop", cups: 1, time:'2019-01-13T17:20'}))
+                drinkMutation.mutate(mutations.POST_DRINK({UserId:2, drink:"Coop", cups: 1, time:'2019-01-13T17:20'}))
               }}
             >
               Create Drink
