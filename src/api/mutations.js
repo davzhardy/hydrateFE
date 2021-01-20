@@ -11,36 +11,43 @@ function CREATE_USER (username, password, email) { return { mutation:
   }`
 }};
 
-function POST_DRINK (UserId, drink, cups, volume, time) { return { mutation: 
-  `mutation {
-    postDrink(
-      UserId: ${UserId}, 
-      drink: ${drink}, 
-      cups: ${cups}, 
-      volume: ${volume},
-      time: ${time}
-    ){
-      drink,
-      cups,
-      volume,
-      time,
-    }
-  }`
-}};
-
-function POST_MEAL(details) { return  {query: `mutation {
-  postMeal(
-    UserId: ${details.UserId}, 
-    description: "${details.description}", 
-    meal: ["joop","ccccsada"], 
-    time: "2021-01-13T17:27"
-  ){
-    description,
-    meal,
-    time,
+function POST_DRINK(details) {
+  return  {
+    query: `mutation {
+      postDrink(
+        UserId: ${details.UserId}, 
+        drink: "${details.drink}", 
+        cups: "${details.cups}", 
+        volume: "${details.volume}", 
+        time: "${details.time}"
+      ){
+        drink,
+        cups,
+        volume,
+        time,
+      }
+    }`
   }
-}`
-}}
+}
+;
+
+function POST_MEAL(details) {
+  const meal = details.meal.map(item => `"${item}"`)
+  return  {
+    query: `mutation {
+      postMeal(
+        UserId: ${details.UserId}, 
+        description: "${details.description}", 
+        meal: [${meal}], 
+        time: "${details.time}"
+      ){
+        description,
+        meal,
+        time,
+      }
+    }`
+  }
+}
 ;
 
 export {

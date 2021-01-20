@@ -18,22 +18,8 @@ export default function ApiService() {
     headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify(func(args))
   }}
-  
-    // const results = useQueries([
-  //   { queryKey: 'drinks', queryFn: () => 
-  //   fetch(endpoint, options(GET_ALL_DRINKS,UserId))
-  //     .then(res => res.json())
-  //   },
-  //   { queryKey: 'meals', queryFn: () => 
-  //   fetch(endpoint, options(GET_ALL_MEALS,UserId))
-  //     .then(res => res.json())
-  //   }
-  // ])
 
-
-
-  const mealOptions = (item) => {
-    console.log(JSON.stringify(item))
+  const mutateOptions = (item) => {
     return {
     method: 'POST',
     headers: { 'Content-Type': 'application/json'},
@@ -48,13 +34,9 @@ export default function ApiService() {
     fetch(endpoint, getOptions(GET_ALL_MEALS,UserId))
       .then(res => res.json()))
   
-  const mutation = useMutation((newMeal) => 
-    fetch(endpoint, mealOptions(newMeal))
+  const mealMutation = useMutation((newMeal) => 
+    fetch(endpoint, mutateOptions(newMeal))
       .then(res => res.json()))
-
-  const runMutate = async (func) => {
-    const mutationData = await mutation.mutate(func)
-  }
 
   if ( [status, status1].includes("loading") ) return <p>Loading....</p>
   if ( [status, status1].includes("error") ) return <p>An error has been thrown</p>
@@ -66,18 +48,18 @@ export default function ApiService() {
         {data && data1.data.getAllMeals.map(el => <p>{el.meal.join(' ')}</p>)}
       </div>
       <div>
-        {mutation.isLoading ? (
+        {mealMutation.isLoading ? (
           'Adding meal...'
         ) : (
           <>
-            {mutation.isError ? (
-              <div>An error occurred: {mutation.error.message}</div>
+            {mealMutation.isError ? (
+              <div>An error occurred: {mealMutation.error.message}</div>
             ) : ''}
   
-            {mutation.isSuccess ? <div>{mutation.data.data.postMeal.meal} </div> : 'Failed'}
+            {mealMutation.isSuccess ? <div>{mealMutation.data.data.postMeal.meal} </div> : 'Failed'}
             <button
               onClick={() => {
-                runMutate(POST_MEAL({UserId:2, description:'A 2nd Breakfast'}))
+                mealMutation.mutate(POST_MEAL({UserId:2, description:'A dsds Breakfast', meal: ['qw', 'jerky'], time:'2019-01-13T17:20'}))
               }}
             >
               Create Meal
@@ -87,5 +69,16 @@ export default function ApiService() {
       </div>
     </>
   )
-
 }
+
+  
+    // const results = useQueries([
+  //   { queryKey: 'drinks', queryFn: () => 
+  //   fetch(endpoint, options(GET_ALL_DRINKS,UserId))
+  //     .then(res => res.json())
+  //   },
+  //   { queryKey: 'meals', queryFn: () => 
+  //   fetch(endpoint, options(GET_ALL_MEALS,UserId))
+  //     .then(res => res.json())
+  //   }
+  // ])
