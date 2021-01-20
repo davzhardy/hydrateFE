@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Box, withStyles } from '@material-ui/core'
 import AddDrinkArea from "../drink/AddDrinkArea"
 import AddMealArea from "../meal/AddMealArea"
 import DrinkDataArea from "../datavisualisation/drink/DrinkDataArea"
@@ -6,8 +7,17 @@ import MealDataArea from "../datavisualisation/meal/MealDataArea"
 import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
 
+const styles = theme => ({
+  box: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+});
 
-function Dashboard() {
+
+function Dashboard(props) {
+
+  const { classes } = props;
 
   // need to make this dynamic
   const UserId = 2;
@@ -26,8 +36,10 @@ function Dashboard() {
 
   return (
     <Fragment>
-      <AddDrinkArea />
-      <AddMealArea />
+      <Box className={classes.box}>
+        <AddDrinkArea />
+        <AddMealArea />
+      </Box>
       <DrinkDataArea 
         data={data.data.getAllDrinks}
       />
@@ -38,4 +50,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard;
+export default  withStyles(styles, { withTheme: true })(Dashboard);

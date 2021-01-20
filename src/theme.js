@@ -120,7 +120,8 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    fontSize: 12
   }
 });
 
