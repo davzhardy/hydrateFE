@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AppBar,
-  Box,
   Toolbar,
   Typography,
   IconButton,

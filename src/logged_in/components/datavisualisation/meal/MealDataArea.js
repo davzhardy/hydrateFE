@@ -1,7 +1,6 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Card, withStyles } from "@material-ui/core"; 
-import { useSelector } from "react-redux";
-import DrinkChart from '../../../../shared/d3/DrinkChart';
+// import DrinkChart from '../../../../shared/d3/DrinkChart';
 import PaginationTable from './PaginationTable'
 
 const styles = theme => ({

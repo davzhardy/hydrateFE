@@ -2,11 +2,10 @@ import React, { Suspense, lazy } from "react";
 import GlobalStyles from "./GlobalStyles";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import theme from "./theme";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { QueryClientProvider, QueryClient } from 'react-query'
-
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
 const queryClient = new QueryClient();

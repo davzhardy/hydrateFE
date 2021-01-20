@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   Typography,
@@ -50,13 +50,13 @@ function AddDrinkArea(props) {
     }
   )
 
-  const addHydrationEvent = useCallback(() => {
+  const addHydrationEvent = () => {
     drinkMutation.mutate(mutations.POST_DRINK(payload))
     setDrinkType('')
     setCupsValue('')
     setVolumeValue('')
     setTime(date)
-  })
+  }
 
   return (
     <Card className={classes.card}>
