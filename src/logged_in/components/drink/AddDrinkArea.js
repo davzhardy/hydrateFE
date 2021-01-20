@@ -8,7 +8,6 @@ import AddIcon from '@material-ui/icons/Add';
 import DrinkInput from './DrinkInput';
 import TextFieldInput from '../../../shared/TextFieldInput';
 import currentTime from '../../functions/currentTime'
-import { useDispatch } from 'react-redux'
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../api'
 
@@ -25,7 +24,6 @@ const styles = theme => ({
 function AddDrinkArea(props) {
 
   const { classes } = props;
-  const dispatch = useDispatch();
   const date = currentTime();
 
   const [drinkType, setDrinkType] = useState('');
@@ -48,16 +46,16 @@ function AddDrinkArea(props) {
       .then(res => res.json())
       ,
     {
-      onSuccess: () => queryClient.invalidateQueries('drinks')
+      onSuccess: () => queryClient.invalidateQueries('drinks') // note this needs to be consistent with the useQuery 
     }
   )
 
   const addHydrationEvent = useCallback(() => {
     drinkMutation.mutate(mutations.POST_DRINK(payload))
-    dispatch({
-      type: 'ADD_DRINK_EVENT',
-      payload: payload,
-    })
+    setDrinkType('')
+    setCupsValue('')
+    setVolumeValue('')
+    setTime(date)
   })
 
   return (

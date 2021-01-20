@@ -1,8 +1,5 @@
 const initialState = {
-  events: [
-    {drink:'Water',cups:1, volume:150, time:"2021-01-13T17:29"},
-    {drink:'Fruit Juice',cups:2, volume:100, time:"2021-01-13T17:30"},
-  ],
+  events: [],
 }
 
 const drinkReducer = (state = initialState, action) => {

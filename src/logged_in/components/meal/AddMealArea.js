@@ -9,7 +9,8 @@ import AddIcon from '@material-ui/icons/Add';
 import MealInput from './MealInput';
 import TextFieldInput from '../../../shared/TextFieldInput';
 import currentTime from '../../functions/currentTime'
-import { useDispatch } from 'react-redux'
+import { useMutation, useQueryClient } from "react-query";
+import { endpoint, mutations, mutateOptions } from '../../../api'
 
 const styles = theme => ({
   card: {
@@ -24,7 +25,6 @@ const styles = theme => ({
 function AddMealArea(props) {
 
   const { classes } = props;
-  const dispatch = useDispatch();
   const date = currentTime();
 
   const [description, setDescription] = useState('');
@@ -34,16 +34,28 @@ function AddMealArea(props) {
   const regex = /(,|\n)/g
 
   const payload = {
+    UserId: 2,
     description: description,
     meal: mealValue.replace(regex,',').split(','),
     time: time,
   }
 
+  const queryClient = useQueryClient()
+
+  const mealMutation = useMutation((newMeal) => 
+    fetch(endpoint, mutateOptions(newMeal))
+      .then(res => res.json())
+    ,
+    {
+      onSuccess: () => queryClient.invalidateQueries('meals')
+    }
+  )
+
   const addEvent = useCallback(() => {
-    dispatch({
-      type: 'ADD_MEAL_EVENT',
-      payload: payload,
-    })
+    mealMutation.mutate(mutations.POST_MEAL(payload))
+    setDescription('')
+    setMealValue('')
+    setTime(date)
   })
 
   return (
