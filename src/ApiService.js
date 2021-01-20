@@ -5,24 +5,9 @@ import {
   useMutation,
   useQueryClient
  } from "react-query";
-import { queries, mutations } from './api'
+import { endpoint, queries, mutations, getOptions, mutateOptions } from './api'
 
-const endpoint = 'http://localhost:4000'
 const UserId = 2;
-
-const getOptions = (func, args) => { 
-  return {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json'},
-  body: JSON.stringify(func(args))
-}}
-
-const mutateOptions = (item) => {
-  return {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json'},
-  body: JSON.stringify(item)
-}}
 
 export default function ApiService() {
 
