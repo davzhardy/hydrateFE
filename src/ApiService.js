@@ -5,7 +5,7 @@ import {
   useMutation,
  } from "react-query";
 import { GET_ALL_DRINKS, GET_ALL_MEALS } from './api/queries'
-// import { CREATE_USER, POST_DRINK, POST_MEAL } from './api/mutations'
+import { CREATE_USER, POST_DRINK, POST_MEAL } from './api/mutations'
 
 export default function ApiService() {
 
@@ -30,38 +30,16 @@ export default function ApiService() {
   //   }
   // ])
 
-  const POST_MEAL =  {query: `mutation {
-      postMeal(
-        UserId: 2, 
-        description: "ddd", 
-        meal: ["ccdddc","noobs"], 
-        time: "2021-01-13T17:27"
-      ){
-        description,
-        meal,
-        time,
-      }
-    }`
-  }
-  ;
+
 
   const mealOptions = (item) => {
+    console.log(JSON.stringify(item))
     return {
     method: 'POST',
     headers: { 'Content-Type': 'application/json'},
     body: JSON.stringify(item)
   }}
-
-  const mutation = useMutation( (xxx) => 
-    fetch(endpoint, mealOptions(xxx))
-      .then(res => res.json()))
-  
       
-
-      // fetch(endpoint, mealOptions(POST_MEAL, newMeal.UserId, newMeal.description, newMeal.meal, newMeal.time))
-      // .then(res => res.json()))
-
-  
   const { data, status, error } = useQuery("drinks", () => 
     fetch(endpoint, getOptions(GET_ALL_DRINKS,UserId))
       .then(res => res.json()))
@@ -70,16 +48,16 @@ export default function ApiService() {
     fetch(endpoint, getOptions(GET_ALL_MEALS,UserId))
       .then(res => res.json()))
   
-  if ( [status, status1].includes("loading") ) return <p>Loading....</p>
-  if ( [status, status1].includes("error") ) return <p>An error has been thrown</p>
+  const mutation = useMutation((newMeal) => 
+    fetch(endpoint, mealOptions(newMeal))
+      .then(res => res.json()))
 
   const runMutate = async (func) => {
     const mutationData = await mutation.mutate(func)
-    console.log(mutationData)
-    console.log(mutation.data)
   }
 
-  mutation.isSuccess ? console.log(mutation) : console.log('none')
+  if ( [status, status1].includes("loading") ) return <p>Loading....</p>
+  if ( [status, status1].includes("error") ) return <p>An error has been thrown</p>
 
   return (
     <>
@@ -89,18 +67,17 @@ export default function ApiService() {
       </div>
       <div>
         {mutation.isLoading ? (
-          'Adding todo...'
+          'Adding meal...'
         ) : (
           <>
             {mutation.isError ? (
               <div>An error occurred: {mutation.error.message}</div>
-            ) : null}
+            ) : ''}
   
-            {mutation.isSuccess ? <div>{mutation.data.data.postMeal.meal} </div> : null}
+            {mutation.isSuccess ? <div>{mutation.data.data.postMeal.meal} </div> : 'Failed'}
             <button
               onClick={() => {
-                runMutate(POST_MEAL)
-                console.log(mutation.data)
+                runMutate(POST_MEAL({UserId:2, description:'A 2nd Breakfast'}))
               }}
             >
               Create Meal

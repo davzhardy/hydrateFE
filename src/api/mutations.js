@@ -28,20 +28,20 @@ function POST_DRINK (UserId, drink, cups, volume, time) { return { mutation:
   }`
 }};
 
-function POST_MEAL (UserId, description, meal, time) { return {mutation: 
-  `mutation {
-    postMeal(
-      UserId: ${UserId}, 
-      description: ${description}, 
-      meal: ${meal}, 
-      time: ${time}
-    ){
-      description,
-      meal,
-      time,
-    }
-  }`
-}};
+function POST_MEAL(details) { return  {query: `mutation {
+  postMeal(
+    UserId: ${details.UserId}, 
+    description: "${details.description}", 
+    meal: ["joop","ccccsada"], 
+    time: "2021-01-13T17:27"
+  ){
+    description,
+    meal,
+    time,
+  }
+}`
+}}
+;
 
 export {
   CREATE_USER,
