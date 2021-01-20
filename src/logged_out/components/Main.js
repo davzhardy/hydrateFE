@@ -15,7 +15,7 @@ function Main(props) {
 
   return (
     <div className={classes.wrapper}>
-      <p>Placeholder</p>
+      <p>Navbar Placeholder</p>
       <Routing />
     </div>
   )
