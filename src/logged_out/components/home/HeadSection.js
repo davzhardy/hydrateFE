@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { useDispatch } from 'react-redux'
 import classNames from "classnames";
 import {
   Grid,
@@ -97,6 +98,16 @@ const styles = (theme) => ({
 
 function HeadSection(props) {
   const { classes, theme, width } = props;
+
+  const dispatch = useDispatch();
+
+  const setDialogOpen = (dialog) => {
+    dispatch({
+      type: "SET_OPEN_DIALOG",
+      payload: dialog
+    });
+  }
+
   return (
     <Fragment>
       <div className={classNames("lg-p-top", classes.wrapper)}>
@@ -138,7 +149,7 @@ function HeadSection(props) {
                           fullWidth
                           className={classes.extraLargeButton}
                           classes={{ label: classes.extraLargeButtonLabel }}
-                          onClick={()=>console.log('login')}
+                          onClick={()=>setDialogOpen('login')}
                         >
                           Login
                         </Button>

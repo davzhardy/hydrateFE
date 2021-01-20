@@ -9,10 +9,10 @@ import {
   FormControlLabel,
   withStyles,
 } from "@material-ui/core";
-import FormDialog from "../../../shared/components/FormDialog";
-import HighlightedInformation from "../../../shared/components/HighlightedInformation";
-import ButtonCircularProgress from "../../../shared/components/ButtonCircularProgress";
-import VisibilityPasswordTextField from "../../../shared/components/VisibilityPasswordTextField";
+import FormDialog from "../../../shared/FormDialog";
+import HighlightedInformation from "../../../shared/HighlightedInformation";
+import ButtonCircularProgress from "../../../shared/ButtonCircularProgress";
+import VisibilityPasswordTextField from "../../../shared/VisibilityPasswordTextField";
 
 const styles = (theme) => ({
   forgotPassword: {
@@ -140,7 +140,7 @@ function LoginDialog(props) {
             />
             {status === "verificationEmailSend" ? (
               <HighlightedInformation>
-                We have send instructions on how to reset your password to your
+                We have sent instructions on how to reset your password to your
                 email address
               </HighlightedInformation>
             ) : (
