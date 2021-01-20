@@ -138,6 +138,7 @@ function HeadSection(props) {
                           fullWidth
                           className={classes.extraLargeButton}
                           classes={{ label: classes.extraLargeButtonLabel }}
+                          onClick={()=>console.log('login')}
                         >
                           Login
                         </Button>
