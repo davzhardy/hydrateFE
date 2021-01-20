@@ -20,6 +20,7 @@ export default function ApiService() {
   }}
 
   const mutateOptions = (item) => {
+    console.log(item)
     return {
     method: 'POST',
     headers: { 'Content-Type': 'application/json'},
@@ -36,6 +37,10 @@ export default function ApiService() {
   
   const mealMutation = useMutation((newMeal) => 
     fetch(endpoint, mutateOptions(newMeal))
+      .then(res => res.json()))
+
+  const drinkMutation = useMutation((newDrink) => 
+    fetch(endpoint, mutateOptions(newDrink))
       .then(res => res.json()))
 
   if ( [status, status1].includes("loading") ) return <p>Loading....</p>
@@ -63,6 +68,26 @@ export default function ApiService() {
               }}
             >
               Create Meal
+            </button>
+          </>
+        )}
+      </div>
+      <div>
+        {drinkMutation.isLoading ? (
+          'Adding drink...'
+        ) : (
+          <>
+            {drinkMutation.isError ? (
+              <div>An error occurred: {drinkMutation.error.message}</div>
+            ) : ''}
+  
+            {drinkMutation.isSuccess ? <div>{drinkMutation.data.data.postDrink.drink} </div> : 'Failed'}
+            <button
+              onClick={() => {
+                drinkMutation.mutate(POST_DRINK({UserId:2, drink:"Bloop", cups: 1, time:'2019-01-13T17:20'}))
+              }}
+            >
+              Create Drink
             </button>
           </>
         )}

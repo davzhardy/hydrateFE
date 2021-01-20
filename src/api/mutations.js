@@ -12,13 +12,17 @@ function CREATE_USER (username, password, email) { return { mutation:
 }};
 
 function POST_DRINK(details) {
+  let cups = null;
+  let volume = null;
+  if (details.cups) cups = details.cups
+  if (details.volume) volume = details.volume
   return  {
     query: `mutation {
       postDrink(
         UserId: ${details.UserId}, 
         drink: "${details.drink}", 
-        cups: "${details.cups}", 
-        volume: "${details.volume}", 
+        cups: ${cups}, 
+        volume: ${volume}, 
         time: "${details.time}"
       ){
         drink,
@@ -28,8 +32,7 @@ function POST_DRINK(details) {
       }
     }`
   }
-}
-;
+};
 
 function POST_MEAL(details) {
   const meal = details.meal.map(item => `"${item}"`)
@@ -47,8 +50,7 @@ function POST_MEAL(details) {
       }
     }`
   }
-}
-;
+};
 
 export {
   CREATE_USER,
