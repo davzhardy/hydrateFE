@@ -1,6 +1,8 @@
 import React, {memo} from "react";
-import Routing from "./Routing";
 import { withStyles } from "@material-ui/core";
+import Routing from "./Routing";
+import Footer from './footer/Footer'
+import NavBar from './navigation/NavBar'
 
 const styles = (theme) => ({
   wrapper: {
@@ -15,8 +17,10 @@ function Main(props) {
 
   return (
     <div className={classes.wrapper}>
-      <p>Navbar Placeholder</p>
+      <NavBar />
       <Routing />
+      <p>Registration Placeholder</p>
+      <Footer />
     </div>
   )
 
