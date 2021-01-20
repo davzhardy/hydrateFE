@@ -40,6 +40,8 @@ function AddMealArea(props) {
     time: time,
   }
 
+  console.log(payload.meal)
+
   const queryClient = useQueryClient()
 
   const mealMutation = useMutation((newMeal) => 
@@ -52,6 +54,7 @@ function AddMealArea(props) {
   )
 
   const addEvent = useCallback(() => {
+    payload.meal = payload.meal.map(el =>el.trim())
     mealMutation.mutate(mutations.POST_MEAL(payload))
     setDescription('')
     setMealValue('')
