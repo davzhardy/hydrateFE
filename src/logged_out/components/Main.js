@@ -1,11 +1,25 @@
-import React from "react";
+import React, {memo} from "react";
+import Routing from "./Routing";
+import { withStyles } from "@material-ui/core";
 
-function Main() {
+const styles = (theme) => ({
+  wrapper: {
+    backgroundColor: theme.palette.common.white,
+    overflowX: "hidden",
+  },
+});
+
+function Main(props) {
+
+  const { classes } = props;
 
   return (
-    <p>Placeholder</p>
+    <div className={classes.wrapper}>
+      <p>Placeholder</p>
+      <Routing />
+    </div>
   )
 
 }
 
-export default Main
+export default withStyles(styles, { withTheme: true })(memo(Main));
