@@ -44,8 +44,8 @@ function NavBar(props) {
     openLoginDialog,
     handleMobileDrawerOpen,
     handleMobileDrawerClose,
-    mobileDrawerOpen,
-    selectedTab
+    // mobileDrawerOpen,
+    // selectedTab
   } = props;
   const menuItems = [
     {

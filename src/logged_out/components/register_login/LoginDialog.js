@@ -67,14 +67,13 @@ function LoginDialog(props) {
     } else {
       payload.UserId = userInfo.data.getUser.userData.id
       payload.username = userInfo.data.getUser.userData.username
-      
       dispatch({
         type: "SET_ACTIVE_USER",
         payload: payload
       })
       history.push("/a/dashboard");
     }
-  }, [setIsLoading, loginEmail, loginPassword, history, setStatus]);
+  }, [setIsLoading, loginEmail, dispatch, loginPassword, history, setStatus]);
 
   return (
     <Fragment>

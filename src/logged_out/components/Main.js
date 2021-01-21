@@ -20,12 +20,12 @@ function Main(props) {
   const dispatch = useDispatch();
   const dialogOpen = useSelector((state) => state.dialog.dialog);
 
-  const setDialogOpen = (dialog) => {
+  const setDialogOpen = useCallback((dialog) => {
     dispatch({
       type: "SET_OPEN_DIALOG",
       payload: dialog
     });
-  }
+  }, [dispatch])
 
   const openLoginDialog = useCallback(() => {
     setDialogOpen("login");

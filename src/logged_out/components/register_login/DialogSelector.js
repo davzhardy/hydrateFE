@@ -8,20 +8,20 @@ import ModalBackdrop from "../../../shared/ModalBackdrop";
 function DialogSelector(props) {
   const {
     dialogOpen,
-    openTermsDialog,
-    openRegisterDialog,
+    // openTermsDialog,
+    // openRegisterDialog,
     openLoginDialog,
     openChangePasswordDialog,
     onClose,
   } = props;
   const [loginStatus, setLoginStatus] = useState(null);
-  const [registerStatus, setRegisterStatus] = useState(null);
+  // const [registerStatus, setRegisterStatus] = useState(null);
 
   const _onClose = useCallback(() => {
     setLoginStatus(null);
-    setRegisterStatus(null);
+    // setRegisterStatus(null);
     onClose();
-  }, [onClose, setLoginStatus, setRegisterStatus]);
+  }, [onClose, setLoginStatus]);
 
   const printDialog = useCallback(() => {
     switch (dialogOpen) {
@@ -58,13 +58,13 @@ function DialogSelector(props) {
     dialogOpen,
     openChangePasswordDialog,
     openLoginDialog,
-    openRegisterDialog,
-    openTermsDialog,
+    // openRegisterDialog,
+    // openTermsDialog,
     _onClose,
     loginStatus,
-    registerStatus,
+    // registerStatus,
     setLoginStatus,
-    setRegisterStatus,
+    // setRegisterStatus,
   ]);
 
   return (
