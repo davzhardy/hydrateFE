@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Grid,
   InputAdornment,
   TextField,
 } from '@material-ui/core';
@@ -37,98 +38,100 @@ export default function MealInput(props) {
   };
 
   return (
-    <React.Fragment>
-      <Autocomplete
-        value={defaultValue}
-        onChange={(event, newValue) => {
-          if (typeof newValue === 'string') {
-            // timeout to avoid instant validation of the dialog's form.
-            setTimeout(() => {
+    <Grid container spacing={1} >
+      <Grid item xs={12}>
+        <Autocomplete
+          value={defaultValue}
+          onChange={(event, newValue) => {
+            if (typeof newValue === 'string') {
+              // timeout to avoid instant validation of the dialog's form.
+              setTimeout(() => {
+                toggleOpen(true);
+                setDialogValue(newValue);
+              });
+            } else if (newValue && newValue.inputValue) {
               toggleOpen(true);
-              setDialogValue(newValue);
-            });
-          } else if (newValue && newValue.inputValue) {
-            toggleOpen(true);
-            setDialogValue(newValue.inputValue);
-          } else {
-            stateSetting(newValue.meal);
-          }
-        }}
-        filterOptions={(options, params) => {
-          const filtered = filter(options, params);
+              setDialogValue(newValue.inputValue);
+            } else {
+              stateSetting(newValue.meal);
+            }
+          }}
+          filterOptions={(options, params) => {
+            const filtered = filter(options, params);
 
-          if (params.inputValue !== '') {
-            filtered.push({
-              inputValue: params.inputValue,
-              meal: `Add "${params.inputValue}"`,
-            });
-          }
+            if (params.inputValue !== '') {
+              filtered.push({
+                inputValue: params.inputValue,
+                meal: `Add "${params.inputValue}"`,
+              });
+            }
 
-          return filtered;
-        }}
-        id="Meal-Adder"
-        options={potentialMeals}
-        getOptionLabel={(option) => {
-          // e.g value selected with enter, right from the input
-          if (typeof option === 'string') {
-            return option;
-          }
-          if (option.inputValue) {
-            return option.inputValue;
-          }
-          return option.meal;
-        }}
-        selectOnFocus
-        clearOnBlur
-        handleHomeEndKeys
-        renderOption={(option) => option.meal}
-        style={{ width: 300 }}
-        freeSolo
-        renderInput={(params) => (
-          <TextField {...params} label="Meal Type" variant="outlined" 
-            InputProps={{
-              ...params.InputProps,
-              startAdornment: (
-                <>
-                  <InputAdornment position="start">
-                    <RestaurantIcon 
-                      color= "primary"                    />
-                  </InputAdornment>
-                  {params.InputProps.startAdornment}
-                </>
-              )
-            }}
-          />
-        )}
-      />
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-meal">
-        <form onSubmit={handleSubmit}>
-          <DialogTitle id="form-dialog-meal">Add a new meal</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Is there a meal missing from our list? Please, add it!
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              value={dialogValue}
-              onChange={(event) => setDialogValue(...dialogValue, event.target.value)}
-              label="Meal"
-              type="text"
+            return filtered;
+          }}
+          id="Meal-Adder"
+          options={potentialMeals}
+          getOptionLabel={(option) => {
+            // e.g value selected with enter, right from the input
+            if (typeof option === 'string') {
+              return option;
+            }
+            if (option.inputValue) {
+              return option.inputValue;
+            }
+            return option.meal;
+          }}
+          selectOnFocus
+          clearOnBlur
+          handleHomeEndKeys
+          renderOption={(option) => option.meal}
+          style={{ width: 300 }}
+          freeSolo
+          renderInput={(params) => (
+            <TextField {...params} label="Meal Type" variant="outlined" 
+              InputProps={{
+                ...params.InputProps,
+                startAdornment: (
+                  <>
+                    <InputAdornment position="start">
+                      <RestaurantIcon 
+                        color= "primary"                    />
+                    </InputAdornment>
+                    {params.InputProps.startAdornment}
+                  </>
+                )
+              }}
             />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button type="submit" color="primary">
-              Add
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
-    </React.Fragment>
+          )}
+        />
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-meal">
+          <form onSubmit={handleSubmit}>
+            <DialogTitle id="form-dialog-meal">Add a new meal</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Is there a meal missing from our list? Please, add it!
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                value={dialogValue}
+                onChange={(event) => setDialogValue(...dialogValue, event.target.value)}
+                label="Meal"
+                type="text"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button type="submit" color="primary">
+                Add
+              </Button>
+            </DialogActions>
+          </form>
+        </Dialog>
+      </Grid>
+    </Grid>
   );
 }
 

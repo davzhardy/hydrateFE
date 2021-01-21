@@ -15,7 +15,7 @@ const styles = theme => ({
   card: {
     borderRadius: 15,
     margin: 10,
-    maxWidth: '50%',
+    maxWidth: '100%',
     display: 'flex',
     flexDirection: 'column',
   },

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
+  Button,
   Card,
-  Typography,
   withStyles
 } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
@@ -15,10 +15,20 @@ const styles = theme => ({
   card: {
     borderRadius: 15,
     margin: 10,
-    maxWidth: '50%',
+    maxWidth: '100%',
+    // height: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
+  button: {
+    marginBottom: 15,
+    fontSize: 12,
+    '&:hover': {
+      backgroundColor: '#0069d9',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+    }
+  }
 });
 
 function AddMealArea(props) {
@@ -60,16 +70,15 @@ function AddMealArea(props) {
 
   return (
     <Card className={classes.card}>
-      <AddIcon 
+      <Button 
+        variant="contained" 
+        color="primary" 
+        startIcon={<AddIcon />}
         onClick={addEvent}
-        color="primary"
-      />      
-      <Typography 
-        variant="subtitle1"
-        color="primary"
+        className={classes.button}
       >
         Add Meal
-      </Typography>
+      </Button>
       <MealInput 
         defaultValue={description}
         stateSetting = {setDescription}

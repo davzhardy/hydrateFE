@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Box, withStyles } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import AddDrinkArea from "../drink/AddDrinkArea"
 import AddMealArea from "../meal/AddMealArea"
@@ -8,17 +8,7 @@ import MealDataArea from "../datavisualisation/meal/MealDataArea"
 import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
 
-const styles = theme => ({
-  box: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-});
-
-
-function Dashboard(props) {
-
-  const { classes } = props;
+function Dashboard() {
 
   const UserId = useSelector((state) => state.user.UserId);
 
@@ -35,10 +25,14 @@ function Dashboard(props) {
 
   return (
     <Fragment>
-      <Box className={classes.box}>
-        <AddDrinkArea UserId={UserId}/>
-        <AddMealArea UserId={UserId}/>
-      </Box>
+      <Grid container spacing ={1}>
+        <Grid item xs={12} sm={6}>
+          <AddDrinkArea UserId={UserId}/>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <AddMealArea UserId={UserId}/>
+        </Grid>
+      </Grid>
       <DrinkDataArea 
         data={data.data.getAllDrinks}
       />
@@ -49,4 +43,4 @@ function Dashboard(props) {
   )
 }
 
-export default  withStyles(styles, { withTheme: true })(Dashboard);
+export default Dashboard;
