@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, Fragment } from "react";
 import classNames from "classnames";
+import { useDispatch } from 'react-redux'
 import { withRouter } from "react-router-dom";
 import {
   TextField,
@@ -45,16 +46,18 @@ function LoginDialog(props) {
     openChangePasswordDialog,
     status,
   } = props;
+
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const loginEmail = useRef();
   const loginPassword = useRef();
+  const dispatch = useDispatch()
 
   const login = useCallback( async () => {
     setIsLoading(true);
     setStatus(null);
     const userInfo = await getUser({email: loginEmail.current.value, password: loginPassword.current.value})
-
+    const payload = {}
     if (!userInfo.data.getUser.emailExists) {
       setStatus("invalidEmail");
       setIsLoading(false);
@@ -62,6 +65,13 @@ function LoginDialog(props) {
       setStatus("invalidPassword");
       setIsLoading(false);
     } else {
+      payload.UserId = userInfo.data.getUser.userData.id
+      payload.username = userInfo.data.getUser.userData.username
+      
+      dispatch({
+        type: "SET_ACTIVE_USER",
+        payload: payload
+      })
       history.push("/a/dashboard");
     }
   }, [setIsLoading, loginEmail, loginPassword, history, setStatus]);

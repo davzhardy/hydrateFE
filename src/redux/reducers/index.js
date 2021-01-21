@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
-import drinkReducer from "./drink";
-import mealReducer from "./meal";
 import dialogReducer from './dialog' 
+import userReducer from './user'
 
 export default combineReducers({ 
-  drink: drinkReducer, 
-  meal: mealReducer,
   dialog: dialogReducer,
+  user: userReducer,
 });
