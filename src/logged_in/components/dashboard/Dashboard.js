@@ -36,8 +36,8 @@ function Dashboard(props) {
   return (
     <Fragment>
       <Box className={classes.box}>
-        <AddDrinkArea />
-        <AddMealArea />
+        <AddDrinkArea UserId={UserId}/>
+        <AddMealArea UserId={UserId}/>
       </Box>
       <DrinkDataArea 
         data={data.data.getAllDrinks}

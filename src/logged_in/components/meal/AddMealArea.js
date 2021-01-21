@@ -23,7 +23,7 @@ const styles = theme => ({
 
 function AddMealArea(props) {
 
-  const { classes } = props;
+  const { UserId, classes } = props;
   const date = currentTime();
 
   const [description, setDescription] = useState('');
@@ -33,7 +33,7 @@ function AddMealArea(props) {
   const regex = /(,|\n)/g
 
   const payload = {
-    UserId: 2,
+    UserId: UserId,
     description: description,
     meal: mealValue.replace(regex,',').split(','),
     time: time,

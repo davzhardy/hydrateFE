@@ -23,7 +23,7 @@ const styles = theme => ({
 
 function AddDrinkArea(props) {
 
-  const { classes } = props;
+  const { UserId, classes } = props;
   const date = currentTime();
 
   const [drinkType, setDrinkType] = useState('');
@@ -32,7 +32,7 @@ function AddDrinkArea(props) {
   const [time, setTime] = useState(date);
 
   const payload = {
-    UserId: 2,
+    UserId: UserId,
     drink: drinkType,
     cups: +cupsValue,
     volume: +volumeValue,
