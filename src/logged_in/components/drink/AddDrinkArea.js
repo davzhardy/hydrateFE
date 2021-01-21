@@ -41,6 +41,7 @@ function AddDrinkArea(props) {
 
   const queryClient = useQueryClient()
   
+  // should this function be moved to the api index?
   const drinkMutation = useMutation((newDrink) => 
     fetch(endpoint, mutateOptions(newDrink))
       .then(res => res.json())

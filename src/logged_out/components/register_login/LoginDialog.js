@@ -13,6 +13,7 @@ import FormDialog from "../../../shared/FormDialog";
 import HighlightedInformation from "../../../shared/HighlightedInformation";
 import ButtonCircularProgress from "../../../shared/ButtonCircularProgress";
 import VisibilityPasswordTextField from "../../../shared/VisibilityPasswordTextField";
+import { getUser  } from '../../../api'
 
 const styles = (theme) => ({
   forgotPassword: {
@@ -49,6 +50,13 @@ function LoginDialog(props) {
   const loginEmail = useRef();
   const loginPassword = useRef();
 
+  // const userObj = {
+  //   email: loginEmail.current.value,
+  //   password: loginPassword.current.value,
+  // }
+
+  console.log(getUser({email: 'xvxcxcx@xxx', password: "admin"}))
+
   const login = useCallback(() => {
     setIsLoading(true);
     setStatus(null);
@@ -64,7 +72,7 @@ function LoginDialog(props) {
       }, 1500);
     } else {
       setTimeout(() => {
-        history.push("/c/dashboard");
+        history.push("/a/dashboard");
       }, 150);
     }
   }, [setIsLoading, loginEmail, loginPassword, history, setStatus]);

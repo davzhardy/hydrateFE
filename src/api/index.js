@@ -17,10 +17,17 @@ const mutateOptions = (item) => {
   body: JSON.stringify(item)
 }}
 
+function getUser (details) {
+  return fetch(endpoint, mutateOptions(GET_USER(details)))
+    .then(res => res.json())
+    .catch((err) => {
+      console.log('Error:', JSON.stringify(err)) //eslint-disable-line no-console
+    })
+}
+
 const queries = {
   GET_ALL_DRINKS,
   GET_ALL_MEALS,
-  GET_USER
 }
 
 const mutations = {
@@ -34,5 +41,6 @@ export {
   getOptions,
   mutateOptions,
   queries,
-  mutations
+  mutations,
+  getUser,
 }

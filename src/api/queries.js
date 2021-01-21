@@ -21,13 +21,12 @@ function GET_ALL_MEALS (UserId) { return {query:
 
 function GET_USER (details) { return {query:
   `query {
-    getAllMeals(
-      username: ${details.username},
-      password: ${details.password}"
+    getUser(
+      email: "${details.email}",
+      password: "${details.password}",
     ){
-      description,
-      meal,
-      time,
+      id,
+      username,
     }
   }`
 }}
