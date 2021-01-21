@@ -25,8 +25,12 @@ function GET_USER (details) { return {query:
       email: "${details.email}",
       password: "${details.password}",
     ){
-      id,
-      username,
+      emailExists,
+      passwordMatches,
+      userData {
+        id,
+        username
+      }
     }
   }`
 }}

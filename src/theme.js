@@ -1,4 +1,4 @@
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core";
+import { unstable_createMuiStrictModeTheme, responsiveFontSizes } from "@material-ui/core";
 
 // colors
 const primary = "#b3294e";
@@ -24,7 +24,7 @@ const xs = 0;
 // spacing
 const spacing = 8;
 
-const theme = createMuiTheme({
+const theme = unstable_createMuiStrictModeTheme({
   palette: {
     primary: { main: primary },
     secondary: { main: secondary },

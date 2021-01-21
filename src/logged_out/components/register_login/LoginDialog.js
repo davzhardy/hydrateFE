@@ -50,30 +50,19 @@ function LoginDialog(props) {
   const loginEmail = useRef();
   const loginPassword = useRef();
 
-  // const userObj = {
-  //   email: loginEmail.current.value,
-  //   password: loginPassword.current.value,
-  // }
-
-  console.log(getUser({email: 'xvxcxcx@xxx', password: "admin"}))
-
-  const login = useCallback(() => {
+  const login = useCallback( async () => {
     setIsLoading(true);
     setStatus(null);
-    if (loginEmail.current.value !== "test@web.com") {
-      setTimeout(() => {
-        setStatus("invalidEmail");
-        setIsLoading(false);
-      }, 1500);
-    } else if (loginPassword.current.value !== "HaRzwc") {
-      setTimeout(() => {
-        setStatus("invalidPassword");
-        setIsLoading(false);
-      }, 1500);
+    const userInfo = await getUser({email: loginEmail.current.value, password: loginPassword.current.value})
+
+    if (!userInfo.data.getUser.emailExists) {
+      setStatus("invalidEmail");
+      setIsLoading(false);
+    } else if (!userInfo.data.getUser.passwordMatches) {
+      setStatus("invalidPassword");
+      setIsLoading(false);
     } else {
-      setTimeout(() => {
-        history.push("/a/dashboard");
-      }, 150);
+      history.push("/a/dashboard");
     }
   }, [setIsLoading, loginEmail, loginPassword, history, setStatus]);
 
@@ -153,6 +142,8 @@ function LoginDialog(props) {
               </HighlightedInformation>
             ) : (
               <HighlightedInformation>
+                <b>For testing purposes you can use the following account information:</b>
+                <br />
                 Email is: <b>test@web.com</b>
                 <br />
                 Password is: <b>HaRzwc</b>
