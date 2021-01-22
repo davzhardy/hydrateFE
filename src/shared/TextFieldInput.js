@@ -22,7 +22,9 @@ function TextFieldInput(props) {
     variant,
     multiline,
     rows,
-    classes
+    classes,
+    InputProps,
+    params
   } = props
 
   const handleChange = (event) => {
@@ -43,6 +45,8 @@ function TextFieldInput(props) {
           helperText={helperText}
           onChange={handleChange}
           variant={variant}
+          {...params}
+          InputProps = {InputProps}
         />
     </Fragment>
   )

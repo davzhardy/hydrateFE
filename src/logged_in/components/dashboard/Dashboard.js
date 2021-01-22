@@ -25,11 +25,11 @@ function Dashboard() {
 
   return (
     <Fragment>
-      <Grid container spacing ={1}>
-        <Grid item xs={12} sm={6}>
+      <Grid container spacing ={6}>
+        <Grid item xs={12} sm={6} style={{display: 'flex'}}>
           <AddDrinkArea UserId={UserId}/>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} style={{display: 'flex'}}>
           <AddMealArea UserId={UserId}/>
         </Grid>
       </Grid>

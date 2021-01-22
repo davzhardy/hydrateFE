@@ -11,3 +11,4 @@ export const useD3 = (renderChartFn, dependencies) => {
 
   return ref;
 }
+

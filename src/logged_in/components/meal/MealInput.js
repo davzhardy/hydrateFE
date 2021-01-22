@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
+import TextFieldInput from '../../../shared/TextFieldInput';
 
 const filter = createFilterOptions();
 
@@ -84,17 +85,19 @@ export default function MealInput(props) {
           clearOnBlur
           handleHomeEndKeys
           renderOption={(option) => option.meal}
-          style={{ width: 300 }}
+          style={{ width: '100%'}}
           freeSolo
           renderInput={(params) => (
-            <TextField {...params} label="Meal Type" variant="outlined" 
+            <TextFieldInput params={params} label="Meal Type" variant="standard" 
               InputProps={{
                 ...params.InputProps,
                 startAdornment: (
                   <>
                     <InputAdornment position="start">
                       <RestaurantIcon 
-                        color= "primary"                    />
+                        color= "primary"
+                        fontSize="inherit"
+                      />
                     </InputAdornment>
                     {params.InputProps.startAdornment}
                   </>

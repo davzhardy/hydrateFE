@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
   Card,
+  Box,
+  Button,
   Typography,
   withStyles
 } from "@material-ui/core";
@@ -15,10 +17,34 @@ const styles = theme => ({
   card: {
     borderRadius: 15,
     margin: 10,
+    width: '100%',
     maxWidth: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
+  boxA: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
+  },
+  boxB: {
+    display: 'flex',
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 15,
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'space-around',
+  },
+  button: {
+    marginBottom: 15,
+    fontSize: 12,
+    '&:hover': {
+      backgroundColor: '#0069d9',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+    }
+  }
 });
 
 function AddDrinkArea(props) {
@@ -61,44 +87,50 @@ function AddDrinkArea(props) {
 
   return (
     <Card className={classes.card}>
-      <AddIcon 
-        onClick={addHydrationEvent}
-        color="primary"
-      />      
-      <Typography 
-        variant="subtitle1"
-        color="primary"
-      >
-        Add Hydration Event
-      </Typography>
-      <DrinkInput 
-        defaultValue={drinkType}
-        stateSetting = {setDrinkType}
-      />
-      <TextFieldInput 
-        id={'cups-drunk'}
-        label={'Cups'}
-        defaultValue={cupsValue}
-        stateSetting = {setCupsValue}
-        helperText={'How many cups you drank'}
-        variant={'filled'}
-      />
-      <TextFieldInput
-        id={'volume-drunk'}
-        label={'Volume'}
-        defaultValue={volumeValue}
-        stateSetting = {setVolumeValue}
-        helperText={'How many mililitres you drank'}
-        variant={'filled'}
-      />
-      <TextFieldInput
-        id={'time-of-drink'}
-        label={'Time'}
-        defaultValue={time}
-        stateSetting = {setTime}
-        type={'datetime-local'}
-        variant={'filled'}
-      />
+      <Box className={classes.boxA}>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          startIcon={<AddIcon />}
+          onClick={addHydrationEvent}
+          className={classes.button}
+        >
+          <Typography>
+            Add Hydration Event
+          </Typography>
+        </Button>
+      </Box>
+      <Box className={classes.boxB}>
+        <DrinkInput 
+          defaultValue={drinkType}
+          stateSetting = {setDrinkType}
+        />
+        <TextFieldInput 
+          id={'cups-drunk'}
+          label={'Cups'}
+          defaultValue={cupsValue}
+          stateSetting = {setCupsValue}
+          helperText={'How many cups you drank'}
+          variant={'standard'}
+        />
+        <TextFieldInput
+          id={'volume-drunk'}
+          label={'Volume'}
+          defaultValue={volumeValue}
+          stateSetting = {setVolumeValue}
+          helperText={'How many mililitres you drank'}
+          variant={'standard'}
+        />
+        <TextFieldInput
+          id={'time-of-drink'}
+          label={'Time'}
+          defaultValue={time}
+          stateSetting = {setTime}
+          type={'datetime-local'}
+          variant={'standard'}
+          // styles={{height:0}}
+        />
+      </Box>
     </Card>
   )
 }
