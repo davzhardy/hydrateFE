@@ -3,8 +3,7 @@ import { Grid } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import AddDrinkArea from "../drink/AddDrinkArea"
 import AddMealArea from "../meal/AddMealArea"
-import DrinkDataArea from "../datavisualisation/drink/DrinkDataArea"
-import MealDataArea from "../datavisualisation/meal/MealDataArea"
+import DataArea from "../datavisualisation/DataArea"
 import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
 
@@ -33,12 +32,8 @@ function Dashboard() {
           <AddMealArea UserId={UserId}/>
         </Grid>
       </Grid>
-      <DrinkDataArea 
-        data={data.data.getAllDrinks}
-      />
-      <MealDataArea 
-        data={data1.data.getAllMeals}
-      />
+      <DataArea data={data.data.getAllDrinks} tablename={'drink'}/>  
+      <DataArea data={data1.data.getAllMeals} tablename={'meal'}/>
     </Fragment>
   )
 }
