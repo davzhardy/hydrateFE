@@ -45,28 +45,29 @@ function RegisterDialog(props) {
   const minimumPasswordLength = 5;
   const dispatch = useDispatch();
 
-  const setDialogOpen = (dialog) => {
-    dispatch({
-      type: "SET_OPEN_DIALOG",
-      payload: dialog
-    });
-  }
-
   const userMutation = useMutation((newUser) => 
     fetch(endpoint, mutateOptions(newUser))
       .then(res => res.json())
   )
 
-  const addNewUser = () => {
-    const payload = {
-      username: registerUsername.current.value,
-      password: registerPassword.current.value,
-      email: registerEmail.current.value,
-    }
-    userMutation.mutate(mutations.CREATE_USER(payload))
-  }
-
   const register = useCallback( () => {
+
+    const setDialogOpen = (dialog) => {
+      dispatch({
+        type: "SET_OPEN_DIALOG",
+        payload: dialog
+      });
+    }
+
+    const addNewUser = () => {
+      const payload = {
+        username: registerUsername.current.value,
+        password: registerPassword.current.value,
+        email: registerEmail.current.value,
+      }
+      userMutation.mutate(mutations.CREATE_USER(payload))
+    }
+
     if (!registerTermsCheckbox.current.checked) {
       setHasTermsOfServiceError(true);
       return;
@@ -90,14 +91,12 @@ function RegisterDialog(props) {
     }
   }, [
     setStatus,
+    dispatch,
+    userMutation,
     setHasTermsOfServiceError,
     registerPassword,
     registerPasswordRepeat,
     registerTermsCheckbox,
-    addNewUser,
-    userMutation.isError,
-    userMutation.isSuccess,
-    setDialogOpen,
   ]);
 
   return (
