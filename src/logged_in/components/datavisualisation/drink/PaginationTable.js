@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -30,8 +31,8 @@ const columns = [
 ];
 
 const useStyles = makeStyles({
-  root: {
-    width: '100%',
+  box: {
+    margin: 10,
   },
   container: {
     maxHeight: 440,
@@ -53,7 +54,7 @@ export default function StickyHeadTable({ data }) {
   };
 
   return (
-    <Paper className={classes.root}>
+    <Box className={classes.box}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -96,6 +97,6 @@ export default function StickyHeadTable({ data }) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </Paper>
+    </Box>
   );
 }

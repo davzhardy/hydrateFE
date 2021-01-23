@@ -1,8 +1,15 @@
 import React, { Fragment } from "react";
-import { Card, withStyles, Accordion } from "@material-ui/core";
+import { 
+  Card, 
+  withStyles, 
+  Accordion,
+  AccordionSummary,
+  Typography,
+} from "@material-ui/core";
 import DrinkChart from '../../../shared/d3/DrinkChart';
 import DrinkTable from './drink/PaginationTable'
 import MealTable from './meal/PaginationTable'
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const styles = theme => ({
   card: {
@@ -11,6 +18,9 @@ const styles = theme => ({
     maxWidth: '100%',
     display: 'flex',
     flexDirection: 'column',
+  },
+  accordionSummary : {
+    backgroundColor: 'green'
   },
 });
 
@@ -22,14 +32,17 @@ function DataArea (props) {
     classes } = props;
 
   return (
-    <Fragment>
-      <Card className={classes.card}>
-        {tablename === 'drink' ? <DrinkTable data = {data}/> : <MealTable data = {data}/> }
-      </Card>
+    <Accordion>
+      <AccordionSummary backgroundColor={'green'} expandIcon={<ExpandMoreIcon />}>
+        <Typography>{tablename} Information</Typography>
+      </AccordionSummary>
+      {/* <Card className={classes.card}> */}
+        {tablename === 'Drink' ? <DrinkTable data = {data}/> : <MealTable data = {data}/> }
+      {/* </Card> */}
       <Card className={classes.card}>
         <DrinkChart width={200} height={400} data={data} />
       </Card>
-    </Fragment>
+    </Accordion>
   )
 }
 

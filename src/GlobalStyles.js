@@ -36,7 +36,7 @@ const styles = theme => ({
         maxWidth: 720
       },
       [theme.breakpoints.up("lg")]: {
-        maxWidth: 1170
+        maxWidth: 900
       }
     },
     ".row": {

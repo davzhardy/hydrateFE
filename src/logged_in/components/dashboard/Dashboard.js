@@ -32,8 +32,8 @@ function Dashboard() {
           <AddMealArea UserId={UserId}/>
         </Grid>
       </Grid>
-      <DataArea data={data.data.getAllDrinks} tablename={'drink'}/>  
-      <DataArea data={data1.data.getAllMeals} tablename={'meal'}/>
+      <DataArea data={data.data.getAllDrinks} tablename={'Drink'}/>  
+      <DataArea data={data1.data.getAllMeals} tablename={'Meal'}/>
     </Fragment>
   )
 }

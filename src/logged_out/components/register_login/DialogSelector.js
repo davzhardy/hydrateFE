@@ -1,5 +1,5 @@
 import React, { useState, useCallback, Fragment } from "react";
-// import RegisterDialog from "./RegisterDialog";
+import RegisterDialog from "./RegisterDialog";
 // import TermsOfServiceDialog from "./TermsOfServiceDialog";
 import LoginDialog from "./LoginDialog";
 import ChangePasswordDialog from "./ChangePasswordDialog";
@@ -9,31 +9,31 @@ function DialogSelector(props) {
   const {
     dialogOpen,
     // openTermsDialog,
-    // openRegisterDialog,
+    openRegisterDialog,
     openLoginDialog,
     openChangePasswordDialog,
     onClose,
   } = props;
   const [loginStatus, setLoginStatus] = useState(null);
-  // const [registerStatus, setRegisterStatus] = useState(null);
+  const [registerStatus, setRegisterStatus] = useState(null);
 
   const _onClose = useCallback(() => {
     setLoginStatus(null);
-    // setRegisterStatus(null);
+    setRegisterStatus(null);
     onClose();
   }, [onClose, setLoginStatus]);
 
   const printDialog = useCallback(() => {
     switch (dialogOpen) {
-      // case "register":
-      //   return (
-      //     <RegisterDialog
-      //       onClose={_onClose}
-      //       openTermsDialog={openTermsDialog}
-      //       status={registerStatus}
-      //       setStatus={setRegisterStatus}
-      //     />
-      //   );
+      case "register":
+        return (
+          <RegisterDialog
+            onClose={_onClose}
+            // openTermsDialog={openTermsDialog}
+            status={registerStatus}
+            setStatus={setRegisterStatus}
+          />
+        );
       // case "termsOfService":
       //   return <TermsOfServiceDialog onClose={openRegisterDialog} />;
       case "login":

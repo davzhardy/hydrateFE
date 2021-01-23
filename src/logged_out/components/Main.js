@@ -51,8 +51,6 @@ function Main(props) {
       />
       <NavBar />
       <Routing />
-      <p>Registration Placeholder</p>
-      <p>Otherwise please register here</p>
       <Footer />
     </div>
   )

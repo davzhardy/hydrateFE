@@ -1,17 +1,13 @@
 import React, { Fragment } from "react";
-import { useDispatch } from 'react-redux'
 import classNames from "classnames";
 import {
-  Grid,
-  Typography,
-  Card,
-  Button,
   Box,
+  Card,
   withStyles,
   withWidth,
-  isWidthUp,
 } from "@material-ui/core";
 import WaveBorder from "../../../shared/WaveBorder";
+import HeadCard from './HeadCard'
 
 const styles = (theme) => ({
   extraLargeButtonLabel: {
@@ -33,6 +29,7 @@ const styles = (theme) => ({
     },
   },
   card: {
+    maxWidth: 900,
     boxShadow: theme.shadows[4],
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
@@ -67,12 +64,6 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.secondary.main,
     paddingBottom: theme.spacing(2),
   },
-  image: {
-    maxWidth: "100%",
-    verticalAlign: "middle",
-    borderRadius: theme.shape.borderRadius,
-    boxShadow: theme.shadows[4],
-  },
   container: {
     marginTop: theme.spacing(6),
     marginBottom: theme.spacing(12),
@@ -97,16 +88,7 @@ const styles = (theme) => ({
 });
 
 function HeadSection(props) {
-  const { classes, theme, width } = props;
-
-  const dispatch = useDispatch();
-
-  const setDialogOpen = (dialog) => {
-    dispatch({
-      type: "SET_OPEN_DIALOG",
-      payload: dialog
-    });
-  }
+  const { classes, theme } = props;
 
   return (
     <Fragment>
@@ -119,44 +101,7 @@ function HeadSection(props) {
               data-aos="zoom-in"
             >
               <div className={classNames(classes.containerFix, "container")}>
-                <Box justifyContent="space-between" className="row">
-                  <Grid item xs={12} md={5}>
-                    <Box
-                      display="flex"
-                      flexDirection="column"
-                      justifyContent="space-between"
-                      height="100%"
-                    >
-                      <Box mb={4}>
-                        <Typography
-                          variant={isWidthUp("lg", width) ? "h3" : "h4"}
-                        >
-                          Welcome to your meal and hydration logging application
-                        </Typography>
-                      </Box>
-                      <div>
-                        <Box mb={2}>
-                          <Typography
-                            variant={isWidthUp("lg", width) ? "h6" : "body1"}
-                            color="textSecondary"
-                          >
-                            Login to get started
-                          </Typography>
-                        </Box>
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          fullWidth
-                          className={classes.extraLargeButton}
-                          classes={{ label: classes.extraLargeButtonLabel }}
-                          onClick={()=>setDialogOpen('login')}
-                        >
-                          Login
-                        </Button>
-                      </div>
-                    </Box>
-                  </Grid>
-                </Box>
+                <HeadCard />
               </div>
             </Card>
           </Box>

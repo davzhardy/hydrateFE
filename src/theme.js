@@ -65,9 +65,17 @@ const theme = unstable_createMuiStrictModeTheme({
     borderWidth: borderWidth
   },
   overrides: {
+    MuiAccordionSummary: {
+      root: {
+        backgroundColor: secondary,
+        color: "white",
+        opacity: 0.8
+      }
+    },
     MuiExpansionPanel: {
       root: {
         position: "static"
+        
       }
     },
     MuiTableCell: {
