@@ -33,7 +33,7 @@ function DataArea (props) {
 
   return (
     <Accordion>
-      <AccordionSummary backgroundColor={'green'} expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography>{tablename} Information</Typography>
       </AccordionSummary>
       {/* <Card className={classes.card}> */}
