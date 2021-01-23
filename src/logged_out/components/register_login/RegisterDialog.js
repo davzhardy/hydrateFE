@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, Fragment } from "react";
+import { useDispatch } from 'react-redux'
 import {
   FormHelperText,
   TextField,
@@ -12,6 +13,8 @@ import FormDialog from "../../../shared/FormDialog";
 import HighlightedInformation from "../../../shared/HighlightedInformation";
 import ButtonCircularProgress from "../../../shared/ButtonCircularProgress";
 import VisibilityPasswordTextField from "../../../shared/VisibilityPasswordTextField";
+import { useMutation } from "react-query";
+import { endpoint, mutations, mutateOptions } from '../../../api'
 
 const styles = (theme) => ({
   link: {
@@ -32,41 +35,74 @@ const styles = (theme) => ({
 
 function RegisterDialog(props) {
   const { setStatus, theme, onClose, openTermsDialog, status, classes } = props;
-  const [isLoading, setIsLoading] = useState(false);
   const [hasTermsOfServiceError, setHasTermsOfServiceError] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const registerTermsCheckbox = useRef();
   const registerPassword = useRef();
+  const registerEmail = useRef();
+  const registerUsername = useRef();
   const registerPasswordRepeat = useRef();
+  const minimumPasswordLength = 5;
+  const dispatch = useDispatch();
 
-  const register = useCallback(() => {
+  const setDialogOpen = (dialog) => {
+    dispatch({
+      type: "SET_OPEN_DIALOG",
+      payload: dialog
+    });
+  }
+
+  const userMutation = useMutation((newUser) => 
+    fetch(endpoint, mutateOptions(newUser))
+      .then(res => res.json())
+  )
+
+  const addNewUser = () => {
+    const payload = {
+      username: registerUsername.current.value,
+      password: registerPassword.current.value,
+      email: registerEmail.current.value,
+    }
+    userMutation.mutate(mutations.CREATE_USER(payload))
+  }
+
+  const register = useCallback( () => {
     if (!registerTermsCheckbox.current.checked) {
       setHasTermsOfServiceError(true);
       return;
     }
-    if (
-      registerPassword.current.value !== registerPasswordRepeat.current.value
-    ) {
+    if (registerPassword.current.value !== registerPasswordRepeat.current.value) {
       setStatus("passwordsDontMatch");
       return;
     }
-    setStatus(null);
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    if (registerPassword.current.value.length <minimumPasswordLength) {
+      setStatus("passwordTooShort");
+      return;
+    }
+    addNewUser()
+    if (userMutation.isError) setStatus(null);
+    if (userMutation.isSuccess) {
+      // need to add logic for cehcking if email was OK etc.
+      setStatus('accountCreated')
+      setTimeout(() => {
+        setDialogOpen('login')
+      },2500)
+    }
   }, [
-    setIsLoading,
     setStatus,
     setHasTermsOfServiceError,
     registerPassword,
     registerPasswordRepeat,
     registerTermsCheckbox,
+    addNewUser,
+    userMutation.isError,
+    userMutation.isSuccess,
+    setDialogOpen,
   ]);
 
   return (
     <FormDialog
-      loading={isLoading}
+      loading={userMutation.isLoading}
       onClose={onClose}
       open
       headline="Register"
@@ -87,12 +123,23 @@ function RegisterDialog(props) {
             label="Email Address"
             autoFocus
             autoComplete="off"
+            inputRef={registerEmail}
             type="email"
             onChange={() => {
               if (status === "invalidEmail") {
                 setStatus(null);
               }
             }}
+            FormHelperTextProps={{ error: true }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Username"
+            autoComplete="off"
+            inputRef={registerUsername}
             FormHelperTextProps={{ error: true }}
           />
           <VisibilityPasswordTextField
@@ -116,7 +163,7 @@ function RegisterDialog(props) {
             }}
             helperText={(() => {
               if (status === "passwordTooShort") {
-                return "Create a password at least 6 characters long.";
+                return `Create a password at least ${minimumPasswordLength} characters long.`;
               }
               if (status === "passwordsDontMatch") {
                 return "Your passwords dont match.";
@@ -174,14 +221,14 @@ function RegisterDialog(props) {
                 I agree to the
                 <span
                   className={classes.link}
-                  onClick={isLoading ? null : openTermsDialog}
+                  onClick={userMutation.isLoading ? null : openTermsDialog}
                   tabIndex={0}
                   role="button"
                   onKeyDown={(event) => {
                     // For screenreaders listen to space and enter events
                     if (
-                      (!isLoading && event.keyCode === 13) ||
-                      event.keyCode === 32
+                      (!userMutation.isLoading && event.code === 13) ||
+                      event.code === 32
                     ) {
                       openTermsDialog();
                     }
@@ -207,8 +254,13 @@ function RegisterDialog(props) {
           )}
           {status === "accountCreated" ? (
             <HighlightedInformation>
-              We have created your account. Please click on the link in the
-              email we have sent to you before logging in.
+              We have successfully created your account. You will be redirected to the login screen shortly.
+            </HighlightedInformation>
+          ) : 
+            <Fragment />}
+          {userMutation.isError ? (
+            <HighlightedInformation>
+              There was an error, please try again.
             </HighlightedInformation>
           ) : 
             <Fragment />}
@@ -221,10 +273,10 @@ function RegisterDialog(props) {
           variant="contained"
           size="large"
           color="secondary"
-          disabled={isLoading}
+          disabled={userMutation.isLoading}
         >
           Register
-          {isLoading && <ButtonCircularProgress />}
+          {userMutation.isLoading && <ButtonCircularProgress />}
         </Button>
       }
     />

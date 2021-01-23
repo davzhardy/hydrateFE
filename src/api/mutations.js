@@ -6,11 +6,16 @@ function CREATE_USER(details) {
         password: "${details.password}", 
         email: "${details.email}", 
       ){
-        message,
+        userSuccessfullyCreated,
         token,
         status,
+        error {
+          emailTaken,
+          usernameTaken,
+        }
         userData {
-          id
+          id,
+          username,
         },
       }
     }`

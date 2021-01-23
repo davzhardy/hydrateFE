@@ -186,8 +186,8 @@ function LoginDialog(props) {
               onKeyDown={(event) => {
                 // For screenreaders listen to space and enter events
                 if (
-                  (!isLoading && event.keyCode === 13) ||
-                  event.keyCode === 32
+                  (!isLoading && event.code === 13) ||
+                  event.code === 32
                 ) {
                   openChangePasswordDialog();
                 }

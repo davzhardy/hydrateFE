@@ -9,7 +9,7 @@ function DialogSelector(props) {
   const {
     dialogOpen,
     // openTermsDialog,
-    openRegisterDialog,
+    // openRegisterDialog,
     openLoginDialog,
     openChangePasswordDialog,
     onClose,
@@ -62,9 +62,9 @@ function DialogSelector(props) {
     // openTermsDialog,
     _onClose,
     loginStatus,
-    // registerStatus,
+    registerStatus,
     setLoginStatus,
-    // setRegisterStatus,
+    setRegisterStatus,
   ]);
 
   return (
