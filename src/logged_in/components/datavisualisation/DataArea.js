@@ -6,7 +6,7 @@ import {
   AccordionSummary,
   Typography,
 } from "@material-ui/core";
-import DrinkChart from '../../../shared/d3/DrinkChart';
+// import DrinkChart from '../../../shared/d3/DrinkChart';
 import DrinkTable from './drink/PaginationTable'
 import MealTable from './meal/PaginationTable'
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -40,7 +40,7 @@ function DataArea (props) {
         {tablename === 'Drink' ? <DrinkTable data = {data}/> : <MealTable data = {data}/> }
       {/* </Card> */}
       <Card className={classes.card}>
-        <DrinkChart width={200} height={400} data={data} />
+        {/* <DrinkChart width={200} height={400} data={data} /> */}
       </Card>
     </Accordion>
   )

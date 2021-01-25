@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, rows, onRequestSort, classes } = props;
+  const { order, orderBy, columns, onRequestSort, classes } = props;
 
   const createSortHandler = useCallback(
     property => event => {
@@ -39,26 +39,26 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        {rows.map((row, index) => (
+        {columns.map((column, index) => (
           <TableCell
             key={index}
-            align={row.numeric ? "right" : "inherit"}
+            align={column.numeric ? "right" : "inherit"}
             padding="default"
-            sortDirection={orderBy === row.name ? order : false}
+            sortDirection={orderBy === column.name ? order : false}
             className={index === 0 ? classes.paddingFix : null}
           >
             {onRequestSort ? (
               <Tooltip
                 title="Sort"
-                placement={row.numeric ? "bottom-end" : "bottom-start"}
+                placement={column.numeric ? "bottom-end" : "bottom-start"}
                 enterDelay={300}
               >
                 <TableSortLabel
-                  active={orderBy === row.id}
+                  active={orderBy === column.id}
                   direction={order}
-                  onClick={createSortHandler(row.id)}
+                  onClick={createSortHandler(column.id)}
                 >
-                  <Typography variant="body2">{row.label}</Typography>
+                  <Typography variant="body2">{column.label}</Typography>
                 </TableSortLabel>
               </Tooltip>
             ) : (
@@ -66,7 +66,7 @@ function EnhancedTableHead(props) {
                 className={classNames(classes.tableSortLabel, classes.noIcon)}
               >
                 <Typography variant="body2" className={classes.label}>
-                  {row.label}
+                  {column.label}
                 </Typography>
               </TableSortLabel>
             )}
