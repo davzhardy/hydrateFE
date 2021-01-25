@@ -145,4 +145,5 @@ const potentialDrinks = [
   { drink: 'Fruit Juice' },
   { drink: 'Coffee' },
   { drink: 'Fizzy Drink' },
+  { drink: 'Ginger & Lemon Tea' },
 ];
