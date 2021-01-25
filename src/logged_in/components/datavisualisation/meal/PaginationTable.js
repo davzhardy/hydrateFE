@@ -1,8 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
-  IconButton,
-  Box,
   Paper,
   Table,
   TableBody,
@@ -11,8 +9,7 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core'
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from '@material-ui/icons/Edit';
+import TableIcons from './TableIcons'
 import getSorting from '../../../functions/getSorting'
 import columnSort from '../../../functions/columnSort'
 import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
@@ -75,29 +72,12 @@ export default function StickyHeadTable( {data} ) {
     setPage(0);
   };
 
-  const actionsJSX = (
-    <Box display="flex" justifyContent="flex-end">
-      <IconButton
-        // onClick={() => {
-        //   handleModifyTargetDialogOpen(row);
-        // }}
-        aria-label="Modify"
-        sizeSmall
-      >
-        <EditIcon />
-      </IconButton>
-      <IconButton
-        // onClick={() => {
-        //   handleDeleteTargetDialogOpen(row);
-        // }}
-        aria-label="Delete"
-      >
-        <DeleteIcon  />
-      </IconButton>
-    </Box>
+  const handleRowModification = useCallback(
+    (row) => {
+      console.log(row)
+    }, 
+    []
   )
-
-
 
   return (
     <Paper className={classes.root}>
@@ -118,7 +98,12 @@ export default function StickyHeadTable( {data} ) {
                     const value = row[column.id];
                     return (
                       <TableCell key={index} align={column.align}>
-                        {column.id === 'actions' ? actionsJSX : column.format ? column.format(value) : value}
+                        {column.id === 'actions' ? 
+                        <TableIcons 
+                          row={row} 
+                          handleRowModification={handleRowModification}
+                        /> 
+                        : column.format ? column.format(value) : value}
                       </TableCell>
                     );
                   })}
@@ -129,7 +114,7 @@ export default function StickyHeadTable( {data} ) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[15, 25, 100]}
+        rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}
