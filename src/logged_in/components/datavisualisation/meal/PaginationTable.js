@@ -10,6 +10,7 @@ import {
   TableRow
 } from '@material-ui/core'
 import TableIcons from './TableIcons'
+import ModifyDialog from './ModifyDialog'
 import getSorting from '../../../functions/getSorting'
 import columnSort from '../../../functions/columnSort'
 import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
@@ -51,6 +52,8 @@ export default function StickyHeadTable( {data} ) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState('time');
+  const [isRowModificationDialogOpen, setIsRowModificationDialogOpen] = useState(false)
+  const [selectedRow, setSelectedRow] = useState(null)
 
   const queryClient = useQueryClient()
 
@@ -85,11 +88,20 @@ export default function StickyHeadTable( {data} ) {
     setPage(0);
   };
 
+  const openRowModificationDialog = () => {
+    setIsRowModificationDialogOpen(true)
+  }
+
+  const closeRowModificationDialog = () => {
+    setIsRowModificationDialogOpen(false)
+  }
+
+
   const handleRowModification = useCallback(
     (row) => {
       const payload = {
         UserId: 1,
-        meal: ['pork', 'cows'],
+        meal: ['tape', 'cows'],
         time: row.time,
       }
       modifyMealMutation.mutate(mutations.MODIFY_MEAL(payload))
@@ -106,6 +118,12 @@ export default function StickyHeadTable( {data} ) {
 
   return (
     <Paper className={classes.root}>
+      <ModifyDialog 
+        selectedRow={selectedRow}
+        open={isRowModificationDialogOpen}
+        onClose={closeRowModificationDialog}
+        handleRowModification={handleRowModification}
+      />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <EnhancedTableHead 
@@ -126,8 +144,9 @@ export default function StickyHeadTable( {data} ) {
                         {column.id === 'actions' ? 
                         <TableIcons 
                           row={row} 
-                          handleRowModification={handleRowModification}
+                          openRowModificationDialog={openRowModificationDialog}
                           handleRowDeletion={handleRowDeletion}
+                          setSelectedRow={setSelectedRow}
                         /> 
                         : column.format ? column.format(value) : value}
                       </TableCell>

@@ -10,15 +10,17 @@ function TableIcons(props) {
 
   const {
     row,
-    handleRowModification,
-    handleRowDeletion
+    openRowModificationDialog,
+    handleRowDeletion,
+    setSelectedRow
   } = props
   
   return (
     <Box display="flex" justifyContent="flex-end">
       <IconButton
         onClick={() => {
-          handleRowModification(row)
+          setSelectedRow(row)
+          openRowModificationDialog()
         }}
         aria-label="Modify"
       >
