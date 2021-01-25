@@ -10,7 +10,8 @@ function TableIcons(props) {
 
   const {
     row,
-    handleRowModification
+    handleRowModification,
+    handleRowDeletion
   } = props
   
   return (
@@ -24,9 +25,9 @@ function TableIcons(props) {
         <EditIcon />
       </IconButton>
       <IconButton
-        // onClick={() => {
-        //   handleDeleteTargetDialogOpen(row);
-        // }}
+        onClick={() => {
+          handleRowDeletion(row);
+        }}
         aria-label="Delete"
       >
         <DeleteIcon  />

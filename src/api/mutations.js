@@ -63,8 +63,27 @@ function POST_MEAL(details) {
   }
 };
 
+function MODIFY_MEAL(details) {
+  const newMeal = details.meal.map(item => `"${item}"`)
+  return  {
+    query: `mutation {
+      modifyMeal(
+        UserId: ${details.UserId}, 
+        meal: [${newMeal}], 
+        time: "${details.time}"
+      ){
+        mealUpdated,
+        meal {
+          meal
+        }
+      }
+    }`
+  }
+}; 
+
 export {
   CREATE_USER,
   POST_DRINK,
   POST_MEAL,
+  MODIFY_MEAL,
 }

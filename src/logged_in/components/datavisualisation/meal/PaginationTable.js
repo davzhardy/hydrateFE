@@ -13,6 +13,8 @@ import TableIcons from './TableIcons'
 import getSorting from '../../../functions/getSorting'
 import columnSort from '../../../functions/columnSort'
 import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
+import { useMutation, useQueryClient } from "react-query";
+import { endpoint, mutations, mutateOptions } from '../../../../api'
 
 const columns = [
   { id: 'time', label: 'Date', minWidth: 50, numeric: false,
@@ -50,6 +52,17 @@ export default function StickyHeadTable( {data} ) {
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState('time');
 
+  const queryClient = useQueryClient()
+
+  const modifyMealMutation = useMutation((modifyMeal) => 
+  fetch(endpoint, mutateOptions(modifyMeal))
+    .then(res => res.json())
+    ,
+  {
+    onSuccess: () => queryClient.invalidateQueries('meals') // note this needs to be consistent with the useQuery 
+  }
+)
+
   const handleRequestSort = useCallback(
     (__, property) => {
       const _orderBy = property;
@@ -73,6 +86,18 @@ export default function StickyHeadTable( {data} ) {
   };
 
   const handleRowModification = useCallback(
+    (row) => {
+      const payload = {
+        UserId: 1,
+        meal: ['pork', 'cows'],
+        time: row.time,
+      }
+      modifyMealMutation.mutate(mutations.MODIFY_MEAL(payload))
+    }, 
+    [modifyMealMutation]
+  )
+
+  const handleRowDeletion = useCallback(
     (row) => {
       console.log(row)
     }, 
@@ -102,6 +127,7 @@ export default function StickyHeadTable( {data} ) {
                         <TableIcons 
                           row={row} 
                           handleRowModification={handleRowModification}
+                          handleRowDeletion={handleRowDeletion}
                         /> 
                         : column.format ? column.format(value) : value}
                       </TableCell>
