@@ -1,24 +1,20 @@
 import React, { Fragment } from "react";
 import FormDialog from '../../../../shared/FormDialog'
+import { 
+  Typography
+} from '@material-ui/core'
 import ButtonCircularProgress from "../../../../shared/ButtonCircularProgress";
 import {
   Button,
 } from "@material-ui/core";
-import MealInputs from '../../meal/MealInputs'
 
 function ModifyDialog(props) {
 
   const {
     selectedRow,
     open,
-    handleRowModification,
+    handleRowDeletion,
     onClose,
-    description,
-    setDescription,
-    mealValue,
-    setMealValue,
-    time,
-    setTime,
     isLoading
   } = props
  
@@ -30,19 +26,18 @@ function ModifyDialog(props) {
         loading={isLoading}
         onFormSubmit={(e) => {
           e.preventDefault();
-          handleRowModification(selectedRow, mealValue)
+          handleRowDeletion(selectedRow)
           onClose()
         }}
         hideBackdrop
-        headline="Modify your meal"
-        content={<MealInputs 
-          description={description}
-          setDescription={setDescription}
-          mealValue={mealValue}
-          setMealValue={setMealValue}
-          time={time}
-          setTime={setTime}
-        />}
+        headline="Delete a meal"
+        content={
+          <Fragment>
+            <Typography>
+              Are you sure you want to delete this meal?
+            </Typography>
+          </Fragment>
+        }
         actions={
           <Fragment>
             <Button
@@ -53,7 +48,7 @@ function ModifyDialog(props) {
               disabled={isLoading}
               size="large"
             >
-              Modify
+              Delete
               {isLoading && <ButtonCircularProgress />}
             </Button>
           </Fragment>

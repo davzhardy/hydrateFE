@@ -7,6 +7,9 @@ import {
   withStyles,
 } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu'
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import ImageIcon from "@material-ui/icons/Image";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
 const styles = (theme) => ({
   appBar: {
@@ -45,10 +48,58 @@ const styles = (theme) => ({
   },
 });
 
-
 function Navbar(props) {
 
-  const { classes } = props;
+  const { 
+    selectedTab,
+    classes
+  } = props;
+
+  const menuItems = [
+    {
+      link: "/a/dashboard",
+      name: "Dashboard",
+      // onClick: closeMobileDrawer,
+      icon: {
+        desktop: (
+          <DashboardIcon
+            className={
+              selectedTab === "Dashboard" ? classes.textPrimary : "text-white"
+            }
+            fontSize="small"
+          />
+        ),
+        mobile: <DashboardIcon className="text-white" />,
+      },
+    },
+    {
+      link: "/a/graphs",
+      name: "Graphs",
+      // onClick: closeMobileDrawer,
+      icon: {
+        desktop: (
+          <ImageIcon
+            className={
+              selectedTab === "Posts" ? classes.textPrimary : "text-white"
+            }
+            fontSize="small"
+          />
+        ),
+        mobile: <ImageIcon className="text-white" />,
+      },
+    },
+    {
+      link: "/",
+      name: "Logout",
+      icon: {
+        desktop: (
+          <PowerSettingsNewIcon className="text-white" fontSize="small" />
+        ),
+        mobile: <PowerSettingsNewIcon className="text-white" />,
+      },
+    },
+  ];
+  
 
   return (
     <AppBar position="sticky" className={classes.appBar}>
@@ -57,16 +108,13 @@ function Navbar(props) {
           <IconButton> 
             <MenuIcon/>
           </IconButton>
-          <Typography variant="h6" color="primary">
-            Menu
-          </Typography>
         </div>
         <div>
           <Typography variant="h6" color="primary">
-            Drinks
+            Graphs
           </Typography>
           <Typography variant="h6" color="primary">
-            Meals
+            Add Event
           </Typography>
         </div>
       </Toolbar>

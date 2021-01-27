@@ -7,8 +7,7 @@ import {
   withStyles
 } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
-import MealInput from './MealInput';
-import TextFieldInput from '../../../shared/TextFieldInput';
+import MealInputs from './MealInputs'
 import currentTime from '../../functions/currentTime'
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../api'
@@ -49,7 +48,11 @@ const styles = theme => ({
 
 function AddMealArea(props) {
 
-  const { UserId, classes } = props;
+  const { 
+    UserId,
+    classes
+  } = props;
+  
   const date = currentTime();
 
   const [description, setDescription] = useState('');
@@ -95,33 +98,19 @@ function AddMealArea(props) {
           className={classes.button}
         >
           <Typography>
-            Add Meal
+            Add meal
           </Typography>
         </Button>
       </Box>
       <Box className={classes.boxB}>
-        <MealInput 
-          defaultValue={description}
-          stateSetting = {setDescription}
+        <MealInputs 
+          description={description}
+          setDescription={setDescription}
+          mealValue={mealValue}
+          setMealValue={setMealValue}
+          time={time}
+          setTime={setTime}
         />
-        <TextFieldInput
-          id={'meals'}
-          label={'Meal'}
-          multiline={true}
-          rows={2}
-          defaultValue={mealValue}
-          stateSetting = {setMealValue}
-          helperText={'Separate each dish with a comma or an enter'}
-          variant={'standard'}
-        />
-        <TextFieldInput
-          id={'time-of-meal'}
-          label={'Time'}
-          defaultValue={time}
-          stateSetting = {setTime}
-          type={'datetime-local'}
-          variant={'standard'}
-      />
       </Box>
     </Card>
   )

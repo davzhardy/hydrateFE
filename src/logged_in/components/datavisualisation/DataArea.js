@@ -29,6 +29,7 @@ function DataArea (props) {
   const { 
     data,
     tablename,
+    UserId,
     classes } = props;
 
   return (
@@ -37,7 +38,7 @@ function DataArea (props) {
         <Typography>{tablename} Information</Typography>
       </AccordionSummary>
       {/* <Card className={classes.card}> */}
-        {tablename === 'Drink' ? <DrinkTable data = {data}/> : <MealTable data = {data}/> }
+        {tablename === 'Drink' ? <DrinkTable data = {data}/> : <MealTable data={data} UserId={UserId}/> }
       {/* </Card> */}
       <Card className={classes.card}>
         {/* <DrinkChart width={200} height={400} data={data} /> */}

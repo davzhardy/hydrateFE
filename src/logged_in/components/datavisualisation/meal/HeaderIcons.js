@@ -3,10 +3,10 @@ import {
   IconButton,
   Box,
 } from '@material-ui/core'
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from '@material-ui/icons/Edit';
+import DownloadIcon from "@material-ui/icons/CloudDownload";
+import SearchIcon from '@material-ui/icons/Search';
 
-function TableIcons(props) {
+function HeaderIcons(props) {
 
   const {
     row,
@@ -30,7 +30,7 @@ function TableIcons(props) {
         }}
         aria-label="Modify"
       >
-        <EditIcon />
+        <DownloadIcon />
       </IconButton>
       <IconButton
         onClick={() => {
@@ -42,10 +42,10 @@ function TableIcons(props) {
         }}
         aria-label="Delete"
       >
-        <DeleteIcon  />
+        <SearchIcon  />
       </IconButton>
     </Box>
   )
 }
 
-export default TableIcons;
+export default HeaderIcons;

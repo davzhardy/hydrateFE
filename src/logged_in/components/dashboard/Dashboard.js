@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 import AddDrinkArea from "../drink/AddDrinkArea"
 import AddMealArea from "../meal/AddMealArea"
 import DataArea from "../datavisualisation/DataArea"
+import MealGraph from '../graphs/MealGraphs'
+import Legend from '../graphs/Legend'
 import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
 
@@ -33,7 +35,13 @@ function Dashboard() {
         </Grid>
       </Grid>
       <DataArea data={data.data.getAllDrinks} tablename={'Drink'}/>  
-      <DataArea data={data1.data.getAllMeals} tablename={'Meal'}/>
+      <DataArea 
+        data={data1.data.getAllMeals} 
+        UserId={UserId}
+        tablename={'Meal'}
+      />
+      <MealGraph/>
+      <Legend/>
     </Fragment>
   )
 }

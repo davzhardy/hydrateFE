@@ -79,6 +79,21 @@ function MODIFY_MEAL(details) {
       }
     }`
   }
+};
+
+function DELETE_MEAL(details) {
+  const oldMeal = details.meal.map(item => `"${item}"`)
+  return  {
+    query: `mutation {
+      deleteMeal(
+        UserId: ${details.UserId}, 
+        meal: [${oldMeal}], 
+        time: "${details.time}"
+      ){
+        mealDeleted,
+      }
+    }`
+  }
 }; 
 
 export {
@@ -86,4 +101,5 @@ export {
   POST_DRINK,
   POST_MEAL,
   MODIFY_MEAL,
+  DELETE_MEAL,
 }

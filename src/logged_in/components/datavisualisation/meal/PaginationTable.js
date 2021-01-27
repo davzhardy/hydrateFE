@@ -10,7 +10,10 @@ import {
   TableRow
 } from '@material-ui/core'
 import TableIcons from './TableIcons'
+import HeaderIcons from './HeaderIcons'
+import TableToolbar from './TableToolbar'
 import ModifyDialog from './ModifyDialog'
+import DeleteDialog from './DeleteDialog'
 import getSorting from '../../../functions/getSorting'
 import columnSort from '../../../functions/columnSort'
 import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
@@ -46,25 +49,39 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable( {data} ) {
+export default function StickyHeadTable( { data, UserId } ) {
+
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState('time');
   const [isRowModificationDialogOpen, setIsRowModificationDialogOpen] = useState(false)
-  const [selectedRow, setSelectedRow] = useState(null)
+  const [isRowDeletionDialogOpen, setIsRowDeletionDialogOpen] = useState(false)
+  const [selectedRow, setSelectedRow] = useState([])
+  const [description, setDescription] = useState('');
+  const [mealValue, setMealValue] = useState('');
+  const [time, setTime] = useState('');
 
   const queryClient = useQueryClient()
 
   const modifyMealMutation = useMutation((modifyMeal) => 
-  fetch(endpoint, mutateOptions(modifyMeal))
-    .then(res => res.json())
-    ,
-  {
-    onSuccess: () => queryClient.invalidateQueries('meals') // note this needs to be consistent with the useQuery 
-  }
-)
+    fetch(endpoint, mutateOptions(modifyMeal))
+      .then(res => res.json())
+      ,
+    {
+      onSuccess: () => queryClient.invalidateQueries('meals') // note this needs to be consistent with the useQuery 
+    }
+  )
+
+  const deleteMealMutation = useMutation((deleteMeal) => 
+    fetch(endpoint, mutateOptions(deleteMeal))
+      .then(res => res.json())
+      ,
+    {
+      onSuccess: () => queryClient.invalidateQueries('meals') // note this needs to be consistent with the useQuery 
+    }
+  )
 
   const handleRequestSort = useCallback(
     (__, property) => {
@@ -92,28 +109,41 @@ export default function StickyHeadTable( {data} ) {
     setIsRowModificationDialogOpen(true)
   }
 
+  const openRowDeletionDialog = () => {
+    setIsRowDeletionDialogOpen(true)
+  }
+
   const closeRowModificationDialog = () => {
     setIsRowModificationDialogOpen(false)
   }
 
+  const closeRowDeletionDialog = () => {
+    setIsRowDeletionDialogOpen(false)
+  } 
 
   const handleRowModification = useCallback(
-    (row) => {
+    (oldRow, newMeal) => {
+      const regex = /(,|\n)/g
       const payload = {
-        UserId: 1,
-        meal: ['tape', 'cows'],
-        time: row.time,
+        UserId: UserId,
+        meal: newMeal.replace(regex,',').split(','),
+        time: oldRow.time,
       }
       modifyMealMutation.mutate(mutations.MODIFY_MEAL(payload))
     }, 
-    [modifyMealMutation]
+    [modifyMealMutation, UserId]
   )
 
   const handleRowDeletion = useCallback(
-    (row) => {
-      console.log(row)
+    (oldRow) => {
+      const payload = {
+        UserId: UserId,
+        meal: oldRow.meal,
+        time: oldRow.time,
+      }
+      deleteMealMutation.mutate(mutations.DELETE_MEAL(payload))
     }, 
-    []
+    [deleteMealMutation, UserId]
   )
 
   return (
@@ -123,6 +153,23 @@ export default function StickyHeadTable( {data} ) {
         open={isRowModificationDialogOpen}
         onClose={closeRowModificationDialog}
         handleRowModification={handleRowModification}
+        description={description}
+        setDescription={setDescription}
+        mealValue={mealValue}
+        setMealValue={setMealValue}
+        time={time}
+        setTime={setTime}
+        isLoading={modifyMealMutation.isLoading}
+      />
+      <DeleteDialog
+        selectedRow={selectedRow}
+        open={isRowDeletionDialogOpen}
+        onClose={closeRowDeletionDialog}
+        handleRowDeletion={handleRowDeletion}
+        isLoading={modifyMealMutation.isLoading}
+      />
+      <TableToolbar
+        component={<HeaderIcons/>}
       />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
@@ -145,8 +192,11 @@ export default function StickyHeadTable( {data} ) {
                         <TableIcons 
                           row={row} 
                           openRowModificationDialog={openRowModificationDialog}
-                          handleRowDeletion={handleRowDeletion}
+                          openRowDeletionDialog={openRowDeletionDialog}
                           setSelectedRow={setSelectedRow}
+                          setDescription={setDescription}
+                          setMealValue={setMealValue}
+                          setTime={setTime}
                         /> 
                         : column.format ? column.format(value) : value}
                       </TableCell>
