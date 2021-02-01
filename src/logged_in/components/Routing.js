@@ -44,6 +44,7 @@ function Routing(props) {
   const {
     selectDashboard,
     selectGraphs,
+    userInfo,
     classes
   } = props;
 
@@ -73,6 +74,7 @@ function Routing(props) {
           // setTargets={setTargets}
           // isAccountActivated={isAccountActivated}
           selectDashboard={selectDashboard}
+          userInfo={userInfo}
         />
       </Switch>
     </div>

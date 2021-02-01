@@ -8,11 +8,11 @@ import DataArea from "../datavisualisation/DataArea"
 import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
 
-function Dashboard( { selectDashboard }) {
+function Dashboard( { selectDashboard, userInfo }) {
 
   useEffect(selectDashboard, [selectDashboard]);
 
-  const UserId = useSelector((state) => state.user.UserId);
+  const UserId = userInfo.UserId;
 
   const { data, status } = useQuery(
     "drinks", 

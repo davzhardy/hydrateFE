@@ -53,6 +53,13 @@ function LoginDialog(props) {
   const loginPassword = useRef();
   const dispatch = useDispatch()
 
+  const setDialogOpen = (dialog) => {
+    dispatch({
+      type: "SET_OPEN_DIALOG",
+      payload: dialog
+    });
+  }
+
   const login = useCallback( async () => {
     setIsLoading(true);
     setStatus(null);
@@ -72,6 +79,8 @@ function LoginDialog(props) {
         payload: payload
       })
       history.push("/a/dashboard");
+      setDialogOpen(null);
+
     }
   }, [setIsLoading, loginEmail, dispatch, loginPassword, history, setStatus]);
 

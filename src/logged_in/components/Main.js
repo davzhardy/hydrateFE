@@ -1,9 +1,20 @@
 import React, { useState } from "react";
+import { useSelector } from 'react-redux'
 import Navbar from "./navigation/Navbar";
 import Routing from "./Routing";
 import smoothScrollTop from '../../shared/smoothScrollTop'
 
 function Main() {
+
+  const userInfo = {
+    UserId: null,
+    username: ''
+  }
+
+  userInfo.UserId = useSelector((state) => state.user.UserId);
+  userInfo.username = useSelector((state) => state.user.username);
+
+  userInfo.username = userInfo.username.charAt(0).toUpperCase() + userInfo.username.slice(1)
 
   const [selectedTab, setSelectedTab] = useState(null);
 
@@ -21,11 +32,14 @@ function Main() {
 
   return (
     <>
-      <Navbar selectedTab={selectedTab}/>
+      <Navbar 
+        selectedTab={selectedTab}
+        userInfo={userInfo}
+      />
       <Routing 
         selectDashboard={selectDashboard}
         selectGraphs={selectGraphs}
-
+        userInfo={userInfo}
       />
     </>
   );
