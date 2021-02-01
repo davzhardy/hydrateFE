@@ -6,6 +6,7 @@ function MealInputs(props) {
 
   const {
     description,
+    potentialMeals,
     setDescription,
     mealValue,
     setMealValue,
@@ -18,6 +19,7 @@ function MealInputs(props) {
         <MealAutocomplete 
           defaultValue={description}
           stateSetting = {setDescription}
+          potentialMeals={potentialMeals}
         />
         <TextFieldInput
           id={'meals'}

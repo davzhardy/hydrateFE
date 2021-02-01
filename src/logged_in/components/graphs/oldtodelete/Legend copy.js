@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-import { useD3 } from '../../functions/useD3'
+import { useD3 } from '../../../functions/useD3'
 import { colorLegend } from "./colorLegend.js";
 import { sizeLegend } from "./sizeLegend.js";
 import data from './data.json'

@@ -21,6 +21,7 @@ export default function MealAutocomplete(props) {
   const {
     stateSetting,
     defaultValue,
+    potentialMeals,
   } = props
 
   const [open, toggleOpen] = useState(false);
@@ -137,10 +138,3 @@ export default function MealAutocomplete(props) {
     </Grid>
   );
 }
-
-const potentialMeals = [
-  { meal: 'Breakfast' },
-  { meal: 'Lunch' },
-  { meal: 'Dinner' },
-  { meal: 'Snack' },
-];

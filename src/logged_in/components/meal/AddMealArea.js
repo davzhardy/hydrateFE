@@ -50,6 +50,7 @@ function AddMealArea(props) {
 
   const { 
     UserId,
+    potentialMeals,
     classes
   } = props;
   
@@ -104,6 +105,7 @@ function AddMealArea(props) {
       </Box>
       <Box className={classes.boxB}>
         <MealInputs 
+          potentialMeals={potentialMeals}
           description={description}
           setDescription={setDescription}
           mealValue={mealValue}
