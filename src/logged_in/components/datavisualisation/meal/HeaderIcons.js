@@ -2,6 +2,7 @@ import React from "react";
 import { 
   IconButton,
   Box,
+  Tooltip
 } from '@material-ui/core'
 import DownloadIcon from "@material-ui/icons/CloudDownload";
 import SearchIcon from '@material-ui/icons/Search';
@@ -54,14 +55,18 @@ function HeaderIcons(props) {
   
   return (
     <Box display="flex" justifyContent="flex-end">
-      <IconButton
-        onClick={() => {
-          download(csvData)
-        }}
-        aria-label="Download"
+      <Tooltip
+        title='Download CSV' arrow
       >
-        <DownloadIcon />
-      </IconButton>
+        <IconButton
+          onClick={() => {
+            download(csvData)
+          }}
+          aria-label="Download"
+        >
+          <DownloadIcon />
+        </IconButton>
+      </Tooltip>
       <IconButton
         onClick={() => {
           setSelectedRow(row)
