@@ -3,6 +3,7 @@ import PropsRoute from "../../shared/PropsRoutes";
 import { Switch } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import Dashboard from "./dashboard/Dashboard";
+import Graphs from './graphs/Graphs';
 
 const styles = (theme) => ({
   wrapper: {
@@ -47,26 +48,18 @@ function Routing(props) {
   return (
     <div className={classes.wrapper}>
       <Switch>
-        {/* <PropsRoute
-          path="/c/posts"
-          component={Posts}
-          EmojiTextArea={EmojiTextArea}
-          ImageCropper={ImageCropper}
-          Dropzone={Dropzone}
-          DateTimePicker={DateTimePicker}
-          pushMessageToSnackbar={pushMessageToSnackbar}
-          posts={posts}
-          setPosts={setPosts}
-          selectPosts={selectPosts}
-        />
         <PropsRoute
-          path="/c/subscription"
-          component={Subscription}
-          transactions={transactions}
-          pushMessageToSnackbar={pushMessageToSnackbar}
-          selectSubscription={selectSubscription}
-          openAddBalanceDialog={openAddBalanceDialog}
-        /> */}
+          path="/a/graphs"
+          component={Graphs}
+          // EmojiTextArea={EmojiTextArea}
+          // ImageCropper={ImageCropper}
+          // Dropzone={Dropzone}
+          // DateTimePicker={DateTimePicker}
+          // pushMessageToSnackbar={pushMessageToSnackbar}
+          // posts={posts}
+          // setPosts={setPosts}
+          // selectPosts={selectPosts}
+        />
         <PropsRoute
           path=""
           component={Dashboard}

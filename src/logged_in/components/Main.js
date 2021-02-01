@@ -5,7 +5,7 @@ import Routing from "./Routing";
 function Main() {
   return (
     <>
-      <Navbar />
+      <Navbar selectedTab={"Graphs"}/>
       <Routing />
     </>
   );

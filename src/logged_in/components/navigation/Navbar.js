@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
+  Tooltip,
   withStyles,
 } from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu'
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ImageIcon from "@material-ui/icons/Image";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
@@ -41,10 +42,14 @@ const styles = (theme) => ({
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
     },
-  menuWrapper: {
-    display: "flex",
-    flexDirection: 'row',
-  },
+    brandText: {
+      fontFamily: "'Baloo Bhaijaan', cursive",
+      fontWeight: 400
+    },
+    menuLink: {
+      textDecoration: "none",
+      color: theme.palette.text.primary,
+    },
   },
 });
 
@@ -55,37 +60,56 @@ function Navbar(props) {
     classes
   } = props;
 
+
+  const links = useRef([]);
+
   const menuItems = [
     {
       link: "/a/dashboard",
       name: "Dashboard",
-      // onClick: closeMobileDrawer,
       icon: {
         desktop: (
           <DashboardIcon
-            className={
-              selectedTab === "Dashboard" ? classes.textPrimary : "text-white"
+            color={
+              selectedTab === "Dashboard" ? "secondary" : "primary"
             }
-            fontSize="small"
+            fontSize={
+              selectedTab === "Dashboard" ? "large" : "medium"
+            }
           />
         ),
-        mobile: <DashboardIcon className="text-white" />,
+        mobile: (
+          <DashboardIcon
+            color={
+              selectedTab === "Dashboard" ? "secondary" : "primary"
+            }
+            fontSize="medium"
+          />
+        ),
       },
     },
     {
       link: "/a/graphs",
       name: "Graphs",
-      // onClick: closeMobileDrawer,
       icon: {
         desktop: (
           <ImageIcon
-            className={
-              selectedTab === "Posts" ? classes.textPrimary : "text-white"
+             color={
+              selectedTab === "Graphs" ? "secondary" : "primary"
             }
-            fontSize="small"
+            fontSize={
+              selectedTab === "Graphs" ? "large" : "medium"
+            }
           />
         ),
-        mobile: <ImageIcon className="text-white" />,
+        mobile: (
+          <ImageIcon
+             color={
+              selectedTab === "Graphs" ? "secondary" : "primary"
+            }
+            fontSize="medium"
+          />
+        ),
       },
     },
     {
@@ -93,32 +117,76 @@ function Navbar(props) {
       name: "Logout",
       icon: {
         desktop: (
-          <PowerSettingsNewIcon className="text-white" fontSize="small" />
+          <PowerSettingsNewIcon color="primary" fontSize="medium" />
         ),
-        mobile: <PowerSettingsNewIcon className="text-white" />,
+        mobile: <PowerSettingsNewIcon color="primary" fontSize="medium" />,
       },
     },
   ];
   
 
   return (
-    <AppBar position="sticky" className={classes.appBar}>
-      <Toolbar className={classes.appBarToolbar}>
-        <div className={classes.menuWrapper}>
-          <IconButton> 
-            <MenuIcon/>
-          </IconButton>
-        </div>
-        <div>
-          <Typography variant="h6" color="primary">
-            Graphs
-          </Typography>
-          <Typography variant="h6" color="primary">
-            Add Event
-          </Typography>
-        </div>
-      </Toolbar>
-    </AppBar>
+    <div className={classes.root}>
+      <AppBar position="sticky" className={classes.appBar}>
+        <Toolbar className={classes.appBarToolbar}>
+          <div>
+            <Typography
+                variant="h4"
+                className={classes.brandText}
+                display="inline"
+                color="primary"
+              >
+                Dr
+              </Typography>
+              <Typography
+                variant="h4"
+                className={classes.brandText}
+                display="inline"
+                color="secondary"
+              >
+                Ink
+              </Typography>
+          </div>
+          <div>
+          Hello
+              {menuItems.map((element, index) => (
+                <Link
+                  to={element.link}
+                  className={classes.menuLink}
+                  onClick={element.onClick}
+                  key={index}
+                  ref={(node) => {
+                    links.current[index] = node;
+                  }}
+                >
+                  <Tooltip
+                    title={element.name}
+                    placement="bottom"
+                    key={element.name}
+                  >
+                    <IconButton
+                      selected={selectedTab === element.name}
+                      className={classes.menuButton}
+                      color="secondary"
+                      button
+                      onClick={() => {
+                        links.current[index].click();
+                      }}
+                      aria-label={
+                        element.name === "Logout"
+                          ? "Logout"
+                          : `Go to ${element.name}`
+                      }
+                    >
+                      {element.icon.desktop}
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+              ))}
+            </div>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 

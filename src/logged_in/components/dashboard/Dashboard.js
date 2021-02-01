@@ -110,8 +110,6 @@ function Dashboard() {
         UserId={UserId}
         tablename={'Meal'}
       />
-      {/* <CirclePack data={outputFormat}/> */}
-      <Test data={outputFormat}/>
     </Fragment>
   )}
 
