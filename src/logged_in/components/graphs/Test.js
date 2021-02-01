@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-import data from './data.json'
-import { uid } from 'react-uid'
 
 function Test({data}) {
 
@@ -11,7 +9,6 @@ function Test({data}) {
     
     const height = 975
     const width = height
-    const format = d3.format(",d")
     const color = d3.scaleSequential([8, 0], d3.interpolateMagma)
     
     const pack = data => d3.pack()
@@ -43,9 +40,7 @@ function Test({data}) {
         .on("mouseover", function() { d3.select(this).attr("stroke", "#000"); })
         .on("mouseout", function() { d3.select(this).attr("stroke", null); })
         .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
-
-    console.log(root)
-  
+ 
     const label = svg.append("g")
         .style("font", "15px sans-serif")
         .attr("pointer-events", "none")
@@ -69,9 +64,7 @@ function Test({data}) {
       node.attr("r", d => d.r * k);
     }
   
-    function zoom(event, d) {
-      const focus0 = focus;
-  
+    function zoom(event, d) {  
       focus = d;
   
       const transition = svg.transition()
@@ -90,7 +83,7 @@ function Test({data}) {
     }
   
 
-  },[])
+  },[data])
 
 
   return (

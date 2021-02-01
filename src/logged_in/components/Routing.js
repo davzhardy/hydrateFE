@@ -42,6 +42,8 @@ const styles = (theme) => ({
 
 function Routing(props) {
   const {
+    selectDashboard,
+    selectGraphs,
     classes
   } = props;
 
@@ -58,7 +60,7 @@ function Routing(props) {
           // pushMessageToSnackbar={pushMessageToSnackbar}
           // posts={posts}
           // setPosts={setPosts}
-          // selectPosts={selectPosts}
+          selectGraphs={selectGraphs}
         />
         <PropsRoute
           path=""
@@ -70,7 +72,7 @@ function Routing(props) {
           // targets={targets}
           // setTargets={setTargets}
           // isAccountActivated={isAccountActivated}
-          // selectDashboard={selectDashboard}
+          selectDashboard={selectDashboard}
         />
       </Switch>
     </div>

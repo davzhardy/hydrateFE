@@ -1,9 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSelector } from 'react-redux'
 import Test from './Test'
 import { useQueryClient } from "react-query";
 
-function Graphs() {
+function Graphs( { selectGraphs } ) {
+
+  useEffect(selectGraphs, [selectGraphs]);
+
 
   const queryClient = useQueryClient()
   const mealsData = queryClient.getQueryData('meals')
