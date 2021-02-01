@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
   Paper,
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    overflow: "hidden",
   },
 });
 
@@ -147,7 +147,7 @@ export default function StickyHeadTable( { data, UserId } ) {
   )
 
   return (
-    <Paper className={classes.root}>
+    <Fragment>
       <ModifyDialog 
         selectedRow={selectedRow}
         open={isRowModificationDialogOpen}
@@ -217,6 +217,6 @@ export default function StickyHeadTable( { data, UserId } ) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </Paper>
+    </Fragment>
   );
 }

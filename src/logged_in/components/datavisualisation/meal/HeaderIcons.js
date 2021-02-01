@@ -56,7 +56,7 @@ function HeaderIcons(props) {
   return (
     <Box display="flex" justifyContent="flex-end">
       <Tooltip
-        title='Download CSV' arrow
+        title='Download CSV Data' arrow
       >
         <IconButton
           onClick={() => {
@@ -67,18 +67,22 @@ function HeaderIcons(props) {
           <DownloadIcon />
         </IconButton>
       </Tooltip>
-      <IconButton
-        onClick={() => {
-          setSelectedRow(row)
-          setDescription(row.description)
-          setMealValue(row.meal)
-          setTime(row.time)
-          openRowDeletionDialog()
-        }}
-        aria-label="Search"
+      <Tooltip
+        title='Search' arrow
       >
-        <SearchIcon  />
-      </IconButton>
+        <IconButton
+          onClick={() => {
+            setSelectedRow(row)
+            setDescription(row.description)
+            setMealValue(row.meal)
+            setTime(row.time)
+            openRowDeletionDialog()
+          }}
+          aria-label="Search"
+        >
+          <SearchIcon  />
+        </IconButton>
+      </Tooltip>
     </Box>
   )
 }
