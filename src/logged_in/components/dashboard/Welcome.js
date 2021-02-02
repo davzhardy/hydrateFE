@@ -12,45 +12,7 @@ import {
 import Emoji from '../../../shared/Emoji'
 
 const styles = theme => ({
-  appBar: {
-    boxShadow: theme.shadows[6],
-    backgroundColor: theme.palette.common.white,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
-      marginLeft: 0,
-    },
-  },
-  appBarToolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    [theme.breakpoints.up("sm")]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-    },
-    [theme.breakpoints.up("md")]: {
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
-    },
-    [theme.breakpoints.up("lg")]: {
-      paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4),
-    },
-  },
-  brandText: {
-    fontFamily: "'Baloo Bhaijaan', cursive",
-    fontWeight: 400,
-    cursor: 'default'
-  },
-  menuLink: {
-    textDecoration: "none",
-    color: theme.palette.text.primary,
-  },
+
   welcome: {
     cursor: 'default'
   }
@@ -64,7 +26,7 @@ function Welcome(props) {
   } = props;
 
   return (
-    <div className={classes.root}>
+    <div>
       <Box
         display="flex"
         flexDirection='row'

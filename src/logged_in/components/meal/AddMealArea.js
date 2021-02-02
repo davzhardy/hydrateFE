@@ -14,7 +14,7 @@ import { endpoint, mutations, mutateOptions } from '../../../api'
 
 const styles = theme => ({
   card: {
-    borderRadius: 15,
+    borderRadius: 5,
     margin: 10,
     width: '100%',
     maxWidth: '100%',
