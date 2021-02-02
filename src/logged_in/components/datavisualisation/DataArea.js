@@ -35,7 +35,7 @@ function DataArea (props) {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>{tablename} Information</Typography>
+        <Typography>{tablename} History</Typography>
       </AccordionSummary>
       {/* <Card className={classes.card}> */}
         {tablename === 'Drink' ? <DrinkTable data = {data}/> : <MealTable data={data} UserId={UserId}/> }

@@ -156,6 +156,12 @@ const theme = unstable_createMuiStrictModeTheme({
         '@font-face': [cabin],
       },
     },
+    MuiFormControlLabel: {
+      root: {
+        marginLeft: 10,
+        marginRight: 10
+      }
+    },
   },
 });
 

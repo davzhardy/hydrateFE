@@ -196,7 +196,6 @@ function Navbar(props) {
                     selected={selectedTab === element.name}
                     className={classes.menuButton}
                     color="secondary"
-                    button
                     onClick={() => {
                       links.current[index].click();
                     }}

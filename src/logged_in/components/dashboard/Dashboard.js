@@ -11,7 +11,6 @@ import { endpoint, queries, getOptions } from '../../../api'
 function Dashboard( { selectDashboard, userInfo }) {
 
   useEffect(selectDashboard, [selectDashboard]);
-
   const UserId = userInfo.UserId;
 
   const { data, status } = useQuery(
