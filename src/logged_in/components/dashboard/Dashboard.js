@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import { Grid } from '@material-ui/core'
-import { useSelector } from 'react-redux'
+import Welcome from './Welcome'
 import AddDrinkArea from "../drink/AddDrinkArea"
 import AddMealArea from "../meal/AddMealArea"
 import DataArea from "../datavisualisation/DataArea"
-
 import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
 
@@ -53,6 +52,7 @@ function Dashboard( { selectDashboard, userInfo }) {
     return (
     
     <Fragment>
+      <Welcome userInfo={userInfo}/>
       <Grid container spacing ={6} style={{marginBottom: 15}}>
         <Grid item xs={12} sm={6} style={{display: 'flex'}}>
           <AddDrinkArea UserId={UserId}/>

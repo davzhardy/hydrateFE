@@ -155,26 +155,6 @@ function Navbar(props) {
           </div>
           <Box
             display="flex"
-            flexDirection='row'
-            justifyContent="center"
-            width='100%'
-            alignItems="center"
-            // mr={10}
-          >
-            <Typography
-              color="textPrimary"
-              variant="h6"
-              className={classes.welcome}
-            >
-              Heya {userInfo.username} &nbsp;
-            </Typography>
-            <Emoji 
-              label={'wave'}
-              symbol={'👋'}
-            />
-          </Box>
-          <Box
-            display="flex"
             alignItems="center"
           >
             {menuItems.map((element, index) => (
