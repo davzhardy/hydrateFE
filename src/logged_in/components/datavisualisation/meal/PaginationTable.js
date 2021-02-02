@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable( { data, UserId } ) {
+export default function PaginationTable( { data, UserId } ) {
 
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -62,6 +62,7 @@ export default function StickyHeadTable( { data, UserId } ) {
   const [description, setDescription] = useState('');
   const [mealValue, setMealValue] = useState('');
   const [time, setTime] = useState('');
+  const [searchQuery, setSearchQuery] = useState('')
 
   const queryClient = useQueryClient()
 
@@ -146,6 +147,11 @@ export default function StickyHeadTable( { data, UserId } ) {
     [deleteMealMutation, UserId]
   )
 
+  const filteredData = data.filter(el => {
+    const mealArray = el['meal']
+    return mealArray.some(el => el.toLowerCase().includes(searchQuery.toLowerCase()))
+  })
+
   return (
     <Fragment>
       <ModifyDialog 
@@ -180,7 +186,7 @@ export default function StickyHeadTable( { data, UserId } ) {
             columns={columns}
           />
           <TableBody>
-            {columnSort(data, getSorting(order, orderBy))
+            {columnSort(filteredData, getSorting(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
                 <TableRow hover tabIndex={-1} key={index}>
@@ -211,7 +217,7 @@ export default function StickyHeadTable( { data, UserId } ) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={data.length}
+        count={filteredData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

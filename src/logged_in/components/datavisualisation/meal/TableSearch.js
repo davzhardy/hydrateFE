@@ -50,17 +50,16 @@ const TableSearch = ({ options, searchText, onSearch, onHide }) => {
           className={classes.searchText}
           autoFocus={true}
           InputProps={{
-            'data-test-id': options.textLabels.toolbar.search,
+            'data-test-id': 'hello',
           }}
           inputProps={{
-            'aria-label': options.textLabels.toolbar.search,
+            'aria-label': 'hello',
           }}
           value={searchText || ''}
           onKeyDown={onKeyDown}
           onChange={handleTextChange}
           fullWidth={true}
-          placeholder={options.searchPlaceholder}
-          {...(options.searchProps ? options.searchProps : {})}
+          placeholder={'Search query'}
         />
         <IconButton className={classes.clearIcon} onClick={onHide}>
           <ClearIcon />

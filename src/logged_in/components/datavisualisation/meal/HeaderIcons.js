@@ -40,8 +40,8 @@ function HeaderIcons(props) {
       >
         <TableSearch 
           // searchText={searchText}
-          // onSearch={this.handleSearch}
-          // onHide={this.hideSearch}
+          // onSearch={handleSearch}
+          // onHide={hideSearch}
           // options={options}
         />
       </Tooltip>
