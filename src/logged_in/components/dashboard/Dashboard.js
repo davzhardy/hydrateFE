@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { Grid } from '@material-ui/core'
 import Welcome from './Welcome'
+import Summary from './Summary'
 import AddDrinkArea from "../drink/AddDrinkArea"
 import AddMealArea from "../meal/AddMealArea"
 import DataArea from "../datavisualisation/DataArea"
@@ -53,6 +54,7 @@ function Dashboard( { selectDashboard, userInfo }) {
     
     <Fragment>
       <Welcome userInfo={userInfo}/>
+      <Summary />
       <Grid container spacing ={6} style={{marginBottom: 15}}>
         <Grid item xs={12} sm={6} style={{display: 'flex'}}>
           <AddDrinkArea UserId={UserId}/>

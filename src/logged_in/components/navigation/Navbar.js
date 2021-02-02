@@ -12,7 +12,6 @@ import {
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ImageIcon from "@material-ui/icons/Image";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import Emoji from '../../../shared/Emoji'
 
 const styles = theme => ({
   appBar: {
@@ -29,20 +28,28 @@ const styles = theme => ({
   },
   appBarToolbar: {
     display: "flex",
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
     justifyContent: "space-between",
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
     [theme.breakpoints.up("sm")]: {
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
+      marginLeft: theme.spacing(7),
+      marginRight: theme.spacing(7),
     },
     [theme.breakpoints.up("md")]: {
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
+      marginLeft: theme.spacing(11),
+      marginRight: theme.spacing(11),
     },
     [theme.breakpoints.up("lg")]: {
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
+      marginLeft: theme.spacing(15),
+      marginRight: theme.spacing(15),
     },
   },
   brandText: {
