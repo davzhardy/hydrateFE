@@ -7,6 +7,7 @@ import {
   Typography,
   Fade,
   Paper,
+  Divider,
   withStyles
 } from '@material-ui/core'
 import CircleGraph from './CircleGraph'
@@ -168,6 +169,7 @@ function Graphs( props ) {
       </Box>
       <Paper>
         {mealsChecked.mealA && mealsData ? <CreateCircleGraph dataInput={circleOutputFormat}/> : null }
+        <Divider/>
         {mealsChecked.mealB && mealsData ? <CreateScatterGraph dataInput={scatterData}/> : null }
       </Paper>
     </Fragment>

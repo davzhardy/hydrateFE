@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
-function Test({data}) {
+function CircleGraph({data}) {
 
   const svgRef = useRef()
 
@@ -31,7 +31,7 @@ function Test({data}) {
       .style("cursor", "pointer")
       .on("click", (event) => zoom(event, root));
 
-      const node = svg.append("g")
+    const node = svg.append("g")
       .selectAll("circle")
       .data(root.descendants().slice(1))
       .join("circle")
@@ -101,7 +101,7 @@ function Test({data}) {
 
 }
 
-export default Test;
+export default CircleGraph;
 
 
 
