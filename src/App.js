@@ -9,7 +9,13 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
 const LoggedOutComponent = lazy(() => import("./logged_out/components/Main"));
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60 * 60 * 24 // 24 hours
+    }
+  }
+});
 
 function App() {
   return (

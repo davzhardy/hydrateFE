@@ -7,7 +7,6 @@ const Emoji = ({symbol, label}) => (
     style={{
       cursor:'default',
       fontSize:'1.5rem',
-      
     }}
     aria-label={label ? label : ""}
     aria-hidden={label ? "false" : "true"}

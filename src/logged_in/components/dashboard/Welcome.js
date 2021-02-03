@@ -12,7 +12,6 @@ import {
 import Emoji from '../../../shared/Emoji'
 
 const styles = theme => ({
-
   welcome: {
     cursor: 'default'
   }

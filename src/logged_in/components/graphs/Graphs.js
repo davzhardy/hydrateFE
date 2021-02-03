@@ -9,7 +9,8 @@ import {
   Paper,
   withStyles
 } from '@material-ui/core'
-import Test from './Test'
+import CircleGraph from './CircleGraph'
+import ScatterGraph from './ScatterGraph'
 import { useQueryClient } from "react-query";
 import graphDataConverter from '../../functions/graphDataConverter'
 import CustomCheckbox from './CustomCheckbox'
@@ -55,23 +56,47 @@ function Graphs( props ) {
   }
 
   const potentialMeals = [
-    { meal: 'Breakfast' },
-    { meal: 'Lunch' },
-    { meal: 'Dinner' },
-    { meal: 'Snack' },
+    { meal: 'Breakfast', value: 1 },
+    { meal: 'Lunch', value: 2 },
+    { meal: 'Dinner', value: 4 },
+    { meal: 'Snack', value: 3 },
   ];
 
-  const outputFormat = {
+  const circleOutputFormat = {
     name: "flare",
     children: ''
   }
 
-  const Graph = React.memo(function({dataInput}) {
-    const queryClient = useQueryClient();
-    const mealsData = queryClient.getQueryData('meals');
-    graphDataConverter(mealsData, potentialMeals, outputFormat);
-    return <Test data={dataInput}/>;
+  const queryClient = useQueryClient();
+  const mealsData = queryClient.getQueryData('meals');
+
+  const CreateCircleGraph = React.memo(function({dataInput}) {
+    graphDataConverter(mealsData, potentialMeals, circleOutputFormat);
+    return <CircleGraph data={dataInput}/>;
   })
+
+  const CreateScatterGraph = React.memo(function({dataInput}) {
+    graphDataConverter(mealsData, potentialMeals, circleOutputFormat);
+    return <ScatterGraph data={dataInput}/>;
+  })
+
+  const scatterDataConverter = (dataInput) => {
+    const data = dataInput.data.getAllMeals.slice();
+    const dataWithValueAndConvertedTime = data.map(mapEl => {
+      const identifier = potentialMeals.filter(filterEl => {
+        return filterEl.meal === mapEl.description
+      })
+      mapEl.value = identifier[0].value
+
+      const timeRegex = /^(\d{4}-\d{2}-\d{2}T)/gm
+      mapEl.time = mapEl.time.replace(timeRegex,'')
+
+      return mapEl
+    })
+    return dataWithValueAndConvertedTime
+  }
+
+  scatterDataConverter(mealsData)
 
   return (
     <Fragment>
@@ -136,19 +161,17 @@ function Graphs( props ) {
               handleChange={handleMealsChange}
               name={'mealB'}
               color={'secondary'}
-              label={'Placeholder'}
+              label={'Scatter Graph'}
             />
           </Box>
         </Fade>
       </Box>
       <Paper>
-        {mealsChecked.mealA ? <Graph dataInput={outputFormat}/> : null }
-        {mealsChecked.mealB ? <Graph dataInput={outputFormat}/> : null }
+        {mealsChecked.mealA && mealsData ? <CreateCircleGraph dataInput={circleOutputFormat}/> : null }
+        {mealsChecked.mealB && mealsData ? <CreateScatterGraph dataInput={circleOutputFormat}/> : null }
       </Paper>
     </Fragment>
-  )
-
-  
+  )  
 }
 
 export default withStyles(styles, { withTheme: true })(Graphs);

@@ -16,6 +16,7 @@ function HeaderIcons(props) {
   const {
 
   } = props
+ // https://www.youtube.com/watch?v=SX_IL7LqSxM
 
   const queryClient = useQueryClient()
   const mealsData = queryClient.getQueryData('meals').data.getAllMeals
