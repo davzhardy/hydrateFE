@@ -76,7 +76,7 @@ function Graphs( props ) {
   })
 
   const CreateScatterGraph = React.memo(function({dataInput}) {
-    graphDataConverter(mealsData, potentialMeals, circleOutputFormat);
+    scatterDataConverter(mealsData);
     return <ScatterGraph data={dataInput}/>;
   })
 
@@ -88,15 +88,15 @@ function Graphs( props ) {
       })
       mapEl.value = identifier[0].value
 
-      const timeRegex = /^(\d{4}-\d{2}-\d{2}T)/gm
-      mapEl.time = mapEl.time.replace(timeRegex,'')
+      // const timeRegex = /^(\d{4}-\d{2}-\d{2}T)/gm
+      // mapEl.time = mapEl.time.replace(timeRegex,'')
 
       return mapEl
     })
     return dataWithValueAndConvertedTime
   }
 
-  scatterDataConverter(mealsData)
+  const scatterData = scatterDataConverter(mealsData)
 
   return (
     <Fragment>
@@ -168,7 +168,7 @@ function Graphs( props ) {
       </Box>
       <Paper>
         {mealsChecked.mealA && mealsData ? <CreateCircleGraph dataInput={circleOutputFormat}/> : null }
-        {mealsChecked.mealB && mealsData ? <CreateScatterGraph dataInput={circleOutputFormat}/> : null }
+        {mealsChecked.mealB && mealsData ? <CreateScatterGraph dataInput={scatterData}/> : null }
       </Paper>
     </Fragment>
   )  
