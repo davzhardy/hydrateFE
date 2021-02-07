@@ -23,7 +23,7 @@ const secondary = "#00CC88";
 const black = "#343a40";
 const darkBlack = "rgb(36, 40, 44)";
 const background = "#F7F7FF";
-const paper = '#CBD6E2'
+const alternative = '#e6ebfa'
 const warningLight = "rgba(253, 200, 69, .3)";
 const warningMain = "rgba(253, 200, 69, .5)";
 const warningDark = "rgba(253, 200, 69, .7)";
@@ -50,7 +50,7 @@ const theme = unstable_createMuiStrictModeTheme({
       background,
       black,
       darkBlack,
-      paper
+      alternative
     },
     warning: {
       light: warningLight,

@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.6.0",
     "classnames": "^2.2.6",
     "d3": "^6.3.1",
+    "dayjs": "^1.10.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-query": "^3.5.16",

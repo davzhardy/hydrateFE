@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Grid } from '@material-ui/core'
 import Welcome from './Welcome'
 import Summary from './Summary'
@@ -7,10 +7,12 @@ import AddMealArea from "../meal/AddMealArea"
 import DataArea from "../datavisualisation/DataArea"
 import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
+import mealsCalculation from '../../functions/mealsCalculation'
 
 function Dashboard( { selectDashboard, userInfo }) {
 
   useEffect(selectDashboard, [selectDashboard]);
+  const [selectedTimeframe, setSelectedTimeframe] = useState('week')
   const UserId = userInfo.UserId;
 
   const { data, status } = useQuery(
@@ -38,6 +40,12 @@ function Dashboard( { selectDashboard, userInfo }) {
     //   onSuccess: (data) => dataFunction(data)
     // }
   )
+    
+  const timeFramesToDays = {
+    'week': 7,
+    'month': 31,
+    'allTime': 0,
+  }
 
   const potentialMeals = [
     { meal: 'Breakfast' },
@@ -50,11 +58,22 @@ function Dashboard( { selectDashboard, userInfo }) {
   if ( [status, status1].includes("loading") ) return <p>Loading....</p>
   if ( [status, status1].includes("error") ) return <p>An error has been thrown</p>
   else { 
+
+    const mealData = data1.data.getAllMeals;
+    const drinkData = data.data.getAllDrinks;
+    const summaryMealsData = mealsCalculation(mealData, timeFramesToDays[selectedTimeframe])
+
     return (
     
     <Fragment>
       <Welcome userInfo={userInfo}/>
-      <Summary />
+      <Grid container>
+        <Summary 
+          summaryMealsData={summaryMealsData}
+          selectedTimeframe={selectedTimeframe}
+          setSelectedTimeframe={setSelectedTimeframe}
+          />
+      </Grid>
       <Grid container spacing ={6} style={{marginBottom: 15}}>
         <Grid item xs={12} sm={6} style={{display: 'flex'}}>
           <AddDrinkArea UserId={UserId}/>
@@ -63,9 +82,9 @@ function Dashboard( { selectDashboard, userInfo }) {
           <AddMealArea UserId={UserId} potentialMeals={potentialMeals}/>
         </Grid>
       </Grid>
-      <DataArea data={data.data.getAllDrinks} tablename={'Drink'}/>  
+      <DataArea data={drinkData} tablename={'Drink'}/>  
       <DataArea 
-        data={data1.data.getAllMeals} 
+        data={mealData} 
         UserId={UserId}
         tablename={'Meal'}
       />

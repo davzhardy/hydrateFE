@@ -5,8 +5,7 @@ import {
   Box,
   Toolbar,
   Typography,
-  IconButton,
-  Tooltip,
+
   withStyles,
 } from "@material-ui/core";
 import Emoji from '../../../shared/Emoji'

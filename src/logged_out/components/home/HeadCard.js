@@ -6,6 +6,7 @@ import {
   Button,
   Box,
   withStyles,
+  Hidden,
   withWidth,
   isWidthUp,
 } from "@material-ui/core";
@@ -61,10 +62,13 @@ function HeadCard(props) {
           mb={2}
         >
           <div>
-            <Box mb={2}>
+            <Box 
+              mb={2}
+            >
               <Typography
                 variant={isWidthUp("lg", width) ? "h6" : "body1"}
                 color="textSecondary"
+                align="center"
               >
                 Login to get started
               </Typography>
@@ -79,9 +83,31 @@ function HeadCard(props) {
             >
               Login
             </Button>
+            <Box 
+              mb={2}
+            >
+            <Typography
+                variant={isWidthUp("lg", width) ? "h6" : "body1"}
+                color="textSecondary"
+                align="center"
+              >
+                Or register here
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              className={classes.extraLargeButton}
+              classes={{ label: classes.extraLargeButtonLabel }}
+              onClick={()=>setDialogOpen('login')}
+            >
+              Register
+            </Button>
           </div>
         </Box>
       </Grid>
+      <Hidden smDown>
       <Grid item xs={12} md={5}>
       <Box
           display="flex"
@@ -94,6 +120,7 @@ function HeadCard(props) {
               <Typography
                 variant={isWidthUp("lg", width) ? "h6" : "body1"}
                 color="textSecondary"
+                align="center"
               >
                 Or register here
               </Typography>
@@ -111,6 +138,7 @@ function HeadCard(props) {
           </div>
         </Box>
       </Grid>
+      </Hidden>
     </Box>
   );
 }
