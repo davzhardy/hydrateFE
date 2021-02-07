@@ -44,8 +44,8 @@ function NavBar(props) {
     openLoginDialog,
     handleMobileDrawerOpen,
     handleMobileDrawerClose,
-    // mobileDrawerOpen,
-    // selectedTab
+    mobileDrawerOpen,
+    selectedTab
   } = props;
   const menuItems = [
     {
@@ -137,13 +137,13 @@ function NavBar(props) {
           </div>
         </Toolbar>
       </AppBar>
-      {/* <NavigationDrawer
+      <NavigationDrawer
         menuItems={menuItems}
         anchor="right"
         open={mobileDrawerOpen}
         selectedItem={selectedTab}
         onClose={handleMobileDrawerClose}
-      /> */}
+      />
     </div>
   );
 }
