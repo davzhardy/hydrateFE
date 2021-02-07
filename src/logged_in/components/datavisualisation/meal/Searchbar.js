@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Grow,
   Box,
@@ -13,31 +13,28 @@ const useStyles = makeStyles(
     main: {
       display: 'flex',
       flexDirection: 'row',
+      alignItems:'center',
       width: '100%'
-    },
-    searchIcon: {
-      color: theme.palette.text.secondary,
-      marginTop: '10px',
-      marginRight: '8px',
     },
     searchText: {
       flex: '0.8 0',
-    },
-    clearIcon: {
-      '&:hover': {
-        color: theme.palette.error.main,
-      },
     },
   }),
   { name: 'MUIDataTableSearch' },
 );
 
-const Searchbar = ({ searchText, onSearch, onHide }) => {
+const Searchbar = ({ searchText, onHide, data }) => {
   const classes = useStyles();
+  const [searchItem, setSearchItem] = useState('') 
 
   const handleTextChange = event => {
-    onSearch(event.target.value);
+    setSearchItem(event.target.value);
+    onSearch(searchItem, data);
   };
+
+  const onSearch = (criteria, data) => {
+    console.log(data)
+  }
 
   const onKeyDown = event => {
     if (event.key === 'Escape') {
@@ -45,30 +42,29 @@ const Searchbar = ({ searchText, onSearch, onHide }) => {
     }
   };
 
-
   return (
-        <Grow appear in={true} timeout={300}>
-          <Box className={classes.main}>
-            <TextField
-              className={classes.searchText}
-              autoFocus={true}
-              InputProps={{
-                'data-test-id': 'hello',
-              }}
-              inputProps={{
-                'aria-label': 'hello',
-              }}
-              value={searchText || ''}
-              onKeyDown={onKeyDown}
-              onChange={handleTextChange}
-              fullWidth={true}
-              placeholder={'Search query'}
-            />
-            <IconButton className={classes.clearIcon} onClick={onHide}>
-              <ClearIcon />
-            </IconButton>
-          </Box>
-        </Grow>
+    <Grow appear in={true} timeout={300}>
+      <Box className={classes.main}>
+        <TextField
+          className={classes.searchText}
+          autoFocus={true}
+          InputProps={{
+            'data-test-id': 'hello',
+          }}
+          inputProps={{
+            'aria-label': 'hello',
+          }}
+          value={searchText || ''}
+          onKeyDown={onKeyDown}
+          onChange={handleTextChange}
+          fullWidth={true}
+          placeholder={'Search query'}
+        />
+        <IconButton className={classes.clearIcon} onClick={onHide}>
+          <ClearIcon />
+        </IconButton>
+      </Box>
+    </Grow>
   );
 };
 

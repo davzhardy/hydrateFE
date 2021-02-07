@@ -34,13 +34,7 @@ function HeaderIcons(props) {
           <DownloadIcon />
         </IconButton>
       </Tooltip>
-      
-      <TableSearch 
-        searchText={''}
-        // onSearch={handleSearch}
-        // onHide={hideSearch}
-        // options={options}
-        />
+      <TableSearch data ={mealsData}/>
     </Box>
   )
 }
