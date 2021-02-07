@@ -1,21 +1,21 @@
-import React from 'react';
-import Grow from '@material-ui/core/Grow';
-import TextField from '@material-ui/core/TextField';
+import React, { useState } from 'react';
+import {
+  Grow,
+  Box,
+  Tooltip
+} from '@material-ui/core/';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 import { makeStyles } from '@material-ui/core/styles';
+import Searchbar from './Searchbar'
 
 const useStyles = makeStyles(
   theme => ({
     main: {
       display: 'flex',
-      flex: '1 0 auto',
-    },
-    searchIcon: {
-      color: theme.palette.text.secondary,
-      marginTop: '10px',
-      marginRight: '8px',
+      flexDirection: 'row',
+      width: '100%'
     },
     searchText: {
       flex: '0.8 0',
@@ -29,8 +29,9 @@ const useStyles = makeStyles(
   { name: 'MUIDataTableSearch' },
 );
 
-const TableSearch = ({ options, searchText, onSearch, onHide }) => {
+const TableSearch = ({ searchText, onSearch, onHide }) => {
   const classes = useStyles();
+  const [showSearchbar, setShowSearchbar] = useState(false)
 
   const handleTextChange = event => {
     onSearch(event.target.value);
@@ -42,30 +43,23 @@ const TableSearch = ({ options, searchText, onSearch, onHide }) => {
     }
   };
 
+  const openSearchbar = () => {
+    setShowSearchbar(true)
+  }
+
   return (
-    <Grow appear in={true} timeout={300}>
-      <div className={classes.main}>
-        <SearchIcon className={classes.searchIcon} />
-        <TextField
-          className={classes.searchText}
-          autoFocus={true}
-          InputProps={{
-            'data-test-id': 'hello',
-          }}
-          inputProps={{
-            'aria-label': 'hello',
-          }}
-          value={searchText || ''}
-          onKeyDown={onKeyDown}
-          onChange={handleTextChange}
-          fullWidth={true}
-          placeholder={'Search query'}
-        />
-        <IconButton className={classes.clearIcon} onClick={onHide}>
-          <ClearIcon />
+    <Box className={classes.main}>
+      <Tooltip title='Search' arrow >
+        <IconButton
+          onClick={openSearchbar}
+          aria-label="Search"
+        >
+          <SearchIcon />
         </IconButton>
-      </div>
-    </Grow>
+      </Tooltip>
+      {showSearchbar ? <Searchbar /> : null}
+    </Box>
+   
   );
 };
 

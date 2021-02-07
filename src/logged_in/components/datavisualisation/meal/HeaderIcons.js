@@ -20,32 +20,27 @@ function HeaderIcons(props) {
 
   const queryClient = useQueryClient()
   const mealsData = queryClient.getQueryData('meals').data.getAllMeals
-  const csvData = dataToCsv(mealsData)
+  let csvData;
+
+  if (mealsData.length) csvData = dataToCsv(mealsData)
   
   return (
-    <Box display="flex" justifyContent="flex-end">
-      <Tooltip
-        title='Download CSV Data' arrow
-      >
+    <Box display="flex" justifyContent="flex-end" width='100%'>
+      <Tooltip title='Download CSV Data' arrow>
         <IconButton
-          onClick={() => {
-            createCsv(csvData)
-          }}
+          onClick={() => {createCsv(csvData)}}
           aria-label="Download"
         >
           <DownloadIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip
-        title='Search' arrow
-      >
-        <TableSearch 
-          // searchText={searchText}
-          // onSearch={handleSearch}
-          // onHide={hideSearch}
-          // options={options}
+      
+      <TableSearch 
+        searchText={''}
+        // onSearch={handleSearch}
+        // onHide={hideSearch}
+        // options={options}
         />
-      </Tooltip>
     </Box>
   )
 }

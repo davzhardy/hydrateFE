@@ -10,8 +10,8 @@ import {
   withStyles,
 } from "@material-ui/core";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ImageIcon from "@material-ui/icons/Image";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import BarChartIcon from "@material-ui/icons/BarChart";
 
 const styles = theme => ({
   appBar: {
@@ -106,7 +106,7 @@ function Navbar(props) {
       name: "Graphs",
       icon: {
         desktop: (
-          <ImageIcon
+          <BarChartIcon
              color={
               selectedTab === "Graphs" ? "secondary" : "primary"
             }
@@ -116,7 +116,7 @@ function Navbar(props) {
           />
         ),
         mobile: (
-          <ImageIcon
+          <BarChartIcon
              color={
               selectedTab === "Graphs" ? "secondary" : "primary"
             }

@@ -162,9 +162,9 @@ function LoginDialog(props) {
               <HighlightedInformation>
                 <b>For testing purposes you can use the following account information:</b>
                 <br />
-                Email is: <b>test@web.com</b>
+                Email is: <b>test@test.com</b>
                 <br />
-                Password is: <b>HaRzwc</b>
+                Password is: <b>Admin1</b>
               </HighlightedInformation>
             )}
           </Fragment>
