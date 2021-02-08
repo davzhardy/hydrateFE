@@ -5,15 +5,16 @@ import {
   Fade,
   Paper,
   Divider,
-  withStyles
 } from '@material-ui/core'
 import CircleGraph from './CircleGraph'
 import ScatterGraph from './ScatterGraph'
+import PackingGraph from './PackingGraph'
 import { useQueryClient } from "react-query";
 import graphDataConverter from '../../functions/graphDataConverter'
 import CustomCheckbox from './CustomCheckbox'
 import GraphCard from './GraphCard'
 import SwitchElement from './SwitchElement'
+import packingDataConverter from '../../functions/packingDataConverter'
 
 function Graphs( props ) {
 
@@ -89,9 +90,12 @@ function Graphs( props ) {
   const scatterData = scatterDataConverter(mealsData)
 
   const mealsComponent = [ 
-    ['mealA', <CreateCircleGraph dataInput={circleOutputFormat}/>],
+    // ['mealA', <CreateCircleGraph dataInput={circleOutputFormat}/>],
+    // ['mealA', <PackingGraph data={mealsData.data.getAllMeals}/>]
     ['mealB', <CreateScatterGraph dataInput={scatterData}/>],
   ]
+
+  const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
 
   return (
     <Fragment>
@@ -101,6 +105,7 @@ function Graphs( props ) {
         fadeTrigger={switchChecked}
         handleSwitchChange={handleSwitchChange}
       />
+      <PackingGraph data={packingData}/>
       <Box display="grid" mt={2} mb={4}>
         <Fade in={!switchChecked} timeout={500} disableStrictModeCompat>
           <Box gridRow="1" gridColumn="1" display='flex' flexDirection='row' justifyContent='center' alignItems='center' >

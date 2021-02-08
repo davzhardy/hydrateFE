@@ -1,14 +1,13 @@
 import React, { Fragment, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import mealsCalculation from '../../functions/mealsCalculation'
 
 function PackingGraph({data}) {
 
   const svgRef = useRef()
   const wrapperRef = useRef();
 
-  useEffect(() => {
-
-    console.log(data)
+  useEffect(() => {   
     const svg = d3.select(svgRef.current)    
     const { width, height } = wrapperRef.current.getBoundingClientRect();
     const margin = {top: 50, right: 20, bottom: 65, left: 75}
@@ -20,7 +19,7 @@ function PackingGraph({data}) {
     // get max repeated values of the data to find domain range
 
     const size= d3.scaleLinear()
-      .domain([0, 1400000000])
+      .domain([0, 20])
       .range([0,innerHeight/4])
 
     const Tooltip = d3.select("#PackingGraph")
@@ -38,18 +37,19 @@ function PackingGraph({data}) {
       Tooltip
         .style("opacity", 1)
     }
-    const mousemove = function(d) {
+    const mousemove = function(d, i) {
+      console.log(i)
       Tooltip
-        .html('<u>' + d.description + '</u>' + "<br>" + d.value + " inhabitants")
-        .style("left", (d3.mouse(this)[0]+20) + "px")
-        .style("top", (d3.mouse(this)[1]) + "px")
+        .html('<u>' + i.description + '</u>' + "<br>" + "Eaten "+ i.value + " times")
+        .style("left", (i.x) + "px")
+        .style("top", (i.y) + "px")
     }
     const mouseleave = function(d) {
       Tooltip
         .style("opacity", 0)
     }
     
-    const node = svg.append("g")
+    const node = svg
       .selectAll("circle")
       .data(data)
       .enter()
@@ -65,10 +65,10 @@ function PackingGraph({data}) {
         .on("mouseover", mouseover) // What to do when hovered
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
-        .call(d3.drag() // call specific function when circle is dragged
-             .on("start", dragstarted)
-             .on("drag", dragged)
-             .on("end", dragended));
+        // .call(d3.drag() // call specific function when circle is dragged
+        //      .on("start", dragstarted)
+        //      .on("drag", dragged)
+        //      .on("end", dragended));
   
     const simulation = d3.forceSimulation()
       .force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
@@ -83,22 +83,22 @@ function PackingGraph({data}) {
             .attr("cy", function(d){ return d.y; })
       });
 
-    function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(.03).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-    function dragged(d) {
-      d.fx = d3.event.x;
-      d.fy = d3.event.y;
-    }
-    function dragended(d) {
-      if (!d3.event.active) simulation.alphaTarget(.03);
-      d.fx = null;
-      d.fy = null;
-    }
+    // function dragstarted(d) {
+    //   if (!d3.event.active) simulation.alphaTarget(.03).restart();
+    //   d.fx = d.x;
+    //   d.fy = d.y;
+    // }
+    // function dragged(d) {
+    //   d.fx = d3.event.x;
+    //   d.fy = d3.event.y;
+    // }
+    // function dragended(d) {
+    //   if (!d3.event.active) simulation.alphaTarget(.03);
+    //   d.fx = null;
+    //   d.fy = null;
+    // }
 
-  },[data])
+  })
 
 
   return (

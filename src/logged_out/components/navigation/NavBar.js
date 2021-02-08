@@ -25,7 +25,6 @@ const styles = theme => ({
     justifyContent: "space-between"
   },
   menuButtonText: {
-    fontSize: theme.typography.body1.fontSize,
     fontWeight: theme.typography.h6.fontWeight
   },
   brandText: {

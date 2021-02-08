@@ -20,11 +20,12 @@ function GraphCard( props ) {
       <Fragment>
         <Paper>
           {components.map((el, index) => {
+            console.log(components.length > 1 && components.length-1 <= index)
             return ( 
               checked[el[0]] === true ?
-                <Fragment>
+                <Fragment key={index}>
+                  {components.length > 1 && components.length-1 <= index ? <Divider/> : null}
                   {el[1]}
-                  {components.length > 1 && components.length < index ? <Divider/> : null}
                 </Fragment>
               : null
             )
