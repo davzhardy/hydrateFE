@@ -6,8 +6,6 @@ function ScatterGraph({data}) {
   const svgRef = useRef()
   const wrapperRef = useRef();
 
-  
-
   useEffect(() => {
 
     data.map(el => {
@@ -23,13 +21,13 @@ function ScatterGraph({data}) {
     const svg = d3.select(svgRef.current)      
 
     const { width, height } = wrapperRef.current.getBoundingClientRect();
-
+    console.log(width)
     const xValue = data => data.date;
     const xAxisLabel = 'Date'
     const yValue = data => data.hour;
     const yAxisLabel = 'Hour'
     const circleRadius = 5;
-    const margin = {top: 50, right: 20, bottom: 65, left: 75}
+    const margin = {top: 50, right: 40, bottom: 65, left: 75}
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
 
@@ -44,7 +42,7 @@ function ScatterGraph({data}) {
     const xAxis = d3.axisBottom(xScale)
       .tickSize(-innerHeight)
       .tickPadding(20)
-      .ticks(d3.timeDay.every(3), "%a %e %b")
+      .ticks(d3.timeDay.every(0), "%a %e %b")
 
     const yScale = d3.scaleLinear()
       .domain([d3.extent(data, yValue)[0]-1,d3.extent(data, yValue)[1]+1])

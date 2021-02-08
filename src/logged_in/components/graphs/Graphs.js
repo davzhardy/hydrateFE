@@ -1,10 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
 import { 
-  FormControlLabel,
   Box,
-  Switch,
-  Typography,
   Fade,
   Paper,
   Divider,
@@ -15,24 +12,15 @@ import ScatterGraph from './ScatterGraph'
 import { useQueryClient } from "react-query";
 import graphDataConverter from '../../functions/graphDataConverter'
 import CustomCheckbox from './CustomCheckbox'
-
-const styles = (theme) => ({
-  switchBase: {
-    color: theme.palette.primary.main,
-  },
-  track: {
-    backgroundColor: theme.palette.primary.main,
-    transition: theme.transitions.create(['background-color']),
-  },
-})
+import GraphCard from './GraphCard'
+import SwitchElement from './SwitchElement'
 
 function Graphs( props ) {
 
-  const { selectGraphs, classes } = props;
+  const { selectGraphs } = props;
 
   useEffect(selectGraphs, [selectGraphs]);
   const [switchChecked, setSwitchChecked] = useState(false)
-
   // should be migrated onto db and saved in user preferences to persist selections between sessions
   const [mealsChecked, setMealsChecked] = useState({
     mealA: true,
@@ -70,6 +58,7 @@ function Graphs( props ) {
 
   const queryClient = useQueryClient();
   const mealsData = queryClient.getQueryData('meals');
+  const drinksData = queryClient.getQueryData('drinks');
 
   const CreateCircleGraph = React.memo(function({dataInput}) {
     graphDataConverter(mealsData, potentialMeals, circleOutputFormat);
@@ -99,36 +88,19 @@ function Graphs( props ) {
 
   const scatterData = scatterDataConverter(mealsData)
 
+  const mealsComponent = [ 
+    ['mealA', <CreateCircleGraph dataInput={circleOutputFormat}/>],
+    ['mealB', <CreateScatterGraph dataInput={scatterData}/>],
+  ]
+
   return (
     <Fragment>
-      <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-        <Fade in={!switchChecked} timeout={500}>
-          <Typography
-            color="primary"  
-          >
-            Drinks
-          </Typography>
-        </Fade>
-        <FormControlLabel
-          ml={15}
-          control={
-            <Switch checked={switchChecked} onChange={handleSwitchChange} name="graphsSwitch" 
-              classes={{
-                switchBase: classes.switchBase,
-                track: classes.track,
-              }}
-            />
-          }
-          color='primary'
-        />
-        <Fade in={switchChecked} timeout={500}>
-          <Typography
-            color="secondary"
-          >
-            Meals
-          </Typography>
-        </Fade>
-      </Box>
+      <SwitchElement 
+        name1={'Drinks'}
+        name2={'Meals'}
+        fadeTrigger={switchChecked}
+        handleSwitchChange={handleSwitchChange}
+      />
       <Box display="grid" mt={2} mb={4}>
         <Fade in={!switchChecked} timeout={500} disableStrictModeCompat>
           <Box gridRow="1" gridColumn="1" display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
@@ -137,14 +109,14 @@ function Graphs( props ) {
               handleChange={handleDrinksChange}
               name={'drinkA'}
               color={'primary'}
-              label={'Placeholder'}
+              label={'Placeholder1'}
             />
             <CustomCheckbox
               checked={drinksChecked}
               handleChange={handleDrinksChange}
               name={'drinkB'}
               color={'primary'}
-              label={'Placeholder'}
+              label={'Placeholder2'}
             />
           </Box>
         </Fade>
@@ -167,13 +139,21 @@ function Graphs( props ) {
           </Box>
         </Fade>
       </Box>
-      <Paper>
-        {mealsChecked.mealA && mealsData ? <CreateCircleGraph dataInput={circleOutputFormat}/> : null }
-        <Divider/>
-        {mealsChecked.mealB && mealsData ? <CreateScatterGraph dataInput={scatterData}/> : null }
-      </Paper>
+      { switchChecked ?
+        <GraphCard checked={mealsChecked} data={mealsData.data.getAllMeals} components={mealsComponent} />  
+        : null
+      }
+      { !switchChecked ?
+        <Paper>
+          {drinksChecked.drinkA && drinksData ? 'Placeholder1' : null }
+          {drinksChecked.drinkA && drinksChecked.drinkB ? <Divider/> : null}
+          {mealsChecked.drinkB && drinksData ? 'Placeholder2' : null }
+        </Paper>
+        : null
+      }
+      
     </Fragment>
   )  
 }
 
-export default withStyles(styles, { withTheme: true })(Graphs);
+export default Graphs;

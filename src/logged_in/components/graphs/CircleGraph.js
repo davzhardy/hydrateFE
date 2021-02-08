@@ -1,18 +1,22 @@
-import React, { useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
 function CircleGraph({data}) {
 
   const svgRef = useRef()
+  const wrapperRef = useRef();
 
   useEffect(() => {
     
-    const height = 975
-    const width = height
-    const color = d3.scaleSequential([8, 0], d3.interpolateMagma)
+    const { width, height } = wrapperRef.current.getBoundingClientRect();
+    const margin = {top: 50, right: 20, bottom: 65, left: 75}
+    const innerWidth = width - margin.left - margin.right
+    const innerHeight = height - margin.top - margin.bottom
+
+    const color = d3.scaleOrdinal(data.children.map(d => d.name), d3.schemeCategory10)
     
     const pack = data => d3.pack()
-      .size([width - 2, height - 2])
+      .size([innerWidth - 2, innerHeight - 2])
       .padding(3)
     
     (d3.hierarchy(data)
@@ -22,16 +26,16 @@ function CircleGraph({data}) {
     const root = pack(data);
     let focus = root;
     let view;
-    
+
     const svg = d3.select(svgRef.current)
-      .attr("viewBox", `-${width / 2} -${height / 2} ${width} ${height}`)
-      .style("display", "block")
-      .style("margin", "0 -14px")
+    
+    const g = svg.append('g')
+      .attr('transform', `translate(${root.x},${root.y})`)
       // .style("background", color(0))
       .style("cursor", "pointer")
       .on("click", (event) => zoom(event, root));
 
-    const node = svg.append("g")
+    const node = g.append("g")
       .selectAll("circle")
       .data(root.descendants().slice(1))
       .join("circle")
@@ -41,8 +45,8 @@ function CircleGraph({data}) {
         .on("mouseout", function() { d3.select(this).attr("stroke", null); })
         .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
  
-    const label = svg.append("g")
-        .style("font", "15px sans-serif")
+    const label = g.append("g")
+        .style("font", "20px Cabin")
         .attr("pointer-events", "none")
         .attr("text-anchor", "middle")
       .selectAll("text")
@@ -55,7 +59,7 @@ function CircleGraph({data}) {
     zoomTo([root.x, root.y, root.r * 2]);
   
     function zoomTo(v) {
-      const k = width / v[2];
+      const k = innerWidth / v[2];
   
       view = v;
   
@@ -87,16 +91,20 @@ function CircleGraph({data}) {
 
 
   return (
-    <svg
-      ref={svgRef}
-      style={{
-        height: 500,
-        width: "100%",
-        marginRight: "0px",
-        marginLeft: "0px",
-      }}
-    >
-    </svg>
+    <Fragment>
+    <div ref={wrapperRef}>
+      <svg
+        ref={svgRef}
+        style={{
+          height: 500,
+          width: "100%",
+          marginRight: "0px",
+          marginLeft: "0px",
+        }}
+      >
+      </svg>
+    </div>
+    </Fragment>
   );
 
 }

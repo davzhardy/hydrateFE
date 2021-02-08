@@ -1,11 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { 
-  Box, 
+  Box,
+  Grid,
   Typography, 
   Divider,
   ButtonBase,
-  ListItem,
-  ListItemText,
   withStyles
 } from '@material-ui/core'
 
@@ -13,32 +12,25 @@ const styles = theme => ({
   container: {
     display: "flex",
     flexDirection: "column",
+    width: '45%',
     backgroundColor: theme.palette.common.alternative,
-    width: "max-content",
     borderRadius: 5,
+    [theme.breakpoints.down("sm")]: {
+      width: "max-content",
+    },
   },
   list: {
     display: 'flex', 
-    flexDirection: 'row', 
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     padding: 0, 
-    marginLeft: theme.spacing(3), 
-    maxHeight: 50
+    marginLeft: theme.spacing(4), 
   },
   listItem: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
+    paddingLeft: 0,
+    paddingRight: 0,
     justifyContent: 'center',
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.light
-    },
-    "&:focus": {
-      backgroundColor: theme.palette.secondary.main
-    }
-  },
-  listItemTypographySelected : {
-    fontWeight: 200,
-    justifyContent: 'center',
-    borderBottom: `2px solid ${theme.palette.secondary.secondary}`
   },
   listItemTypographySelected: {
     fontWeight: 600,
@@ -66,57 +58,65 @@ function Summary(props) {
       <Box className={classes.container} mb={4} ml={2}>
         <Box className={classes.wrapper}>
           <Box display="flex" flexDirection="row" >
-            <Typography variant="h6">
+            <Typography variant="h6" style={{whiteSpace: "nowrap"}}>
               Key Statistics
             </Typography>
-            <Box className={classes.list}>
+            <Grid container spacing={1} className={classes.list}>
+            <Grid item>
               <ButtonBase 
                 className={classes.listItem}
-                selected={selectedTimeframe === 'week'}
                 onClick={() => {
                   setSelectedTimeframe('week')
                 }}
               >
                   <Typography 
                     variant="body2"
-                    // className={selected ? classes.listItemTypographySelected : classes.listItemTypography}
+                    align='center'
+                    selected={selectedTimeframe === 'week'}
+                    className={selectedTimeframe === 'week' ? classes.listItemTypographySelected : null}
                   >
                     Last week
                   </Typography>
+                  
               </ButtonBase>
-              <ListItem button disableRipple
+              </Grid>
+              <Grid item>
+              <ButtonBase 
                 className={classes.listItem}
-                selected={selectedTimeframe === 'month'}
                 onClick={() => {
                   setSelectedTimeframe('month')
                 }}
               >
-                <ListItemText className={classes.listItemText} primary={
                   <Typography 
                     variant="body2"
                     className={classes.listItemTypography}
+                    selected={selectedTimeframe === 'month'}
+                    className={selectedTimeframe === 'month' ? classes.listItemTypographySelected : null}
+                    align='center'
                   >
                     Last month
                   </Typography>
-                }/>
-              </ListItem>
-              <ListItem button disableRipple
-                className={classes.listItem}
-                selected={selectedTimeframe === 'allTime'}
-                onClick={() => {
-                  setSelectedTimeframe('allTime')
-                }}
-              >
-                <ListItemText className={classes.listItemText} primary={
-                  <Typography 
-                    variant="body2"
-                    className={classes.listItemTypography}
-                  >
-                    All time
-                  </Typography>
-                }/>
-              </ListItem>
-            </Box>
+              </ButtonBase>
+              </Grid>
+              <Grid item>
+                <ButtonBase
+                  className={classes.listItem}
+                  onClick={() => {
+                    setSelectedTimeframe('allTime')
+                  }}
+                >
+                    <Typography 
+                      variant="body2"
+                      className={classes.listItemTypography}
+                      selected={selectedTimeframe === 'allTime'}
+                      className={selectedTimeframe === 'allTime' ? classes.listItemTypographySelected : null}
+                      align='center'
+                    >
+                      All time
+                    </Typography>
+                </ButtonBase>
+              </Grid>
+            </Grid>
           </Box>
           <Divider light width="40px" style={{marginTop: '8px'}}/>
           <Typography variant="body1" style={{marginTop: '15px'}}>

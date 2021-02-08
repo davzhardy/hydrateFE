@@ -34,7 +34,7 @@ const mealsCalculation = (data, history) => {
     })
   }
   
-  let popular = 'You haven\'t added any meals yet'
+  let popular = 'No meals added'
   let currentMax = 0
   
   const obj = {}
