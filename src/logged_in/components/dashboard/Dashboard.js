@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import { endpoint, queries, getOptions } from '../../../api'
 import mealsCalculation from '../../functions/mealsCalculation'
 import drinksCalculation from '../../functions/drinksCalculation'
+import drinksConverter from '../../functions/drinksConverter'
 
 function Dashboard( { selectDashboard, userInfo }) {
 
@@ -61,7 +62,8 @@ function Dashboard( { selectDashboard, userInfo }) {
   else { 
 
     const mealData = data1.data.getAllMeals;
-    const drinkData = data.data.getAllDrinks;
+    const drinkData = drinksConverter(data.data.getAllDrinks, 250);
+
     const summaryMealsData = mealsCalculation(mealData, timeFramesToDays[selectedTimeframe])
     const summaryDrinksData = drinksCalculation(drinkData, timeFramesToDays[selectedTimeframe])
 

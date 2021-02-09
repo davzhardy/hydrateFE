@@ -1,20 +1,10 @@
-const drinksConverter = (data) => {
-  
-  const formattedArray = [];
-  const numberRegex = /([0-9]\/[0-9])|[0-9]/g;
-  const nonWordRegex = /[\-()/+]|(\set\s)/gi;
-
-  const mealsInputNoNumbers = data.meal.map(el => el.replace(numberRegex,''))
-  const mealsInputNoNonWord = mealsInputNoNumbers.map(el => el.replace(nonWordRegex,','))
-  const check = mealsInputNoNonWord.map(el => el.split(','))
-  const trim = check.map(el=> el.map(el => el.trim()))
-  const split = trim.map(el =>el.join(',').split(','))
-  split.map(el => el.forEach(el => {
-    if (el.length) {
-      formattedArray.push(el)
-    }
-  }))
-  return formattedArray;
+const drinksConverter = (data, volumePerCup) => {
+  const output = data.map(el => {
+    if (el.cups === null) el.cups = Math.round(el.volume/volumePerCup)
+    if (el.volume === null) el.volume = el.cups*volumePerCup
+    return el
+  })
+  return output;
 }
 
 export default drinksConverter

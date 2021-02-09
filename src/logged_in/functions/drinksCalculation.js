@@ -1,7 +1,6 @@
 import * as dayjs from 'dayjs'
-import drinksConverter from './drinksConverter'
 
-const drinksCalculation = (data, history) => {
+const drinksCalculation = (data, history, volume=true) => {
 
   const output = {
     drinksRegistered: 0,
@@ -28,27 +27,29 @@ const drinksCalculation = (data, history) => {
     data = filteredArray
   }
   
-  let popular = 'No drinks added'
-  let currentMax = 0
-  
+  let popular = 'No drinks added';
+  let currentMax = 0;
   const obj = {}
+  let parameter;
 
-  // data.forEach(el => {
-  //   if (Object.keys(obj).includes(el)) {
-  //     obj[el] ++
-  //     if (obj[el] > currentMax) {
-  //       popular = el
-  //       currentMax++
-  //     }
-  //   }
-  //   else {
-  //     obj[el] = 1
-  //     if (currentMax < 1) currentMax = 1
-  //     if (currentMax === 1 || currentMax === 0) popular = el
-  //   }
-  // })
-  // console.log(output)
+  volume === true ? parameter = 'volume' : parameter = 'cups';
 
+  data.forEach(el => {
+    if (Object.keys(obj).includes(el['drink'])) {
+      obj[el['drink']] += el[parameter]
+      if (obj[el['drink']] > currentMax) {
+        popular = el['drink']
+        currentMax += el[parameter]
+      }
+    }
+    else {
+      obj[el['drink']] = el[parameter]
+      if (currentMax === 0 || currentMax < el[parameter]) {
+        popular = el['drink']
+        currentMax = el[parameter]
+      }
+    }
+  })
   output.popularDrink = popular
   return output
 }
