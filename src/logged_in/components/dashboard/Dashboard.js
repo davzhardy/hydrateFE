@@ -13,7 +13,7 @@ import drinksCalculation from '../../functions/drinksCalculation'
 function Dashboard( { selectDashboard, userInfo }) {
 
   useEffect(selectDashboard, [selectDashboard]);
-  const [selectedTimeframe, setSelectedTimeframe] = useState('week')
+  const [selectedTimeframe, setSelectedTimeframe] = useState('allTime')
   const UserId = userInfo.UserId;
 
   const { data, status } = useQuery(
@@ -64,7 +64,6 @@ function Dashboard( { selectDashboard, userInfo }) {
     const drinkData = data.data.getAllDrinks;
     const summaryMealsData = mealsCalculation(mealData, timeFramesToDays[selectedTimeframe])
     const summaryDrinksData = drinksCalculation(drinkData, timeFramesToDays[selectedTimeframe])
-    console.log(summaryDrinksData)
 
     return (
     
@@ -73,6 +72,7 @@ function Dashboard( { selectDashboard, userInfo }) {
       <Grid container>
         <Summary 
           summaryMealsData={summaryMealsData}
+          summaryDrinksData={summaryDrinksData}
           selectedTimeframe={selectedTimeframe}
           setSelectedTimeframe={setSelectedTimeframe}
           />

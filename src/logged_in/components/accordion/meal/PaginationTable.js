@@ -151,8 +151,6 @@ export default function PaginationTable( { data, UserId } ) {
     return mealArray.some(el => el.toLowerCase().includes(searchQuery.toLowerCase()))
   })
 
-  const mealsData = queryClient.getQueryData('meals').data.getAllMeals
-
   return (
     <Fragment>
       <ModifyDialog 
@@ -176,7 +174,7 @@ export default function PaginationTable( { data, UserId } ) {
         isLoading={modifyMealMutation.isLoading}
       />
       <TableToolbar
-        component={<HeaderIcons data={mealsData}/>}
+        component={<HeaderIcons data={data}/>}
       />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">

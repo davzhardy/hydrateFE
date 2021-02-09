@@ -46,12 +46,14 @@ function Summary(props) {
 
   const { 
     summaryMealsData,
+    summaryDrinksData,
     selectedTimeframe,
     setSelectedTimeframe,
     classes 
   } = props;
 
   const popularMeal = summaryMealsData.popularMeal.charAt(0).toUpperCase() + summaryMealsData.popularMeal.slice(1).toLowerCase()
+  const popularDrink = summaryDrinksData.popularDrink.charAt(0).toUpperCase() + summaryDrinksData.popularDrink.slice(1).toLowerCase()
 
   return (
     <Fragment>
@@ -120,7 +122,7 @@ function Summary(props) {
           </Box>
           <Divider light width="40px" style={{marginTop: '8px'}}/>
           <Typography variant="body1" style={{marginTop: '15px'}}>
-            Drinks registered
+            Drinks registered: {summaryDrinksData.drinksRegistered}
           </Typography>
           <Typography variant="body1" style={{marginTop: '5px'}}>
             Meals registered: {summaryMealsData.mealsRegistered}
@@ -129,7 +131,7 @@ function Summary(props) {
             Most popular dish: {popularMeal}
           </Typography>
           <Typography variant="body1" style={{marginTop: '5px'}}>
-            Most popular drink
+            Most popular drink: {popularDrink}
           </Typography>
         </Box>
       </Box>
