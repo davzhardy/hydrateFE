@@ -21,7 +21,6 @@ function ScatterGraph({data}) {
     const svg = d3.select(svgRef.current)      
 
     const { width, height } = wrapperRef.current.getBoundingClientRect();
-    console.log(width)
     const xValue = data => data.date;
     const xAxisLabel = 'Date'
     const yValue = data => data.hour;

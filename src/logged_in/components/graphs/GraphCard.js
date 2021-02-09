@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
+import React, { Fragment } from "react";
 import { 
   Paper,
   Divider,
@@ -20,7 +19,6 @@ function GraphCard( props ) {
       <Fragment>
         <Paper>
           {components.map((el, index) => {
-            console.log(components.length > 1 && components.length-1 <= index)
             return ( 
               checked[el[0]] === true ?
                 <Fragment key={index}>

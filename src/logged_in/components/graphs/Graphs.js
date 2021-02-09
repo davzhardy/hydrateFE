@@ -6,11 +6,9 @@ import {
   Paper,
   Divider,
 } from '@material-ui/core'
-import CircleGraph from './CircleGraph'
 import ScatterGraph from './ScatterGraph'
 import PackingGraph from './PackingGraph'
 import { useQueryClient } from "react-query";
-import graphDataConverter from '../../functions/graphDataConverter'
 import CustomCheckbox from './CustomCheckbox'
 import GraphCard from './GraphCard'
 import SwitchElement from './SwitchElement'
@@ -52,19 +50,9 @@ function Graphs( props ) {
     { meal: 'Snack', value: 3 },
   ];
 
-  const circleOutputFormat = {
-    name: "flare",
-    children: ''
-  }
-
   const queryClient = useQueryClient();
   const mealsData = queryClient.getQueryData('meals');
   const drinksData = queryClient.getQueryData('drinks');
-
-  const CreateCircleGraph = React.memo(function({dataInput}) {
-    graphDataConverter(mealsData, potentialMeals, circleOutputFormat);
-    return <CircleGraph data={dataInput}/>;
-  })
 
   const CreateScatterGraph = React.memo(function({dataInput}) {
     scatterDataConverter(mealsData);
@@ -78,24 +66,19 @@ function Graphs( props ) {
         return filterEl.meal === mapEl.description
       })
       mapEl.value = identifier[0].value
-
-      // const timeRegex = /^(\d{4}-\d{2}-\d{2}T)/gm
-      // mapEl.time = mapEl.time.replace(timeRegex,'')
-
       return mapEl
     })
     return dataWithValueAndConvertedTime
   }
 
   const scatterData = scatterDataConverter(mealsData)
+  const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
 
   const mealsComponent = [ 
-    // ['mealA', <CreateCircleGraph dataInput={circleOutputFormat}/>],
-    // ['mealA', <PackingGraph data={mealsData.data.getAllMeals}/>]
+    ['mealA', <PackingGraph data={packingData}/>],
     ['mealB', <CreateScatterGraph dataInput={scatterData}/>],
   ]
 
-  const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
 
   return (
     <Fragment>
@@ -105,7 +88,7 @@ function Graphs( props ) {
         fadeTrigger={switchChecked}
         handleSwitchChange={handleSwitchChange}
       />
-      <PackingGraph data={packingData}/>
+      {/* <PackingGraph data={packingData}/> */}
       <Box display="grid" mt={2} mb={4}>
         <Fade in={!switchChecked} timeout={500} disableStrictModeCompat>
           <Box gridRow="1" gridColumn="1" display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
@@ -132,7 +115,7 @@ function Graphs( props ) {
               handleChange={handleMealsChange}
               name={'mealA'}
               color={'secondary'}
-              label={'Circles Graph'}
+              label={'Packing Graph'}
             />
             <CustomCheckbox
               checked={mealsChecked}

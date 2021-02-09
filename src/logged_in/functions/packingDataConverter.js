@@ -29,7 +29,6 @@ const packingDataConverter = (data) => {
     array.push(newObj)
   }
 
-
   return array
 }
 

@@ -1,8 +1,23 @@
 import React, { Fragment, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-import mealsCalculation from '../../functions/mealsCalculation'
+import { 
+  withStyles
+} from '@material-ui/core'
+import Tooltip from './Tooltip'
+import { mouseOver, mouseMove, mouseLeave } from './mouseEvents'
 
-function PackingGraph({data}) {
+const styles = theme => ({
+  tooltip: {
+    borderColor: theme.palette.common.alternative,
+    // position: "absolute",
+  }
+})
+
+function PackingGraph(props) {
+  const {
+    data,
+    classes
+  } = props
 
   const svgRef = useRef()
   const wrapperRef = useRef();
@@ -15,39 +30,47 @@ function PackingGraph({data}) {
     const innerHeight = height - margin.top - margin.bottom
 
     const color = d3.scaleOrdinal(data.map(d => d.description), d3.schemeSet1)
+    const size= d3.scaleSqrt()
+      .domain([0, 10])
+      .range([0,innerHeight/10])
 
-    // get max repeated values of the data to find domain range
-
-    const size= d3.scaleLinear()
-      .domain([0, 20])
-      .range([0,innerHeight/4])
-
-    const Tooltip = d3.select("#PackingGraph")
+    const wrapper = d3.select(wrapperRef.current)    
+    const displayedTooltip = wrapper
       .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip")
-      .style("background-color", "white")
-      .style("border", "solid")
-      .style("border-width", "2px")
-      .style("border-radius", "5px")
-      .style("padding", "5px")
+      .attr('class', 'tooltip')
+
+    displayedTooltip.call(Tooltip, {
+      startingOpacity: 0
+    })
+
+    // const displayedTooltip = d3.select("#PackingGraph")
+    //   .append("div")
+    //   .style("opacity", 0)
+    //   .style("position", "absolute")
+    //   .style("background-color", "white")
+    //   .style("border", "solid")
+    //   .style("border-width", "1px")
+    //   .style("border-radius", "5px")
+    //   .style("padding", "7px")
   
-    // Three function that change the tooltip when user hover / move / leave a cell
-    const mouseover = function(d) {
-      Tooltip
-        .style("opacity", 1)
-    }
-    const mousemove = function(d, i) {
-      console.log(i)
-      Tooltip
-        .html('<u>' + i.description + '</u>' + "<br>" + "Eaten "+ i.value + " times")
-        .style("left", (i.x) + "px")
-        .style("top", (i.y) + "px")
-    }
-    const mouseleave = function(d) {
-      Tooltip
-        .style("opacity", 0)
-    }
+    // // Three function that change the tooltip when user hover / move / leave a cell
+    // const mouseover = function(event, d) {
+    //   console.log('yo')
+    //   graphTooltip
+    //     .style("opacity", 0.97)
+    // }
+    // const mousemove = function(event, d) {
+    //   graphTooltip
+    //     .html(d.description + "<br>" + "Eaten "+ d.value + " times")
+    //     .style("left", (d.x) + "px")
+    //     .style("top", (event.screenY) + "px")
+    //     .style("width", "max-Content")
+    //     .style("opacity", 0.97)
+    // }
+    // const mouseleave = function(d) {
+    //   graphTooltip
+    //     .style("opacity", 0)
+    // }
     
     const node = svg
       .selectAll("circle")
@@ -62,9 +85,17 @@ function PackingGraph({data}) {
         .style("fill-opacity", 0.8)
         .attr("stroke", "black")
         .style("stroke-width", 1)
-        .on("mouseover", mouseover) // What to do when hovered
-        .on("mousemove", mousemove)
-        .on("mouseleave", mouseleave)
+        .on("mouseover", (event, d) => {
+          mouseOver(displayedTooltip ,event, d)
+        })
+        .on("mousemove", (event, d) => {
+          mouseMove(displayedTooltip ,event, d)
+        })
+        // .on("mouseover", mouseover) // What to do when hovered
+        // .on("mousemove", mouseMove(graphTooltip))
+        .on("mouseleave",(event, d) => {
+          mouseLeave(displayedTooltip ,event, d)
+        })
         // .call(d3.drag() // call specific function when circle is dragged
         //      .on("start", dragstarted)
         //      .on("drag", dragged)
@@ -100,10 +131,9 @@ function PackingGraph({data}) {
 
   })
 
-
   return (
     <Fragment>
-    <div id="PackingGraph" ref={wrapperRef}>
+    <div  id="PackingGraph" ref={wrapperRef}>
       <svg
         ref={svgRef}
         style={{
@@ -120,7 +150,7 @@ function PackingGraph({data}) {
 
 }
 
-export default PackingGraph;
+export default withStyles(styles, { withTheme: true })(PackingGraph);
 
 
 
