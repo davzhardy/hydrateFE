@@ -40,7 +40,7 @@ function PackingGraph(props) {
       .attr('class', 'tooltip')
 
     displayedTooltip.call(Tooltip, {
-      startingOpacity: 0
+      startingOpacity: 0,
     })
 
     // const displayedTooltip = d3.select("#PackingGraph")
@@ -86,15 +86,14 @@ function PackingGraph(props) {
         .attr("stroke", "black")
         .style("stroke-width", 1)
         .on("mouseover", (event, d) => {
-          mouseOver(displayedTooltip ,event, d)
+          mouseOver(displayedTooltip)
         })
         .on("mousemove", (event, d) => {
-          mouseMove(displayedTooltip ,event, d)
+          const tooltipTextFormat = `${d.description} <br> Eaten ${d.value} times`
+          mouseMove(displayedTooltip, tooltipTextFormat, event, d)
         })
-        // .on("mouseover", mouseover) // What to do when hovered
-        // .on("mousemove", mouseMove(graphTooltip))
         .on("mouseleave",(event, d) => {
-          mouseLeave(displayedTooltip ,event, d)
+          mouseLeave(displayedTooltip)
         })
         // .call(d3.drag() // call specific function when circle is dragged
         //      .on("start", dragstarted)

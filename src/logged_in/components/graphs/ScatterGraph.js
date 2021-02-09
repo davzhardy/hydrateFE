@@ -1,5 +1,7 @@
 import React, { Fragment, useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
+import Tooltip from './Tooltip'
+import { mouseOver, mouseMove, mouseLeave } from './mouseEvents'
 
 function ScatterGraph({data}) {
 
@@ -33,6 +35,15 @@ function ScatterGraph({data}) {
     const now = new Date
     const color = d3.scaleOrdinal(data.map(d => d.description), d3.schemeCategory10)
 
+    const wrapper = d3.select(wrapperRef.current)
+    const displayedTooltip = wrapper
+      .append("div")
+      .attr('class', 'tooltip')
+
+    displayedTooltip.call(Tooltip, {
+      startingOpacity: 0
+    })
+    
     const xScale = d3.scaleTime()
       .domain([d3.extent(data, xValue)[0], now])
       .range([0, innerWidth])
@@ -97,49 +108,60 @@ function ScatterGraph({data}) {
         .attr('cx', d => xScale(xValue(d)))
         .attr('r', circleRadius)
         .attr("fill", d => color(d.description))
-      .on('mouseover', handleMouseOver)
-      .on('mouseout', handleMouseOut)
+        .on("mouseover", (event, d) => {
+          mouseOver(displayedTooltip ,event, d)
+        })
+        .on("mousemove", (event, d) => {
+          const tooltipTextFormat = `${d.description}: ${d.meal.join(', ')}`
+          mouseMove(displayedTooltip, tooltipTextFormat, event, d)
+        })
+        .on("mouseleave",(event, d) => {
+          mouseLeave(displayedTooltip ,event, d)
+        })
+
+      // .on('mouseover', handleMouseOver)
+      // .on('mouseout', handleMouseOut)
       // .on('mouseout', handleMouseOut)
 
-    const tooltip = d3.select('.tooltip-area')
-      .style('opacity', 0)
+    // const tooltip = d3.select('.tooltip-area')
+    //   .style('opacity', 0)
 
-    function handleMouseOver (event, d) {
-      d3.select(this).transition()
-        .attr("fill", "yellow")
-        .attr("opacity", 0.5)
-        .attr("r", circleRadius * 2)
+    // function handleMouseOver (event, d) {
+    //   d3.select(this).transition()
+    //     .attr("fill", "yellow")
+    //     .attr("opacity", 0.5)
+    //     .attr("r", circleRadius * 2)
 
-      const text = d3.select('.tooltip-area-text');
-      text
-        .text(`${d.description}: ${d.meal.join(', ')}`)
-        .style("font","10px cabin")
+    //   const text = d3.select('.tooltip-area-text');
+    //   text
+    //     .text(`${d.description}: ${d.meal.join(', ')}`)
+    //     .style("font","10px cabin")
 
-      // const {width: w, height: h} = text.node().getBBox();
-      let x = xScale(xValue(d)) + margin.left + 10
-      let y = yScale(yValue(d)) + margin.top - 10
+    //   // const {width: w, height: h} = text.node().getBBox();
+    //   let x = xScale(xValue(d)) + margin.left + 10
+    //   let y = yScale(yValue(d)) + margin.top - 10
 
-      tooltip
-        .style("opacity", 0.85)
-        .attr('transform', `translate(${x}, ${y})`)      
-    }
+    //   tooltip
+    //     .style("opacity", 0.85)
+    //     .attr('transform', `translate(${x}, ${y})`)      
+    // }
     
-    function handleMouseOut () {
-      d3.select(this).transition()
-        .attr("fill",  d => color(d.description))
-        .attr("r", circleRadius)
-        .attr("opacity", 1)
+    // function handleMouseOut () {
+    //   d3.select(this).transition()
+    //     .attr("fill",  d => color(d.description))
+    //     .attr("r", circleRadius)
+    //     .attr("opacity", 1)
       
-      tooltip.transition()
-        .style("opacity", 0)
-    }
+    //   tooltip.transition()
+    //     .style("opacity", 0)
+    // }
 
   },[data])
 
 
   return (
     <Fragment>
-    <div ref={wrapperRef}>
+    <div id="ScatterGraph" ref={wrapperRef}>
       <svg
         ref={svgRef}
         style={{
@@ -149,9 +171,6 @@ function ScatterGraph({data}) {
           marginLeft: "0px",
         }}
       >
-        <g className="tooltip-area">
-          <text className="tooltip-area-text"></text>
-        </g>
       </svg>
     </div>
   </Fragment>

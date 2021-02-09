@@ -3,10 +3,11 @@ import * as d3 from 'd3';
 const Tooltip = (selection, props) => {
 
   const {
+    wrapperId,
     startingOpacity
   } = props
 
-  const createTooltip = d3.select('.tooltip')
+  const createTooltip = d3.selectAll('.tooltip')
   
   createTooltip
     .style("opacity", startingOpacity)

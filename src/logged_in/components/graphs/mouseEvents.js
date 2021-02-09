@@ -1,17 +1,17 @@
-function mouseOver (selection, event, d) {
+function mouseOver (selection) {
     selection
       .style("opacity", 0.96)
 }
   
-function mouseMove (selection, event, d) {
+function mouseMove (selection, textFormat, event, d) {
     selection
-      .html(d.description + "<br>" + "Eaten "+ d.value + " times")
-      .style("left", (d.x) + "px")
-      .style("top", (event.screenY-20) + "px")
+      .html(textFormat)
+      .style("left", (event.pageX) + "px")
+      .style("top", (event.pageY+10) + "px")
       .style("width", "max-Content")
 }
 
-function mouseLeave (selection, d) {
+function mouseLeave (selection) {
     selection
       .style("opacity", 0)
 }
