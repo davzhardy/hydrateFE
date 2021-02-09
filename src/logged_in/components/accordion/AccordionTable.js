@@ -9,7 +9,7 @@ import MealTable from './meal/PaginationTable'
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useDispatch } from 'react-redux'
 
-function DataArea (props) {
+function AccordionTable (props) {
 
   const { 
     data,
@@ -48,4 +48,4 @@ function DataArea (props) {
   )
 }
 
-export default DataArea;
+export default AccordionTable;

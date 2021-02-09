@@ -40,7 +40,6 @@ const mealsCalculation = (data, history) => {
   const obj = {}
 
   formattedMealData.forEach(el => {
-    console.log(el)
     if (Object.keys(obj).includes(el)) {
       obj[el] ++
       if (obj[el] > currentMax) {

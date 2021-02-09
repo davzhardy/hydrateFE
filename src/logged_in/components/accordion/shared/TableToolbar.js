@@ -5,8 +5,6 @@ import {
 
 function TableToolbar(props) {
 
-// https://github.com/gregnb/mui-datatables/blob/master/src/components/TableToolbar.js
-
   const {
     component
   } = props

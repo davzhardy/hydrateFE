@@ -1,7 +1,6 @@
 import React, { useState, useCallback, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,9 +8,9 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core'
-import TableIcons from './TableIcons'
-import HeaderIcons from './HeaderIcons'
-import TableToolbar from './TableToolbar'
+import TableIcons from '../shared/TableIcons'
+import HeaderIcons from '../shared/HeaderIcons'
+import TableToolbar from '../shared/TableToolbar'
 import ModifyDialog from './ModifyDialog'
 import DeleteDialog from './DeleteDialog'
 import getSorting from '../../../functions/getSorting'
@@ -152,6 +151,8 @@ export default function PaginationTable( { data, UserId } ) {
     return mealArray.some(el => el.toLowerCase().includes(searchQuery.toLowerCase()))
   })
 
+  const mealsData = queryClient.getQueryData('meals').data.getAllMeals
+
   return (
     <Fragment>
       <ModifyDialog 
@@ -175,7 +176,7 @@ export default function PaginationTable( { data, UserId } ) {
         isLoading={modifyMealMutation.isLoading}
       />
       <TableToolbar
-        component={<HeaderIcons/>}
+        component={<HeaderIcons data={mealsData}/>}
       />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">

@@ -8,7 +8,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import Searchbar from './Searchbar'
-import { useDispatch } from 'react-redux'
 
 const useStyles = makeStyles(
   theme => ({
