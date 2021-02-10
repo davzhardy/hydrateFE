@@ -1,7 +1,7 @@
-import React, { Fragment, useRef, useEffect, useState } from 'react';
+import React, { Fragment, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-import Tooltip from './Tooltip'
-import { mouseOver, mouseMove, mouseLeave } from './mouseEvents'
+import Tooltip from '../Tooltip'
+import { mouseOver, mouseMove, mouseLeave } from '../mouseEvents'
 
 function ScatterGraph({data}) {
 

@@ -6,13 +6,18 @@ import {
   Paper,
   Divider,
 } from '@material-ui/core'
-import ScatterGraph from './ScatterGraph'
-import PackingGraph from './PackingGraph'
+import ScatterGraph from './meals/ScatterGraph'
+import PackingGraph from './meals/PackingGraph'
+import WaffleGraph from './drinks/WaffleGraph'
+import BarchartHorizontalGraph from './drinks/BarchartHorizontalGraph'
 import { useQueryClient } from "react-query";
 import CustomCheckbox from './CustomCheckbox'
 import GraphCard from './GraphCard'
 import SwitchElement from './SwitchElement'
 import packingDataConverter from '../../functions/packingDataConverter'
+
+// https://juba.github.io/scatterD3/articles/introduction.html
+// https://github.com/juba/scatterD3/blob/master/inst/htmlwidgets/scatterD3-dots.js
 
 function Graphs( props ) {
 
@@ -73,10 +78,16 @@ function Graphs( props ) {
 
   const scatterData = scatterDataConverter(mealsData)
   const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
+  const barchartData = drinksData.data.getAllDrinks
 
   const mealsComponent = [ 
     ['mealA', <PackingGraph data={packingData}/>],
     ['mealB', <CreateScatterGraph dataInput={scatterData}/>],
+  ]
+
+  const drinksComponent = [
+    ['drinkA', <WaffleGraph data={barchartData}/>],
+    ['drinkB', <BarchartHorizontalGraph data={barchartData}/>]
   ]
 
 
@@ -88,7 +99,6 @@ function Graphs( props ) {
         fadeTrigger={switchChecked}
         handleSwitchChange={handleSwitchChange}
       />
-      {/* <PackingGraph data={packingData}/> */}
       <Box display="grid" mt={2} mb={4}>
         <Fade in={!switchChecked} timeout={500} disableStrictModeCompat>
           <Box gridRow="1" gridColumn="1" display='flex' flexDirection='row' justifyContent='center' alignItems='center' >
@@ -97,14 +107,14 @@ function Graphs( props ) {
               handleChange={handleDrinksChange}
               name={'drinkA'}
               color={'primary'}
-              label={'Placeholder1'}
+              label={'Waffle Graph'}
             />
             <CustomCheckbox
               checked={drinksChecked}
               handleChange={handleDrinksChange}
               name={'drinkB'}
               color={'primary'}
-              label={'Placeholder2'}
+              label={'Horizontal Barchart'}
             />
           </Box>
         </Fade>
@@ -128,15 +138,11 @@ function Graphs( props ) {
         </Fade>
       </Box>
       { switchChecked ?
-        <GraphCard checked={mealsChecked} data={mealsData.data.getAllMeals} components={mealsComponent} />  
+        <GraphCard checked={mealsChecked} data={mealsData.data.getAllMeals} components={mealsComponent} />
         : null
       }
       { !switchChecked ?
-        <Paper>
-          {drinksChecked.drinkA && drinksData ? 'Placeholder1' : null }
-          {drinksChecked.drinkA && drinksChecked.drinkB ? <Divider/> : null}
-          {mealsChecked.drinkB && drinksData ? 'Placeholder2' : null }
-        </Paper>
+        <GraphCard checked={drinksChecked} data={barchartData} components={drinksComponent} />
         : null
       }
       

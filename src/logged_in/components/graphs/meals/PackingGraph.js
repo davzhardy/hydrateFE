@@ -3,8 +3,8 @@ import * as d3 from 'd3';
 import { 
   withStyles
 } from '@material-ui/core'
-import Tooltip from './Tooltip'
-import { mouseOver, mouseMove, mouseLeave } from './mouseEvents'
+import Tooltip from '../Tooltip'
+import { mouseOver, mouseMove, mouseLeave } from '../mouseEvents'
 
 const styles = theme => ({
   tooltip: {
