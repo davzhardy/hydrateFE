@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { 
   Accordion,
   AccordionSummary,
@@ -7,7 +7,7 @@ import {
 import DrinkTable from './drink/PaginationTable'
 import MealTable from './meal/PaginationTable'
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 function AccordionTable (props) {
 
@@ -18,6 +18,8 @@ function AccordionTable (props) {
   } = props;
 
   const dispatch = useDispatch();
+
+  const [expanded, setExpanded] = useState(false); 
 
   const setDrinkSearchClosed = () => {
     dispatch({
@@ -33,14 +35,16 @@ function AccordionTable (props) {
     });
   }
 
-  const clickHandler = () => {
+  const clickHandler = () => (event, isExpanded) => {
+    setExpanded(isExpanded ? !expanded : false)
     setDrinkSearchClosed();
     setMealSearchClosed();
   }
+  const searchState = useSelector((state) => state.search.mealSearch)
 
   return (
-    <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon onClick={clickHandler()}/>}>
+    <Accordion expanded={expanded} onChange={clickHandler()}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography>{tablename} History</Typography>
       </AccordionSummary>
         {tablename === 'Drink' ? <DrinkTable data = {data}/> : <MealTable data={data} UserId={UserId}/> }

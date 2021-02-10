@@ -14,7 +14,16 @@ const useStyles = makeStyles(
       display: 'flex',
       flexDirection: 'row',
       alignItems:'center',
-      width: '100%'
+      [theme.breakpoints.up("xs")]: {
+        width: '100%',
+
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: '75%',
+      },
+      [theme.breakpoints.up("md")]: {
+        width: '50%',
+      },
     },
     searchText: {
       flex: '0.8 0',
@@ -23,18 +32,14 @@ const useStyles = makeStyles(
   { name: 'MUIDataTableSearch' },
 );
 
-const Searchbar = ({ searchText, onHide, data }) => {
+const Searchbar = ({ searchText, onHide, data, onSearch }) => {
   const classes = useStyles();
-  const [searchItem, setSearchItem] = useState('') 
+  // const [searchItem, setSearchItem] = useState('') 
 
-  const handleTextChange = event => {
-    setSearchItem(event.target.value);
-    onSearch(searchItem, data);
-  };
-
-  const onSearch = (criteria, data) => {
-    console.log(data)
-  }
+  // const handleTextChange = event => {
+  //   setSearchItem(event.target.value);
+  //   onSearch(searchItem, data);
+  // };
 
   const onKeyDown = event => {
     if (event.key === 'Escape') {
@@ -56,7 +61,7 @@ const Searchbar = ({ searchText, onHide, data }) => {
           }}
           value={searchText || ''}
           onKeyDown={onKeyDown}
-          onChange={handleTextChange}
+          onChange={onSearch}
           fullWidth={true}
           placeholder={'Search query'}
         />

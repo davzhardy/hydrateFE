@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import {
-  Grow,
   Box,
   Tooltip
 } from '@material-ui/core/';
@@ -30,28 +30,48 @@ const useStyles = makeStyles(
 
 const TableSearch = (data) => {
   const classes = useStyles();
-  const [showSearchbar, setShowSearchbar] = useState(false)
+  const dispatch = useDispatch();
+  const searchState = useSelector((state) => state.search.mealSearch)
 
-  useEffect(() => {
-    'mount'
-    setShowSearchbar(false)
-  }, []);
+  const setMealSearchClosed = () => {
+    dispatch({
+      type: "SET_MEALSEARCH_STATE",
+      payload: false
+    });
+  }
+
+  const setMealSearchOpen = () => {
+    dispatch({
+      type: "SET_MEALSEARCH_STATE",
+      payload: true
+    });
+  }
+
+  const [searchQuery, setSearchQuery] = useState('')
 
   const openSearchbar = () => {
-    setShowSearchbar(true)
+    setMealSearchOpen()
+  }
+
+  const onSearch = event => {
+    setSearchQuery(event.target.value);
+  }
+
+  const onHide = () => {
+    setMealSearchClosed()
   }
 
   return (
     <Box className={classes.main}>
       <Tooltip title='Search' arrow >
         <IconButton
-          onClick={openSearchbar}
+          onClick={() => openSearchbar()}
           aria-label="Search"
         >
           <SearchIcon />
         </IconButton>
       </Tooltip>
-      {showSearchbar ? <Searchbar searchText={''} onSearch={''} onHide={''} data={data} /> : null}
+      {searchState ? <Searchbar searchText={searchQuery} onSearch={onSearch} onHide={onHide} data={data} /> : null}
     </Box>
    
   );
