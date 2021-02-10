@@ -31,34 +31,33 @@ const useStyles = makeStyles(
 const TableSearch = (data) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const searchState = useSelector((state) => state.search.mealSearch)
+  const searchState = useSelector((state) => state.search.mealSearchState)
+  const searchQuery = useSelector((state) => state.search.mealSearchValue)
 
-  const setMealSearchClosed = () => {
+  const setMealSearchState = (input) => {
     dispatch({
       type: "SET_MEALSEARCH_STATE",
-      payload: false
+      payload: input
     });
   }
 
-  const setMealSearchOpen = () => {
+  const setMealSearchValue = (input) => {
     dispatch({
-      type: "SET_MEALSEARCH_STATE",
-      payload: true
+      type: "SET_MEALSEARCH_VALUE",
+      payload: input
     });
   }
-
-  const [searchQuery, setSearchQuery] = useState('')
 
   const openSearchbar = () => {
-    setMealSearchOpen()
+    setMealSearchState(true)
   }
 
   const onSearch = event => {
-    setSearchQuery(event.target.value);
+    setMealSearchValue(event.target.value);
   }
 
   const onHide = () => {
-    setMealSearchClosed()
+    setMealSearchState(false)
   }
 
   return (

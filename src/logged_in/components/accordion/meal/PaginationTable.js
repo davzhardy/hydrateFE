@@ -1,4 +1,5 @@
 import React, { useState, useCallback, Fragment } from 'react';
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { 
   Table,
@@ -61,7 +62,6 @@ export default function PaginationTable( { data, UserId } ) {
   const [description, setDescription] = useState('');
   const [mealValue, setMealValue] = useState('');
   const [time, setTime] = useState('');
-  const [searchQuery, setSearchQuery] = useState('')
 
   const queryClient = useQueryClient()
 
@@ -145,6 +145,8 @@ export default function PaginationTable( { data, UserId } ) {
     }, 
     [deleteMealMutation, UserId]
   )
+
+  const searchQuery = useSelector((state) => state.search.mealSearchValue)
 
   const filteredData = data.filter(el => {
     const mealArray = el['meal']

@@ -40,7 +40,7 @@ function AccordionTable (props) {
     setDrinkSearchClosed();
     setMealSearchClosed();
   }
-  const searchState = useSelector((state) => state.search.mealSearch)
+  const searchState = useSelector((state) => state.search.mealSearchState)
 
   return (
     <Accordion expanded={expanded} onChange={clickHandler()}>
