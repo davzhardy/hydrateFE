@@ -8,7 +8,7 @@ import {
   Button,
 } from "@material-ui/core";
 
-function ModifyDialog(props) {
+function DeleteDialog(props) {
 
   const {
     selectedRow,
@@ -58,4 +58,4 @@ function ModifyDialog(props) {
   )
 }
 
-export default ModifyDialog;
+export default DeleteDialog;

@@ -96,10 +96,49 @@ function DELETE_MEAL(details) {
   }
 }; 
 
+function MODIFY_DRINK(details) {
+  let cups = null;
+  let volume = null;
+  if (details.cups) cups = details.cups
+  if (details.volume) volume = details.volume
+  return  {
+    query: `mutation {
+      modifyDrink(
+        UserId: ${details.UserId}, 
+        drink: "${details.drink}", 
+        cups: ${cups}, 
+        volume: ${volume}, 
+        time: "${details.time}"
+      ){
+        drinkUpdated,
+        drink {
+          drink
+        }
+      }
+    }`
+  }
+};
+
+function DELETE_DRINK(details) {
+  return  {
+    query: `mutation {
+      deleteDrink(
+        UserId: ${details.UserId}, 
+        drink: ${details.drink}, 
+        time: "${details.time}"
+      ){
+        drinkDeleted,
+      }
+    }`
+  }
+}; 
+
 export {
   CREATE_USER,
   POST_DRINK,
   POST_MEAL,
   MODIFY_MEAL,
   DELETE_MEAL,
+  MODIFY_DRINK,
+  DELETE_DRINK,
 }

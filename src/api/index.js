@@ -1,8 +1,8 @@
 import { GET_ALL_DRINKS, GET_ALL_MEALS, GET_USER } from './queries'
-import { CREATE_USER, POST_DRINK, POST_MEAL, MODIFY_MEAL, DELETE_MEAL } from './mutations'
+import { CREATE_USER, POST_DRINK, POST_MEAL, MODIFY_MEAL, DELETE_MEAL, MODIFY_DRINK, DELETE_DRINK } from './mutations'
 
-// const endpoint = 'http://localhost:4000'
-const endpoint = 'https://hydrateapp.herokuapp.com/'
+const endpoint = 'http://localhost:4000'
+// const endpoint = 'https://hydrateapp.herokuapp.com/'
 
 const getOptions = (func, args) => { 
   return {
@@ -36,7 +36,9 @@ const mutations = {
   POST_DRINK, 
   POST_MEAL,
   MODIFY_MEAL,
-  DELETE_MEAL
+  DELETE_MEAL,
+  MODIFY_DRINK,
+  DELETE_DRINK,
 }
 
 export {

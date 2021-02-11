@@ -51,21 +51,21 @@ export default function PaginationTable( props ) {
 
   const queryClient = useQueryClient()
 
-  const modifyMealMutation = useMutation((modifyMeal) => 
-    fetch(endpoint, mutateOptions(modifyMeal))
+  const modifyDrinkMutation = useMutation((modifyDrink) => 
+    fetch(endpoint, mutateOptions(modifyDrink))
       .then(res => res.json())
       ,
     {
-      onSuccess: () => queryClient.invalidateQueries('meals') // note this needs to be consistent with the useQuery 
+      onSuccess: () => queryClient.invalidateQueries('drinks') // note this needs to be consistent with the useQuery 
     }
   )
 
-  const deleteMealMutation = useMutation((deleteMeal) => 
-    fetch(endpoint, mutateOptions(deleteMeal))
+  const deleteDrinkMutation = useMutation((deleteDrink) => 
+    fetch(endpoint, mutateOptions(deleteDrink))
       .then(res => res.json())
       ,
     {
-      onSuccess: () => queryClient.invalidateQueries('meals') // note this needs to be consistent with the useQuery 
+      onSuccess: () => queryClient.invalidateQueries('drinks') // note this needs to be consistent with the useQuery 
     }
   )
 
@@ -108,32 +108,30 @@ export default function PaginationTable( props ) {
   } 
 
   const handleRowModification = useCallback(
-    (oldRow, newMeal) => {
-      const regex = /(,|\n)/g
+    (oldRow, newDrink) => {
       const payload = {
         UserId: UserId,
-        meal: newMeal.replace(regex,',').split(','),
+        drink: newDrink,
         time: oldRow.time,
       }
-      modifyMealMutation.mutate(mutations.MODIFY_MEAL(payload))
+      modifyDrinkMutation.mutate(mutations.MODIFY_DRINK(payload))
     }, 
-    [modifyMealMutation, UserId]
+    [modifyDrinkMutation, UserId]
   )
 
   const handleRowDeletion = useCallback(
     (oldRow) => {
       const payload = {
         UserId: UserId,
-        meal: oldRow.meal,
+        drink: oldRow.drink,
         time: oldRow.time,
       }
-      deleteMealMutation.mutate(mutations.DELETE_MEAL(payload))
+      deleteDrinkMutation.mutate(mutations.DELETE_DRINK(payload))
     }, 
-    [deleteMealMutation, UserId]
+    [deleteDrinkMutation, UserId]
   )
 
   const searchQuery = useSelector((state) => state.search.drinkSearchValue)
-  console.log('query', searchQuery)
 
   const filteredData = data.filter(el => {
     return el['drink'].toLowerCase().includes(searchQuery.toLowerCase())
@@ -152,14 +150,14 @@ export default function PaginationTable( props ) {
         setMealValue={setMealValue}
         time={time}
         setTime={setTime}
-        isLoading={modifyMealMutation.isLoading}
+        isLoading={modifyDrinkMutation.isLoading}
       />
       <DeleteDialog
         selectedRow={selectedRow}
         open={isRowDeletionDialogOpen}
         onClose={closeRowDeletionDialog}
         handleRowDeletion={handleRowDeletion}
-        isLoading={modifyMealMutation.isLoading}
+        isLoading={modifyDrinkMutation.isLoading}
       />
       <TableToolbar
         component={<HeaderIcons data={data} tableName={'Drink'}/>}

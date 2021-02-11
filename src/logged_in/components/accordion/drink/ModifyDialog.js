@@ -4,7 +4,7 @@ import ButtonCircularProgress from "../../../../shared/ButtonCircularProgress";
 import {
   Button,
 } from "@material-ui/core";
-import MealInputs from '../../meal/MealInputs'
+import DrinkInputs from '../../drink/DrinkInput'
 
 function ModifyDialog(props) {
 
@@ -35,7 +35,7 @@ function ModifyDialog(props) {
         }}
         hideBackdrop
         headline="Modify your drink"
-        content={<MealInputs 
+        content={<DrinkInputs 
           description={description}
           setDescription={setDescription}
           mealValue={mealValue}

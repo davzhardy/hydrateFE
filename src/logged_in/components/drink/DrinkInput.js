@@ -1,149 +1,63 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Grid,
-  InputAdornment,
-  TextField,
-} from '@material-ui/core';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
+import React, { Fragment } from 'react';
 import TextFieldInput from '../../../shared/TextFieldInput';
-
-const filter = createFilterOptions();
+import DrinkAutocomplete from './DrinkAutocomplete'
 
 export default function DrinkInput(props) {
 
   const {
-    stateSetting,
-    defaultValue,
+    drinkType,
+    setDrink,
+    cupsValue,
+    setCupsValue,
+    volumeValue,
+    setVolumeValue,
+    time,
+    setTime
   } = props
 
-  const [open, toggleOpen] = useState(false);
-
-  const handleClose = () => {
-    setDialogValue('');
-    toggleOpen(false);
-  };
-
-  const [dialogValue, setDialogValue] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    stateSetting(dialogValue);
-    handleClose();
-  };
+  const potentialDrinks = [
+    { drink: 'Water' },
+    { drink: 'Black Tea' },
+    { drink: 'Herbal Tea' },
+    { drink: 'Fruit Juice' },
+    { drink: 'Coffee' },
+    { drink: 'Fizzy Drink' },
+    { drink: 'Ginger & Lemon Tea' },
+  ];
 
   return (
-    <Grid container spacing={1} >
-      <Grid item xs={12}>
-        <Autocomplete
-          value={defaultValue}
-          onChange={(event, newValue) => {
-            if (typeof newValue === 'string') {
-              // timeout to avoid instant validation of the dialog's form.
-              setTimeout(() => {
-                toggleOpen(true);
-                setDialogValue(newValue);
-              });
-            } else if (newValue && newValue.inputValue) {
-              toggleOpen(true);
-              setDialogValue(newValue.inputValue);
-            } else {
-              stateSetting(newValue.drink);
-            }
-          }}
-          filterOptions={(options, params) => {
-            const filtered = filter(options, params);
-
-            if (params.inputValue !== '') {
-              filtered.push({
-                inputValue: params.inputValue,
-                drink: `Add "${params.inputValue}"`,
-              });
-            }
-
-            return filtered;
-          }}
-          id="Drink-Adder"
-          options={potentialDrinks}
-          getOptionLabel={(option) => {
-            // e.g value selected with enter, right from the input
-            if (typeof option === 'string') {
-              return option;
-            }
-            if (option.inputValue) {
-              return option.inputValue;
-            }
-            return option.drink;
-          }}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          renderOption={(option) => option.drink}
-          style={{ width: '100%' }}
-          freeSolo
-          renderInput={(params) => (
-            <TextFieldInput params={params} label="Drink Type" variant="standard" 
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: (
-                  <>
-                    <InputAdornment position="start">
-                      <FreeBreakfastIcon 
-                        color= "primary"
-                        fontSize="inherit"
-                      />
-                    </InputAdornment>
-                    {params.InputProps.startAdornment}
-                  </>
-                )
-              }}
-            />
-          )}
+    <Fragment>
+        <DrinkAutocomplete 
+          defaultValue={drinkType}
+          stateSetting = {setDrink}
+          potentialDrinks={potentialDrinks}
         />
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-drink">
-          <form onSubmit={handleSubmit}>
-            <DialogTitle id="form-dialog-drink">Add a new drink</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Is there a drink missing from our list? Please, add it!
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                value={dialogValue}
-                onChange={(event) => setDialogValue(...dialogValue, event.target.value)}
-                label="Drink"
-                type="text"
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button type="submit" color="primary">
-                Add
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-      </Grid>
-    </Grid>
+        <TextFieldInput 
+          id={'cups-drunk'}
+          label={'Cups'}
+          defaultValue={cupsValue}
+          stateSetting = {setCupsValue}
+          helperText={'How many cups you drank'}
+          variant={'standard'}
+        />
+        <TextFieldInput
+          id={'volume-drunk'}
+          label={'Volume'}
+          defaultValue={volumeValue}
+          stateSetting = {setVolumeValue}
+          helperText={'How many mililitres you drank'}
+          variant={'standard'}
+        />
+        <TextFieldInput
+          id={'time-of-drink'}
+          label={'Time'}
+          defaultValue={time}
+          stateSetting = {setTime}
+          type={'datetime-local'}
+          variant={'standard'}
+          // styles={{height:0}}
+        />
+    </Fragment>
   );
 }
 
-const potentialDrinks = [
-  { drink: 'Water' },
-  { drink: 'Black Tea' },
-  { drink: 'Herbal Tea' },
-  { drink: 'Fruit Juice' },
-  { drink: 'Coffee' },
-  { drink: 'Fizzy Drink' },
-  { drink: 'Ginger & Lemon Tea' },
-];
