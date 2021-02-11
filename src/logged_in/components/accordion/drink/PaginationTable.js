@@ -1,4 +1,5 @@
 import React, { useState, useCallback, Fragment } from 'react';
+import { useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { 
   Table,
@@ -19,31 +20,6 @@ import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../../api'
 
-const columns = [
-  { id: 'time', label: 'Date', minWidth: 50, 
-    format: (value) => `${new Date(value).getDate()} ${new Date(value).toLocaleString('default', { month: 'short' })} ${new Date(value).getFullYear()}`
-  },
-  { id: 'drink', label: 'Drink', minWidth: 50 },
-  {
-    id: 'volume',
-    label: 'Volume',
-    minWidth: 50,
-    align: 'right',
-  },
-  {
-    id: 'cups',
-    label: 'Cups',
-    minWidth: 50,
-    align: 'right',
-  },
-  {
-    id: "actions",
-    label: '',
-    numeric: false,
-    minWidth: 50,
-  }
-];
-
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -53,7 +29,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PaginationTable( { data, UserId } ) {
+export default function PaginationTable( props ) {
+
+  const {
+    data,
+    UserId,
+    columns
+  } = props
 
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -66,7 +48,6 @@ export default function PaginationTable( { data, UserId } ) {
   const [description, setDescription] = useState('');
   const [mealValue, setMealValue] = useState('');
   const [time, setTime] = useState('');
-  const [searchQuery, setSearchQuery] = useState('')
 
   const queryClient = useQueryClient()
 
@@ -151,10 +132,13 @@ export default function PaginationTable( { data, UserId } ) {
     [deleteMealMutation, UserId]
   )
 
-  // const filteredData = data.filter(el => {
-  //   const mealArray = el['meal']
-  //   return mealArray.some(el => el.toLowerCase().includes(searchQuery.toLowerCase()))
-  // })
+  const searchQuery = useSelector((state) => state.search.drinkSearchValue)
+  console.log('query', searchQuery)
+
+  const filteredData = data.filter(el => {
+    console.log('drink',el['drink'])
+    return el['drink'].includes(searchQuery.toLowerCase())
+  })
 
   return (
     <Fragment>
@@ -179,7 +163,7 @@ export default function PaginationTable( { data, UserId } ) {
         isLoading={modifyMealMutation.isLoading}
       />
       <TableToolbar
-        component={<HeaderIcons data={data}/>}
+        component={<HeaderIcons data={data} tableName={'Drink'}/>}
       />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
@@ -190,7 +174,7 @@ export default function PaginationTable( { data, UserId } ) {
             columns={columns}
           />
           <TableBody>
-            {columnSort(data, getSorting(order, orderBy))
+            {columnSort(filteredData, getSorting(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
               return (
                 <TableRow hover tabIndex={-1} key={index}>
@@ -221,7 +205,7 @@ export default function PaginationTable( { data, UserId } ) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={data.length}
+        count={filteredData.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

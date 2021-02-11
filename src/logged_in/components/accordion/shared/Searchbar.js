@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Grow,
   Box,
@@ -34,12 +34,6 @@ const useStyles = makeStyles(
 
 const Searchbar = ({ searchText, onHide, data, onSearch }) => {
   const classes = useStyles();
-  // const [searchItem, setSearchItem] = useState('') 
-
-  // const handleTextChange = event => {
-  //   setSearchItem(event.target.value);
-  //   onSearch(searchItem, data);
-  // };
 
   const onKeyDown = event => {
     if (event.key === 'Escape') {

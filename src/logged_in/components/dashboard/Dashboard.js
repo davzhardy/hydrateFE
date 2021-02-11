@@ -5,8 +5,6 @@ import Summary from './Summary'
 import AddDrinkArea from "../drink/AddDrinkArea"
 import AddMealArea from "../meal/AddMealArea"
 import AccordionTable from "../accordion/AccordionTable"
-import { useQuery } from "react-query";
-import { endpoint, queries, getOptions } from '../../../api'
 import mealsCalculation from '../../functions/mealsCalculation'
 import drinksCalculation from '../../functions/drinksCalculation'
 import drinksConverter from '../../functions/drinksConverter'
@@ -18,20 +16,8 @@ function Dashboard( { selectDashboard, userInfo }) {
   const [selectedTimeframe, setSelectedTimeframe] = useState('allTime')
   const UserId = userInfo.UserId;
 
-  const { data, status } = useQuery(
-    "drinks", 
-    async () => 
-      fetch(endpoint, getOptions(queries.GET_ALL_DRINKS,UserId))
-        .then(res => res.json())
-        .catch((err) => {
-          console.log('Error:', JSON.stringify(err)) //eslint-disable-line no-console
-        }),
-    // {
-    //   onSuccess: (data) => dataFunction(data)
-    // }
-  )
-
   const mealsRequest = GetMeals(UserId)
+  const drinksRequest = GetDrinks(UserId)
     
   const timeFramesToDays = {
     'week': 7,
@@ -92,12 +78,12 @@ function Dashboard( { selectDashboard, userInfo }) {
   ];
 
 
-  if ( [status, mealsRequest.status].includes("loading") ) return <p>Loading....</p>
-  if ( [status, mealsRequest.status].includes("error") ) return <p>An error has been thrown</p>
+  if ( [drinksRequest.status, mealsRequest.status].includes("loading") ) return <p>Loading....</p>
+  if ( [drinksRequest.status, mealsRequest.status].includes("error") ) return <p>An error has been thrown</p>
   else { 
 
     const mealData = mealsRequest.data.data.getAllMeals;
-    const drinkData = drinksConverter(data.data.getAllDrinks, 250);
+    const drinkData = drinksConverter(drinksRequest.data.data.getAllDrinks, 250);
     const summaryMealsData = mealsCalculation(mealData, timeFramesToDays[selectedTimeframe])
     const summaryDrinksData = drinksCalculation(drinkData, timeFramesToDays[selectedTimeframe])
 

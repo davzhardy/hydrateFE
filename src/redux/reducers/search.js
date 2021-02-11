@@ -2,6 +2,7 @@ const initialState = {
   mealSearch: false,
   drinkSearch: false,
   mealSearchValue: '',
+  drinkSearchValue: '',
 }
 
 const searchReducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const searchReducer = (state = initialState, action) => {
       return {
         ...state,
         mealSearchValue: action.payload
+      }
+    case "SET_DRINKSEARCH_VALUE":
+      return {
+        ...state,
+        drinkSearchValue: action.payload
       }
     default:
       return state;

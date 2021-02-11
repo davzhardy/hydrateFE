@@ -5,7 +5,8 @@ import {
   Tooltip
 } from '@material-ui/core'
 import DownloadIcon from "@material-ui/icons/CloudDownload";
-import TableSearch from './TableSearch'
+import MealTableSearch from '../meal/TableSearch'
+import DrinkTableSearch from '../drink/TableSearch'
 import dataToCsv from '../../../functions/dataToCsv'
 import createCsv from '../../../functions/createCsv'
 
@@ -13,12 +14,13 @@ import createCsv from '../../../functions/createCsv'
 function HeaderIcons(props) {
 
   const {
-    data
+    data,
+    tableName
   } = props
 
   let csvData;
   if (data.length) csvData = dataToCsv(data)
-  
+
   return (
     <Box display="flex" justifyContent="flex-end" width='100%'>
       <Tooltip title='Download CSV Data' arrow>
@@ -29,7 +31,7 @@ function HeaderIcons(props) {
           <DownloadIcon />
         </IconButton>
       </Tooltip>
-      <TableSearch data ={data}/>
+      {tableName === 'Meal' ? <MealTableSearch data ={data}/>: <DrinkTableSearch data ={data}/>}
     </Box>
   )
 }

@@ -7,7 +7,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import Searchbar from './Searchbar'
+import Searchbar from '../shared/Searchbar'
 
 const useStyles = makeStyles(
   theme => ({
@@ -31,33 +31,34 @@ const useStyles = makeStyles(
 const TableSearch = (data) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const searchState = useSelector((state) => state.search.mealSearchState)
-  const searchQuery = useSelector((state) => state.search.mealSearchValue)
+  const searchState = useSelector((state) => state.search.drinkSearchState)
+  const searchQuery = useSelector((state) => state.search.drinkSearchValue)
 
-  const setMealSearchState = (input) => {
+  const setSearchState = (input) => {
     dispatch({
-      type: "SET_MEALSEARCH_STATE",
+      type: "SET_DRINKSEARCH_STATE",
       payload: input
     });
   }
 
-  const setMealSearchValue = (input) => {
+  const setSearchValue = (input) => {
     dispatch({
-      type: "SET_MEALSEARCH_VALUE",
+      type: "SET_DRINKSEARCH_VALUE",
       payload: input
     });
   }
 
   const openSearchbar = () => {
-    setMealSearchState(true)
+    setSearchState(true)
   }
 
   const onSearch = event => {
-    setMealSearchValue(event.target.value);
+    setSearchValue(event.target.value);
   }
 
   const onHide = () => {
-    setMealSearchState(false)
+    setSearchState(false)
+    setSearchValue('')
   }
 
   return (

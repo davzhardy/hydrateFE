@@ -1,5 +1,6 @@
-import { useQuery } from "react-query";
-import { endpoint, queries, getOptions } from '../../../api'
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { endpoint, queries, getOptions, mutations, mutateOptions } from '../../../api'
+
 
 function GetMeals (UserId) {
   const output = {}
@@ -33,8 +34,23 @@ function GetDrinks (UserId) {
   return output
 }
 
+// function ModifyMeal () {
+//   const queryClient = useQueryClient()
+
+//   const modifyMealMutation = useMutation((mealToModify) => 
+//     fetch(endpoint, mutateOptions(mealToModify))
+//       .then(res => res.json())
+//       ,
+//     {
+//       onSuccess: () => queryClient.invalidateQueries('meals') // note this needs to be consistent with the useQuery 
+//     }
+//   )
+//   return modifyMealMutation
+// }
+
 
 export {
   GetMeals,
   GetDrinks,
+  // ModifyMeal,
 }

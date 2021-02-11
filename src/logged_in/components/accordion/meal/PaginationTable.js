@@ -162,7 +162,7 @@ export default function PaginationTable(props) {
         isLoading={modifyMealMutation.isLoading}
       />
       <TableToolbar
-        component={<HeaderIcons data={data}/>}
+        component={<HeaderIcons data={data} tableName={'Meal'}/>}
       />
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
