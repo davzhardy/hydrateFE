@@ -13,10 +13,12 @@ function ModifyDialog(props) {
     open,
     handleRowModification,
     onClose,
-    description,
-    setDescription,
-    mealValue,
-    setMealValue,
+    drinkType,
+    setDrinkType,
+    cupsValue,
+    setCupsValue,
+    volumeValue,
+    setVolumeValue,
     time,
     setTime,
     isLoading
@@ -30,16 +32,18 @@ function ModifyDialog(props) {
         loading={isLoading}
         onFormSubmit={(e) => {
           e.preventDefault();
-          handleRowModification(selectedRow, mealValue)
+          handleRowModification(selectedRow, drinkType, cupsValue, volumeValue)
           onClose()
         }}
         hideBackdrop
         headline="Modify your drink"
         content={<DrinkInputs 
-          description={description}
-          setDescription={setDescription}
-          mealValue={mealValue}
-          setMealValue={setMealValue}
+          drinkType={drinkType}
+          setDrink = {setDrinkType}
+          cupsValue={cupsValue}
+          setCupsValue={setCupsValue}
+          volumeValue={volumeValue}
+          setVolumeValue={setVolumeValue}
           time={time}
           setTime={setTime}
         />}

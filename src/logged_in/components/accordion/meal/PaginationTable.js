@@ -190,6 +190,7 @@ export default function PaginationTable(props) {
                           setDescription={setDescription}
                           setMealValue={setMealValue}
                           setTime={setTime}
+                          tableType={'Meal'}
                         /> 
                         : column.format ? column.format(value) : value}
                       </TableCell>

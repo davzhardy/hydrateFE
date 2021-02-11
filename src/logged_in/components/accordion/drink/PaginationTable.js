@@ -45,8 +45,9 @@ export default function PaginationTable( props ) {
   const [isRowModificationDialogOpen, setIsRowModificationDialogOpen] = useState(false)
   const [isRowDeletionDialogOpen, setIsRowDeletionDialogOpen] = useState(false)
   const [selectedRow, setSelectedRow] = useState([])
-  const [description, setDescription] = useState('');
-  const [mealValue, setMealValue] = useState('');
+  const [drinkType, setDrinkType] = useState('');
+  const [cupsValue, setCupsValue] = useState('');
+  const [volumeValue, setVolumeValue] = useState('');
   const [time, setTime] = useState('');
 
   const queryClient = useQueryClient()
@@ -108,10 +109,12 @@ export default function PaginationTable( props ) {
   } 
 
   const handleRowModification = useCallback(
-    (oldRow, newDrink) => {
+    (oldRow, newDrink, newCups, newVolume) => {
       const payload = {
         UserId: UserId,
         drink: newDrink,
+        cups: newCups,
+        volume: newVolume,
         time: oldRow.time,
       }
       modifyDrinkMutation.mutate(mutations.MODIFY_DRINK(payload))
@@ -144,10 +147,12 @@ export default function PaginationTable( props ) {
         open={isRowModificationDialogOpen}
         onClose={closeRowModificationDialog}
         handleRowModification={handleRowModification}
-        description={description}
-        setDescription={setDescription}
-        mealValue={mealValue}
-        setMealValue={setMealValue}
+        drinkType={drinkType}
+        setDrink = {setDrinkType}
+        cupsValue={cupsValue}
+        setCupsValue={setCupsValue}
+        volumeValue={volumeValue}
+        setVolumeValue={setVolumeValue}
         time={time}
         setTime={setTime}
         isLoading={modifyDrinkMutation.isLoading}
@@ -185,9 +190,11 @@ export default function PaginationTable( props ) {
                           openRowModificationDialog={openRowModificationDialog}
                           openRowDeletionDialog={openRowDeletionDialog}
                           setSelectedRow={setSelectedRow}
-                          setDescription={setDescription}
-                          setMealValue={setMealValue}
+                          setDrink = {setDrinkType}
+                          setCupsValue={setCupsValue}
+                          setVolumeValue={setVolumeValue}
                           setTime={setTime}
+                          tableType={'Drink'}
                         /> 
                         : column.format ? column.format(value) : value}
                       </TableCell>
