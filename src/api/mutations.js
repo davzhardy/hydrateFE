@@ -124,7 +124,7 @@ function DELETE_DRINK(details) {
     query: `mutation {
       deleteDrink(
         UserId: ${details.UserId}, 
-        drink: ${details.drink}, 
+        drink: "${details.drink}", 
         time: "${details.time}"
       ){
         drinkDeleted,

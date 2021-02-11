@@ -129,6 +129,7 @@ export default function PaginationTable( props ) {
         drink: oldRow.drink,
         time: oldRow.time,
       }
+      console.log('here',payload)
       deleteDrinkMutation.mutate(mutations.DELETE_DRINK(payload))
     }, 
     [deleteDrinkMutation, UserId]

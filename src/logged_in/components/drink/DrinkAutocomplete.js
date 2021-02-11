@@ -16,7 +16,7 @@ import TextFieldInput from '../../../shared/TextFieldInput';
 
 const filter = createFilterOptions();
 
-export default function MealAutocomplete(props) {
+export default function DrinkAutocomplete(props) {
 
   const {
     stateSetting,
