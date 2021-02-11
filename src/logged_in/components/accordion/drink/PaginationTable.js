@@ -136,8 +136,7 @@ export default function PaginationTable( props ) {
   console.log('query', searchQuery)
 
   const filteredData = data.filter(el => {
-    console.log('drink',el['drink'])
-    return el['drink'].includes(searchQuery.toLowerCase())
+    return el['drink'].toLowerCase().includes(searchQuery.toLowerCase())
   })
 
   return (
