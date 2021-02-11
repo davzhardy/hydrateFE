@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { QueryClientProvider, QueryClient } from 'react-query'
+import LoadingScreen from './shared/LoadingScreen'
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
 const LoggedOutComponent = lazy(() => import("./logged_out/components/Main"));
@@ -25,7 +26,7 @@ function App() {
           <MuiThemeProvider theme={theme}>
             <CssBaseline />
             <GlobalStyles />
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<LoadingScreen />}>
               <Switch>
                 <Route path="/a">
                   <LoggedInComponent />

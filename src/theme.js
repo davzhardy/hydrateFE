@@ -1,5 +1,6 @@
 import { unstable_createMuiStrictModeTheme, responsiveFontSizes } from "@material-ui/core";
 import CabinTTF from './fonts/Cabin-Regular.ttf'
+import { red, blue, purple } from '@material-ui/core/colors'
 
 // fonts
 const cabin = {
@@ -51,6 +52,11 @@ const theme = unstable_createMuiStrictModeTheme({
       black,
       darkBlack,
       alternative
+    },
+    avatars: {
+      breakfast: red[300],
+      lunch: blue[300],
+      dinner: purple[300]
     },
     warning: {
       light: warningLight,

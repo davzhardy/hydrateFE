@@ -39,8 +39,7 @@ const styles = theme => ({
     marginBottom: 15,
     fontSize: 12,
     '&:hover': {
-      backgroundColor: '#0069d9',
-      borderColor: '#0062cc',
+      backgroundColor: theme.palette.secondary.main,
       boxShadow: 'none',
     }
   }

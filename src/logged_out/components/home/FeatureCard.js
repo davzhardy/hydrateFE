@@ -40,7 +40,6 @@ function FeatureCard(props) {
   return (
     <Fragment>
       <div
-        // We will set color and fill here, due to some prios complications
         className={classes.iconWrapper}
         style={{
           color: color,

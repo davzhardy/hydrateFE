@@ -61,13 +61,13 @@ function Dashboard( { selectDashboard, userInfo }) {
       id: 'volume',
       label: 'Volume',
       minWidth: 50,
-      align: 'right',
+      align: 'left',
     },
     {
       id: 'cups',
       label: 'Cups',
       minWidth: 50,
-      align: 'right',
+      align: 'left',
     },
     {
       id: "actions",

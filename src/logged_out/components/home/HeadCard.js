@@ -18,7 +18,20 @@ const styles = (theme) => ({
       fontSize: theme.typography.h6.fontSize,
     },
   },
-  extraLargeButton: {
+  extraLargeButtonTop: {
+    paddingTop: theme.spacing(1.5),
+    paddingBottom: theme.spacing(1.5),
+    marginBottom: theme.spacing(4),
+    [theme.breakpoints.up("xs")]: {
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+    },
+    [theme.breakpoints.up("lg")]: {
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    },
+  },
+  extraLargeButtonBottom: {
     paddingTop: theme.spacing(1.5),
     paddingBottom: theme.spacing(1.5),
     [theme.breakpoints.up("xs")]: {
@@ -29,7 +42,7 @@ const styles = (theme) => ({
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
     },
-  },
+  }
 });
 
 function HeadCard(props) {
@@ -77,7 +90,7 @@ function HeadCard(props) {
               variant="contained"
               color="secondary"
               fullWidth
-              className={classes.extraLargeButton}
+              className={classes.extraLargeButtonTop}
               classes={{ label: classes.extraLargeButtonLabel }}
               onClick={()=>setDialogOpen('login')}
             >
@@ -98,7 +111,7 @@ function HeadCard(props) {
               variant="contained"
               color="secondary"
               fullWidth
-              className={classes.extraLargeButton}
+              className={classes.extraLargeButtonBottom}
               classes={{ label: classes.extraLargeButtonLabel }}
               onClick={()=>setDialogOpen('login')}
             >

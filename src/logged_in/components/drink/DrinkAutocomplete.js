@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
-import RestaurantIcon from '@material-ui/icons/Restaurant';
+import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import TextFieldInput from '../../../shared/TextFieldInput';
 
 const filter = createFilterOptions();
@@ -95,7 +95,7 @@ export default function DrinkAutocomplete(props) {
                 startAdornment: (
                   <>
                     <InputAdornment position="start">
-                      <RestaurantIcon 
+                      <FreeBreakfastIcon 
                         color= "primary"
                         fontSize="inherit"
                       />
