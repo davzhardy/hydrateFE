@@ -10,6 +10,7 @@ import { endpoint, queries, getOptions } from '../../../api'
 import mealsCalculation from '../../functions/mealsCalculation'
 import drinksCalculation from '../../functions/drinksCalculation'
 import drinksConverter from '../../functions/drinksConverter'
+import { GetMeals, GetDrinks } from './useAsync'
 
 function Dashboard( { selectDashboard, userInfo }) {
 
@@ -30,18 +31,7 @@ function Dashboard( { selectDashboard, userInfo }) {
     // }
   )
 
-  const { data: data1, status: status1 } = useQuery(
-    "meals",
-    async () => 
-      fetch(endpoint, getOptions(queries.GET_ALL_MEALS,UserId))
-        .then(res => res.json())
-        .catch((err) => {
-          console.log('Error:', JSON.stringify(err)) //eslint-disable-line no-console
-        }),
-    // {
-    //   onSuccess: (data) => dataFunction(data)
-    // }
-  )
+  const mealsRequest = GetMeals(UserId)
     
   const timeFramesToDays = {
     'week': 7,
@@ -56,14 +46,58 @@ function Dashboard( { selectDashboard, userInfo }) {
     { meal: 'Snack' },
   ];
 
+  const mealColumns = [
+    { id: 'time', label: 'Date', minWidth: 50, numeric: false,
+      format: (value) => `${new Date(value).getDate()} ${new Date(value).toLocaleString('default', { month: 'short' })} ${new Date(value).getFullYear()}`
+    },
+    { id: 'description', label: 'Type', minWidth: 50, numeric: false },
+    {
+      id: 'meal',
+      label: 'Meal',
+      minWidth: 50,
+      numeric: false,
+      format: (value) => value.join(',\n')
+    },
+    {
+      id: "actions",
+      label: '',
+      numeric: false,
+      minWidth: 50,
+    }
+  ];
 
-  if ( [status, status1].includes("loading") ) return <p>Loading....</p>
-  if ( [status, status1].includes("error") ) return <p>An error has been thrown</p>
+  const drinkColumns = [
+    { id: 'time', label: 'Date', minWidth: 50, 
+      format: (value) => `${new Date(value).getDate()} ${new Date(value).toLocaleString('default', { month: 'short' })} ${new Date(value).getFullYear()}`
+    },
+    { id: 'drink', label: 'Drink', minWidth: 50 },
+    {
+      id: 'volume',
+      label: 'Volume',
+      minWidth: 50,
+      align: 'right',
+    },
+    {
+      id: 'cups',
+      label: 'Cups',
+      minWidth: 50,
+      align: 'right',
+    },
+    {
+      id: "actions",
+      label: '',
+      numeric: false,
+      minWidth: 50,
+    }
+  ];
+
+
+  if ( [status, mealsRequest.status].includes("loading") ) return <p>Loading....</p>
+  if ( [status, mealsRequest.status].includes("error") ) return <p>An error has been thrown</p>
   else { 
 
-    const mealData = data1.data.getAllMeals;
+    const mealData = mealsRequest.data.data.getAllMeals;
     const drinkData = drinksConverter(data.data.getAllDrinks, 250);
-
     const summaryMealsData = mealsCalculation(mealData, timeFramesToDays[selectedTimeframe])
     const summaryDrinksData = drinksCalculation(drinkData, timeFramesToDays[selectedTimeframe])
 
@@ -87,16 +121,20 @@ function Dashboard( { selectDashboard, userInfo }) {
           <AddMealArea UserId={UserId} potentialMeals={potentialMeals}/>
         </Grid>
       </Grid>
-      <AccordionTable data={drinkData} tablename={'Drink'}/>  
       <AccordionTable 
-        data={mealData} 
+        drinkData={drinkData} 
+        UserId={UserId}
+        tablename={'Drink'}
+        drinkColumns={drinkColumns}
+      />
+      <AccordionTable 
+        mealData={mealData} 
         UserId={UserId}
         tablename={'Meal'}
+        mealColumns={mealColumns}
       />
     </Fragment>
   )}
-
-  
 }
 
 export default Dashboard;

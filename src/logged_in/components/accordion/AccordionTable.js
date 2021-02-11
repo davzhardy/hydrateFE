@@ -5,20 +5,22 @@ import {
   Typography,
 } from "@material-ui/core";
 import DrinkTable from './drink/PaginationTable'
-import MealTable from './meal/PaginationTable'
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MealTable from './meal/PaginationTable'
 import { useDispatch, useSelector } from 'react-redux'
 
 function AccordionTable (props) {
 
   const { 
-    data,
+    mealData,
+    drinkData,
     tablename,
     UserId,
+    mealColumns,
+    drinkColumns,
   } = props;
 
   const dispatch = useDispatch();
-
   const [expanded, setExpanded] = useState(false); 
 
   const setDrinkSearchClosed = () => {
@@ -47,7 +49,10 @@ function AccordionTable (props) {
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography>{tablename} History</Typography>
       </AccordionSummary>
-        {tablename === 'Drink' ? <DrinkTable data = {data}/> : <MealTable data={data} UserId={UserId}/> }
+        {tablename === 'Meal' ? <MealTable data={mealData} UserId={UserId} columns={mealColumns}/>
+        :
+        <DrinkTable data={drinkData} UserId={UserId} columns={drinkColumns} />
+        }
     </Accordion>
   )
 }

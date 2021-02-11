@@ -20,6 +20,26 @@ import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../../api'
 
+const columns = [
+  { id: 'time', label: 'Date', minWidth: 50, numeric: false,
+    format: (value) => `${new Date(value).getDate()} ${new Date(value).toLocaleString('default', { month: 'short' })} ${new Date(value).getFullYear()}`
+  },
+  { id: 'description', label: 'Type', minWidth: 50, numeric: false },
+  {
+    id: 'meal',
+    label: 'Meal',
+    minWidth: 50,
+    numeric: false,
+    format: (value) => value.join(',\n')
+  },
+  {
+    id: "actions",
+    label: '',
+    numeric: false,
+    minWidth: 50,
+  }
+];
+
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -29,17 +49,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PaginationTable(props) {
-
-  const {
-    data,
-    UserId,
-    columns
-  } = props
+export default function PaginationTable( { data, UserId } ) {
 
   const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState('time');
   const [isRowModificationDialogOpen, setIsRowModificationDialogOpen] = useState(false)
