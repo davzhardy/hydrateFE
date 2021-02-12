@@ -28,6 +28,8 @@ function PackingGraph(props) {
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
 
+    const names = new Set(data.map(d => d.meal))
+
     const color = d3.scaleOrdinal(data.map(d => d.description), d3.schemeSet1)
     const size= d3.scaleSqrt()
       .domain([0, 10])
@@ -60,7 +62,7 @@ function PackingGraph(props) {
           mouseOver(displayedTooltip)
         })
         .on("mousemove", (event, d) => {
-          const tooltipTextFormat = `${d.description} <br> Eaten ${d.value} times`
+          const tooltipTextFormat = `${d.meal} <br> Eaten ${d.value} times`
           mouseMove(displayedTooltip, tooltipTextFormat, event, d)
         })
         .on("mouseleave",(event, d) => {
