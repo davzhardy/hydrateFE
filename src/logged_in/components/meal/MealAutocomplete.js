@@ -27,15 +27,18 @@ export default function MealAutocomplete(props) {
   const [open, toggleOpen] = useState(false);
 
   const handleClose = () => {
-    setDialogValue('');
+    setDialogValue({meal: ''});
     toggleOpen(false);
   };
 
-  const [dialogValue, setDialogValue] = useState('');
+  const [dialogValue, setDialogValue] = useState({meal: ''});
+
+  // the value prop for the material ui autocomplete needs to be within the component otherwise it does not recognise the state 
+  const [description, setDescription] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    stateSetting(dialogValue);
+    stateSetting(dialogValue.meal);
     handleClose();
   };
 
@@ -43,31 +46,35 @@ export default function MealAutocomplete(props) {
     <Grid container spacing={1} >
       <Grid item xs={12}>
         <Autocomplete
-          value={defaultValue}
+          value={description}
           onChange={(event, newValue) => {
+            console.log('newValue', newValue)
             if (typeof newValue === 'string') {
               // timeout to avoid instant validation of the dialog's form.
               setTimeout(() => {
                 toggleOpen(true);
-                setDialogValue(newValue);
+                setDialogValue({
+                  meal: newValue
+                });
               });
             } else if (newValue && newValue.inputValue) {
               toggleOpen(true);
-              setDialogValue(newValue.inputValue);
+              setDialogValue({
+                  meal: newValue.inputValue
+              });
             } else {
-              stateSetting(newValue.meal);
+              stateSetting(newValue);
             }
           }}
           filterOptions={(options, params) => {
+            console.log(params)
             const filtered = filter(options, params);
-
             if (params.inputValue !== '') {
               filtered.push({
                 inputValue: params.inputValue,
                 meal: `Add "${params.inputValue}"`,
               });
             }
-
             return filtered;
           }}
           id="Meal-Adder"
@@ -89,7 +96,8 @@ export default function MealAutocomplete(props) {
           style={{ width: '100%'}}
           freeSolo
           renderInput={(params) => (
-            <TextFieldInput params={params} label="Meal Type" variant="standard" 
+            <TextFieldInput params={params} label="Meal Type" variant="standard"
+              stateSetting={stateSetting}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: (
@@ -118,8 +126,8 @@ export default function MealAutocomplete(props) {
                 autoFocus
                 margin="dense"
                 id="name"
-                value={dialogValue}
-                onChange={(event) => setDialogValue(...dialogValue, event.target.value)}
+                value={dialogValue.meal}
+                onChange={(event) => setDialogValue({...dialogValue, meal: event.target.value})}
                 label="Meal"
                 type="text"
               />

@@ -36,7 +36,7 @@ function Dashboard( { selectDashboard, userInfo }) {
     { id: 'time', label: 'Date', minWidth: 50, numeric: false,
       format: (value) => `${new Date(value).getDate()} ${new Date(value).toLocaleString('default', { month: 'short' })} ${new Date(value).getFullYear()}`
     },
-    { id: 'description', label: 'Type', minWidth: 50, numeric: false },
+    { id: 'description', label: 'Type', numeric: false },
     {
       id: 'meal',
       label: 'Meal',

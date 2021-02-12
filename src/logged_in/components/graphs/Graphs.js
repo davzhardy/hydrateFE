@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux'
 import { 
   Box,
   Fade,
-  Paper,
-  Divider,
 } from '@material-ui/core'
 import ScatterGraph from './meals/ScatterGraph'
 import PackingGraph from './meals/PackingGraph'
@@ -15,6 +13,7 @@ import CustomCheckbox from './CustomCheckbox'
 import GraphCard from './GraphCard'
 import SwitchElement from './SwitchElement'
 import packingDataConverter from '../../functions/packingDataConverter'
+import drinksConverter from '../../functions/drinksConverter'
 
 // https://juba.github.io/scatterD3/articles/introduction.html
 // https://github.com/juba/scatterD3/blob/master/inst/htmlwidgets/scatterD3-dots.js
@@ -78,7 +77,7 @@ function Graphs( props ) {
 
   const scatterData = scatterDataConverter(mealsData)
   const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
-  const barchartData = drinksData.data.getAllDrinks
+  const barchartData = drinksConverter(drinksData.data.getAllDrinks, 200)
 
   const mealsComponent = [ 
     ['mealA', <PackingGraph data={packingData}/>],

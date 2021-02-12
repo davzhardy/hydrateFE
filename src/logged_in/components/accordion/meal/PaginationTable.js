@@ -7,7 +7,7 @@ import {
   TableCell,
   TableContainer,
   TablePagination,
-  TableRow
+  TableRow,
 } from '@material-ui/core'
 import TableIcons from '../shared/TableIcons'
 import HeaderIcons from '../shared/HeaderIcons'
@@ -20,14 +20,21 @@ import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../../api'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
   container: {
     overflow: "hidden",
   },
-});
+  breakfast: {
+    // color: theme.palette.getContrastText(pink[500]),
+    backgroundColor: theme.palette.avatars.breakfast,
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    margin: theme.spacing(0),
+  }
+}));
 
 export default function PaginationTable(props) {
 

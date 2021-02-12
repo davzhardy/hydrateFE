@@ -11,7 +11,6 @@ function BarchartGraph({data}) {
 
   useEffect(() => {
 
-
     data = data.sort((a,b) => {
       let aDate = dayjs(`${a['time']+':00.000Z'}`).valueOf()
       let bDate = dayjs(`${b['time']+':00.000Z'}`).valueOf()
@@ -33,10 +32,12 @@ function BarchartGraph({data}) {
     })
 
     const input = 'cumVolume'
+    let titleText;
+    input === 'cumVolume' ? titleText = 'Total volume drunk' : titleText = 'Total cups drunk'
 
     const names = new Set(data.map(d => d.drink))
     data = Array.from(names, drink => ({drink, value: counterObj[drink][input]}));
-    data.sort((a, b) => d3.ascending(a.value, b.value));
+    data.sort((a, b) => d3.descending(a.value, b.value));
 
     const svg = d3.select(svgRef.current)      
 
@@ -46,7 +47,13 @@ function BarchartGraph({data}) {
     const innerHeight = height - margin.top - margin.bottom
 
     const now = new Date
-    const color = "steelblue"
+    // const color = "steelblue"
+    function sequence (length) {
+      return Array.apply(null, {length: length}).map((d, i) => i);
+    }
+
+    const color = d3.scaleOrdinal(d3.schemeTableau10)
+      .domain(sequence(data.length))
 
     const y = d3.scaleBand()
       .domain(d3.range(data.length))
@@ -55,27 +62,37 @@ function BarchartGraph({data}) {
 
     const x = d3.scaleLinear()
       .domain([0, d3.max(data, d => d.value)])
-      .range([0, innerWidth])
+      .range([0, innerWidth-margin.right])
       .nice()
       
     const yAxis = g => g
-      .call(d3.axisLeft(y).tickFormat(i => data[i].drink).tickSizeOuter(0))
+      .attr('class', 'y-axis')
+      .call(
+        d3.axisLeft(y).tickFormat(i => data[i].drink)
+        .tickSize([0,0])
+      )
+      .style("font","10px cabin")
+      .style("color", "white")
       .call(g => g.select(".domain").remove())
 
     const xAxis = g => g
-      .attr("transform", `translate(0,0)`)
-      .call(d3.axisTop(x).ticks(null, data.format))
+      .attr("transform", `translate(0,${innerHeight})`)
+      .attr('class', 'x-axis')
+      .call(d3.axisBottom(x).ticks(null, data.format))
+      .style("font","10px cabin")
+
 
     const g = svg.append('g')
+      .attr('class', 'barchart')
       .attr('transform', `translate(${margin.left},${margin.top})`)
     
-    g.selectAll("rect").data(data)
+    const bars = g.selectAll("rect").data(data)
       .enter().append("rect")
         .attr("x", d => x(0))
         .attr("y", (d, i) => y(i))
         .attr("height", y.bandwidth())
         .attr("width", d => x(d.value) - x(0))
-        .attr("fill", color)
+        .attr("fill", (d, i) => color(i))
 
     const format = x.tickFormat(20, data.format)
 
@@ -85,14 +102,35 @@ function BarchartGraph({data}) {
         .attr("x", d => x(d.value))
         .attr("y", (d, i) => y(i) + y.bandwidth() / 2)
         .attr("dy", "0.35em")
-        .attr("dx", -4)
-        .text(d => format(d.value))
+        .attr("dx", 3)
+        .text(d => {
+          return (d.value === 0 || d.value === null) ? '' : format(d.value)
+        })
 
     g.append("g")
-      .call(xAxis);
+      .call(xAxis)
 
     g.append("g")
-      .call(yAxis);
+      .call(yAxis)
+      
+    const yAxisLabels = g.selectAll('.y-axis').selectAll('text')
+    const nodeList = yAxisLabels._groups
+
+    yAxisLabels
+      .attr('dx', d => {
+        let details = nodeList[0][d].getBBox()
+        return details.width + 10
+      });
+
+    const titleG = svg.selectAll(".barchart")
+      .append("g")
+      .attr('class', 'title')
+      .attr("transform", `translate(${innerWidth/2 },${0})`)
+
+    titleG.append('text')
+      .text(titleText)
+      .attr("alignment-baseline", "hanging")
+      .style("font-size", "1rem")
 
   },[data])
 

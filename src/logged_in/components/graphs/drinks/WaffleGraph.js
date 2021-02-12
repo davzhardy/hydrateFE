@@ -31,6 +31,8 @@ function WaffleGraph({data}) {
     })
 
     const input = 'cumVolume'
+    let titleText;
+    input === 'cumVolume' ? titleText = 'Total drinks by volume' : titleText = 'Total drinks by cups'
 
     const names = new Set(data.map(d => d.drink))
     const baseData = Array.from(names, drink => ({drink, value: counterObj[drink][input]}));
@@ -186,12 +188,25 @@ function WaffleGraph({data}) {
     legend.append("rect")
       .attr("rx", 3).attr("ry", 3)
       .attr("width", 30).attr("height", 20)
+      .style("cursor", "pointer")
       .attr("fill", (d, i) => color(i));    
     
     legend.append("text")
       .attr("dx", 40)
-      .attr("alignment-baseline", "hanging")
+      .attr("dy", 15)
+      // .attr("alignment-baseline", "baseline")
       .text((d, i) => `${d} (${chartData[i].ratio.toFixed(1)}%)`);
+
+    const titleG = svg.selectAll(".waffle")
+      .append("g")
+      .attr('class', 'title')
+      .attr("transform", (d, i) => `translate(${waffleSize + 20 + margin.left},${i * 30})`)
+
+    titleG.append('text')
+      .text(titleText)
+      .attr("alignment-baseline", "hanging")
+      .style("font-size", "1rem")
+      // .attr('y', 10)
 
   },[data])
 
