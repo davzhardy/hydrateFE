@@ -19,6 +19,7 @@ function ScatterGraph({data}) {
       el.date = date
       return el
     })
+    console.log(data)
 
     const svg = d3.select(svgRef.current)      
 
@@ -91,7 +92,6 @@ function ScatterGraph({data}) {
         .attr("stroke-opacity", 0)
         .style("font","10px cabin")
 
-        
     xAxisG.select('.domain')
       .remove()
 

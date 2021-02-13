@@ -69,7 +69,7 @@ function PackingGraph(props) {
         .attr("cx", innerWidth / 2)
         .attr("cy", innerHeight / 2)
         .style("fill", function(d, i){ 
-          return color(d.description)
+          return color([...descriptions].indexOf(d.description))
         })
         .style("fill-opacity", 1)
         // .attr("stroke", "black")
@@ -142,7 +142,7 @@ function PackingGraph(props) {
       .attr("width", 30).attr("height", 20)
       .style("cursor", "pointer")
       .attr("fill", (d, i) => {
-        return color(d)
+        return color(i)
       });    
     
     legend.append("text")

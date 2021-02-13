@@ -14,6 +14,7 @@ import GraphCard from './GraphCard'
 import SwitchElement from './SwitchElement'
 import packingDataConverter from '../../functions/packingDataConverter'
 import drinksConverter from '../../functions/drinksConverter'
+import scatterDataConverter from '../../functions/scatterDataConverter'
 
 // https://juba.github.io/scatterD3/articles/introduction.html
 // https://github.com/juba/scatterD3/blob/master/inst/htmlwidgets/scatterD3-dots.js
@@ -65,30 +66,23 @@ function Graphs( props ) {
   const CreatePackingGraph = React.memo(function({dataInput}) {
     return <PackingGraph data={dataInput}/>;
   })
-  
-  const scatterDataConverter = (dataInput) => {
-    const data = dataInput.data.getAllMeals.slice();
-    const dataWithValueAndConvertedTime = data.map(mapEl => {
-      const identifier = potentialMeals.filter(filterEl => {
-        return filterEl.meal === mapEl.description
-      })
-      mapEl.value = identifier[0].value
-      return mapEl
-    })
-    return dataWithValueAndConvertedTime
-  }
 
-  const scatterData = scatterDataConverter(mealsData)
+  const CreateWaffleGraph = React.memo(function({dataInput}) {
+    return <WaffleGraph data={dataInput}/>;
+  })
+  
+
+  // const scatterData = scatterDataConverter(mealsData)
   const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
   const barchartData = drinksConverter(drinksData.data.getAllDrinks, 200)
 
   const mealsComponent = [ 
     ['mealA', <CreatePackingGraph dataInput={packingData}/>],
-    ['mealB', <CreateScatterGraph dataInput={scatterData}/>],
+    ['mealB', <CreateScatterGraph dataInput={mealsData.data.getAllMeals}/>],
   ]
 
   const drinksComponent = [
-    ['drinkA', <WaffleGraph data={barchartData}/>],
+    ['drinkA', <CreateWaffleGraph dataInput={barchartData}/>],
     ['drinkB', <BarchartHorizontalGraph data={barchartData}/>]
   ]
 
