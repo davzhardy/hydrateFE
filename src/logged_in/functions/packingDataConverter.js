@@ -42,7 +42,6 @@ const packingDataConverter = (data) => {
     newObj.value = obj[i].value;
     array.push(newObj);
   }
-  console.log(obj)
 
   return array;
 }

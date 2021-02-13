@@ -19,8 +19,6 @@ function ScatterGraph({data}) {
       el.date = date
       return el
     })
-    console.log(data)
-
     const svg = d3.select(svgRef.current)      
 
     const { width, height } = wrapperRef.current.getBoundingClientRect();
@@ -28,13 +26,19 @@ function ScatterGraph({data}) {
     const xAxisLabel = 'Date'
     const yValue = data => data.hour;
     const yAxisLabel = 'Hour'
-    const circleRadius = 5;
+    const circleRadius = 7;
     const margin = {top: 50, right: 40, bottom: 65, left: 75}
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
 
     const now = new Date
-    const color = d3.scaleOrdinal(data.map(d => d.description), d3.schemeCategory10)
+    const descriptions = new Set(data.map(d => d.description))
+    function sequence (length) {
+      return Array.apply(null, {length: length}).map((d, i) => i);
+    }
+
+    const color = d3.scaleOrdinal(d3.schemeTableau10)
+      .domain(sequence(descriptions.length))
 
     const wrapper = d3.select(wrapperRef.current)
     const displayedTooltip = wrapper
@@ -47,32 +51,39 @@ function ScatterGraph({data}) {
     
     const xScale = d3.scaleTime()
       .domain([d3.extent(data, xValue)[0], now])
-      .range([0, innerWidth])
+      .range([0, innerWidth-margin.right])
       .nice();
-
+  
     const xAxis = d3.axisBottom(xScale)
       .tickSize(-innerHeight)
       .tickPadding(20)
-      .ticks(d3.timeDay.every(0), "%a %e %b")
+      .ticks(5, "%a %e %b")
+
+    const minTimeLate = Math.min(d3.extent(data, yValue)[0]-1, 8)
+    const minTimeEarly = Math.min(d3.extent(data, yValue)[1]+1, 20)
 
     const yScale = d3.scaleLinear()
-      .domain([d3.extent(data, yValue)[0]-1,d3.extent(data, yValue)[1]+1])
-      .range([innerHeight, 0])
+      .domain([minTimeLate,minTimeEarly])
+      .range([innerHeight-margin.top-margin.bottom/2, 0])
       .nice()
 
     const yAxis = d3.axisLeft(yScale)
+      .ticks((minTimeEarly-minTimeLate)/2)
       .tickSize(-innerWidth)
       .tickPadding(10)
-      .tickFormat(d => d + "hr")
+      .tickFormat(d => {
+        if (d%2 === 0) return d + "hr"
+      })
 
     const g = svg.append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`)
+      .attr('transform', `translate(${margin.left},${margin.top*2})`)
+      .attr('class','scatter')
 
     const yAxisG = g.append('g')
       .call(yAxis)
         .style("stroke-dasharray", "2 2")
         .style("font","10px cabin")
-        .attr("stroke-opacity", 0.5)
+        .attr("stroke-opacity", 0.25)
       
     yAxisG.selectAll('.domain')
         .remove()
@@ -88,7 +99,7 @@ function ScatterGraph({data}) {
     
     const xAxisG = g.append('g')
       .call(xAxis)
-        .attr('transform', `translate(0,${innerHeight})`)
+        .attr('transform', `translate(0,${innerHeight-margin.top-margin.bottom/2})`)
         .attr("stroke-opacity", 0)
         .style("font","10px cabin")
 
@@ -107,6 +118,7 @@ function ScatterGraph({data}) {
         .attr('cy', d => yScale(yValue(d)))
         .attr('cx', d => xScale(xValue(d)))
         .attr('r', circleRadius)
+        .attr('opacity', 0.75)
         .attr("fill", d => color(d.description))
         .on("mouseover", (event, d) => {
           mouseOver(displayedTooltip ,event, d)
@@ -119,42 +131,46 @@ function ScatterGraph({data}) {
           mouseLeave(displayedTooltip ,event, d)
         })
 
-      // .on('mouseover', handleMouseOver)
-      // .on('mouseout', handleMouseOut)
-      // .on('mouseout', handleMouseOut)
-
-    // const tooltip = d3.select('.tooltip-area')
-    //   .style('opacity', 0)
-
-    // function handleMouseOver (event, d) {
-    //   d3.select(this).transition()
-    //     .attr("fill", "yellow")
-    //     .attr("opacity", 0.5)
-    //     .attr("r", circleRadius * 2)
-
-    //   const text = d3.select('.tooltip-area-text');
-    //   text
-    //     .text(`${d.description}: ${d.meal.join(', ')}`)
-    //     .style("font","10px cabin")
-
-    //   // const {width: w, height: h} = text.node().getBBox();
-    //   let x = xScale(xValue(d)) + margin.left + 10
-    //   let y = yScale(yValue(d)) + margin.top - 10
-
-    //   tooltip
-    //     .style("opacity", 0.85)
-    //     .attr('transform', `translate(${x}, ${y})`)      
-    // }
-    
-    // function handleMouseOut () {
-    //   d3.select(this).transition()
-    //     .attr("fill",  d => color(d.description))
-    //     .attr("r", circleRadius)
-    //     .attr("opacity", 1)
+      const legendG = svg
+        .append("g")
+        .attr('class', 'legend')
+        .attr('transform', `translate(${innerWidth - margin.left},${margin.top})`);
+  
+      const legend = legendG.selectAll("g")
+        .data(descriptions)
+        .join("g")      
+        .attr("opacity", 1)
+        .attr("transform", (d, i) => `translate(0,${i * 30})`)
+      //   .on("mouseover", highlight)
+      //   .on("mouseout", restore);
       
-    //   tooltip.transition()
-    //     .style("opacity", 0)
-    // }
+      legend.append("rect")
+        .attr("rx", 3).attr("ry", 3)
+        .attr("width", 30).attr("height", 20)
+        .style("cursor", "pointer")
+        .attr("fill", (d, i) => {
+          return color(d)
+        });    
+      
+      legend.append("text")
+        .attr("dx", 40)
+        .attr("dy", 15)
+        // .attr("alignment-baseline", "baseline")
+        .text((d, i) => `${d}`);
+
+
+
+
+    const titleText = 'Meals eaten over time'
+    const titleG = svg.selectAll(".scatter")
+      .append("g")
+      .attr('class', 'title')
+      .attr("transform", `translate(${innerWidth/2 -margin.left*2},${-margin.top})`)
+
+    titleG.append('text')
+      .text(titleText)
+      .attr("alignment-baseline", "hanging")
+      .style("font-size", "1rem")
 
   },[data])
 

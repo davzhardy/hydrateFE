@@ -70,7 +70,10 @@ function Graphs( props ) {
   const CreateWaffleGraph = React.memo(function({dataInput}) {
     return <WaffleGraph data={dataInput}/>;
   })
-  
+ 
+  const CreateBarchartHorizontalGraph = React.memo(function({dataInput}) {
+    return <BarchartHorizontalGraph data={dataInput}/>;
+  })
 
   // const scatterData = scatterDataConverter(mealsData)
   const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
@@ -83,7 +86,7 @@ function Graphs( props ) {
 
   const drinksComponent = [
     ['drinkA', <CreateWaffleGraph dataInput={barchartData}/>],
-    ['drinkB', <BarchartHorizontalGraph data={barchartData}/>]
+    ['drinkB', <CreateBarchartHorizontalGraph dataInput={barchartData}/>]
   ]
 
 

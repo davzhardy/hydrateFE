@@ -1,7 +1,5 @@
-import React, { Fragment, useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect, memo } from 'react';
 import * as d3 from 'd3';
-import Tooltip from '../Tooltip'
-import { mouseOver, mouseMove, mouseLeave } from '../mouseEvents'
 import * as dayjs from 'dayjs';
 
 function BarchartGraph({data}) {

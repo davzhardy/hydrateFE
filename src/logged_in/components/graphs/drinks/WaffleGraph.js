@@ -1,8 +1,5 @@
 import React, { Fragment, useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
-import Tooltip from '../Tooltip'
-import { mouseOver, mouseMove, mouseLeave } from '../mouseEvents'
-import * as dayjs from 'dayjs';
 
 function WaffleGraph({data}) {
 
@@ -50,7 +47,7 @@ function WaffleGraph({data}) {
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
     
-    const waffleSize = whole ? innerWidth < innerHeight ? innerWidth : innerHeight : 150;
+    const waffleSize = innerWidth-margin.left-margin.right-150 < innerHeight ? innerWidth-margin.left-margin.right-150 : innerHeight ;
 
     const padding = ({x: 10, y: 40})
     function sequence (length) {
