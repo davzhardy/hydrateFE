@@ -63,7 +63,7 @@ function AddMealArea(props) {
 
   const payload = {
     UserId: UserId,
-    description: description,
+    description: description.meal,
     meal: mealValue.replace(regex,',').split(','),
     time: time,
   }

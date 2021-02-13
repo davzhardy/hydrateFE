@@ -59,10 +59,13 @@ function Graphs( props ) {
   const drinksData = queryClient.getQueryData('drinks');
 
   const CreateScatterGraph = React.memo(function({dataInput}) {
-    scatterDataConverter(mealsData);
     return <ScatterGraph data={dataInput}/>;
   })
 
+  const CreatePackingGraph = React.memo(function({dataInput}) {
+    return <PackingGraph data={dataInput}/>;
+  })
+  
   const scatterDataConverter = (dataInput) => {
     const data = dataInput.data.getAllMeals.slice();
     const dataWithValueAndConvertedTime = data.map(mapEl => {
@@ -80,7 +83,7 @@ function Graphs( props ) {
   const barchartData = drinksConverter(drinksData.data.getAllDrinks, 200)
 
   const mealsComponent = [ 
-    ['mealA', <PackingGraph data={packingData}/>],
+    ['mealA', <CreatePackingGraph dataInput={packingData}/>],
     ['mealB', <CreateScatterGraph dataInput={scatterData}/>],
   ]
 

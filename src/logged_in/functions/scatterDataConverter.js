@@ -1,39 +1,13 @@
-const scatterDataConverter = (dataInput, potentialMeals, outputFormat) => {
-  const mealsArray = potentialMeals.map(el => el.meal);
-
-  const mealsData = dataInput.data.getAllMeals.slice();
-  const outputArray = mealsArray.map(el => {
-    return {name: el, children: []}
-  });
-
-  const numberRegex = /([0-9]\/[0-9])|[0-9]/g;
-  const nonWordRegex = /[\-()/+]|(\set\s)/gi;
-
-  for (let i=0; i<mealsArray.length; i++) {
-    const childrenElement = [];
-    const output = []
-    for (let j=0; j<mealsData.length; j++) {
-      if(mealsData[j]['description'] === mealsArray[i]) {
-        const mealsInput = mealsData[j]['meal']
-        const mealsInputNoNumbers = mealsInput.map(el => el.replace(numberRegex,''))
-        const mealsInputNoNonWord = mealsInputNoNumbers.map(el => el.replace(nonWordRegex,','))
-        const check = mealsInputNoNonWord.map(el => el.split(','))
-        const trim = check.map(el=> el.map(el => el.trim()))
-        const split = trim.map(el =>el.join(',').split(','))
-        split.map(el => el.forEach(el => childrenElement.push(el)))
-      }
-    }
-    childrenElement.forEach(el => {
-      const mealObj = {
-        name: 'xxx',
-        value: Math.random()
-      }
-      mealObj.name = el
-      output.push(mealObj)
+const scatterDataConverter = (dataInput) => {
+  const data = dataInput.data.getAllMeals.slice();
+  const dataWithValueAndConvertedTime = data.map(mapEl => {
+    const identifier = potentialMeals.filter(filterEl => {
+      return filterEl.meal === mapEl.description
     })
-    outputArray[i].children = output
-  }
-  outputFormat.children = outputArray
+    mapEl.value = identifier[0].value
+    return mapEl
+  })
+  return dataWithValueAndConvertedTime
 }
 
 export default scatterDataConverter

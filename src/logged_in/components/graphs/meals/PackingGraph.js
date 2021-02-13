@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect, memo } from 'react';
 import * as d3 from 'd3';
 import { 
   withStyles
@@ -28,12 +28,21 @@ function PackingGraph(props) {
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
 
+    const titleText = 'Total meals registered'
     const names = new Set(data.map(d => d.meal))
+    const descriptions = new Set(data.map(d => d.description))
+    const values = new Set(data.map(d => d.value))
 
-    const color = d3.scaleOrdinal(data.map(d => d.description), d3.schemeSet1)
+    function sequence (length) {
+      return Array.apply(null, {length: length}).map((d, i) => i);
+    }
+
+    const color = d3.scaleOrdinal(d3.schemeTableau10)
+      .domain(sequence(data.length-1))
+
     const size= d3.scaleSqrt()
-      .domain([0, 10])
-      .range([0,innerHeight/10])
+      .domain([0, Math.max(...values)])
+      .range([0,60/Math.pow(data.length,1/5)])
 
     const wrapper = d3.select(wrapperRef.current)    
     const displayedTooltip = wrapper
@@ -44,7 +53,13 @@ function PackingGraph(props) {
       startingOpacity: 0,
     })
 
-    const node = svg
+    const randomizedXScale = d3.scaleLinear().domain([0, 1]).range([0, innerWidth/2])
+
+    const g = svg.append('g')
+      .attr('class', 'packing')
+      .attr('transform', `translate(0,0)`)
+
+    const node = g
       .selectAll("circle")
       .data(data)
       .enter()
@@ -53,10 +68,12 @@ function PackingGraph(props) {
         .attr("r", function(d){ return size(d.value)})
         .attr("cx", innerWidth / 2)
         .attr("cy", innerHeight / 2)
-        .style("fill", function(d){ return color(d.description)})
-        .style("fill-opacity", 0.8)
-        .attr("stroke", "black")
-        .style("stroke-width", 1)
+        .style("fill", function(d, i){ 
+          return color(d.description)
+        })
+        .style("fill-opacity", 1)
+        // .attr("stroke", "black")
+        // .style("stroke-width", 1)
         .style("cursor", "grab")
         .on("mouseover", (event, d) => {
           mouseOver(displayedTooltip)
@@ -69,21 +86,27 @@ function PackingGraph(props) {
           mouseLeave(displayedTooltip)
         })
         .call(d3.drag() // call specific function when circle is dragged
-             .on("start", dragstarted)
-             .on("drag", dragged)
-             .on("end", dragended));
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
   
     const simulation = d3.forceSimulation()
-      .force("center", d3.forceCenter().x(width / 2).y(height / 2)) // Attraction to the center of the svg area
-      .force("charge", d3.forceManyBody().strength(.1)) // Nodes are attracted one each other of value is > 0
+      // .force("center", d3.forceCenter().x(width / 2).y(height / 2+margin.top)) // Attraction to the center of the svg area
+      .force("charge", d3.forceManyBody().strength(10)) // Nodes are attracted one each other of value is > 0
       .force("collide", d3.forceCollide().strength(.2).radius(function(d){ return (size(d.value)+3) }).iterations(1)) // Force that avoids circle overlapping
+      .force('y', d3.forceY().y(function(d) {
+        return height / 2+margin.top-margin.bottom/2;
+      }))
+      .force('x', d3.forceX().x(function(d) {
+        return randomizedXScale(Math.random())+innerWidth/4+margin.left*2/3;
+      }))
 
     simulation
       .nodes(data)
       .on("tick", function(d){
         node
-            .attr("cx", function(d){ return d.x; })
-            .attr("cy", function(d){ return d.y; })
+          .attr("cx", function(d){ return d.x; })
+          .attr("cy", function(d){ return d.y; })
       });
 
     function dragstarted(event, d) {
@@ -100,6 +123,43 @@ function PackingGraph(props) {
       d.fx = null;
       d.fy = null;
     }
+
+    const legendG = svg
+      .append("g")
+      .attr('class', 'legend')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    const legend = legendG.selectAll("g")
+      .data(descriptions)
+      .join("g")      
+      .attr("opacity", 1)
+      .attr("transform", (d, i) => `translate(0,${i * 30})`)
+    //   .on("mouseover", highlight)
+    //   .on("mouseout", restore);
+    
+    legend.append("rect")
+      .attr("rx", 3).attr("ry", 3)
+      .attr("width", 30).attr("height", 20)
+      .style("cursor", "pointer")
+      .attr("fill", (d, i) => {
+        return color(d)
+      });    
+    
+    legend.append("text")
+      .attr("dx", 40)
+      .attr("dy", 15)
+      // .attr("alignment-baseline", "baseline")
+      .text((d, i) => `${d}`);
+
+    const titleG = svg.selectAll(".packing")
+      .append("g")
+      .attr('class', 'title')
+      .attr("transform", `translate(${innerWidth/2 },${margin.top})`)
+
+    titleG.append('text')
+      .text(titleText)
+      .attr("alignment-baseline", "hanging")
+      .style("font-size", "1rem")
 
   })
 
@@ -122,7 +182,7 @@ function PackingGraph(props) {
 
 }
 
-export default withStyles(styles, { withTheme: true })(PackingGraph);
+export default withStyles(styles, { withTheme: true })(memo(PackingGraph));
 
 
 
