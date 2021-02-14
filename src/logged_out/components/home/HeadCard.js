@@ -42,7 +42,7 @@ const styles = (theme) => ({
       paddingTop: theme.spacing(2),
       paddingBottom: theme.spacing(2),
     },
-  }
+  },
 });
 
 function HeadCard(props) {

@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { QueryClientProvider, QueryClient } from 'react-query'
 import LoadingScreen from './shared/LoadingScreen'
+import { Router } from "./routing/Routing";
+
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
 const LoggedOutComponent = lazy(() => import("./logged_out/components/Main"));
@@ -27,14 +29,7 @@ function App() {
             <CssBaseline />
             <GlobalStyles />
             <Suspense fallback={<LoadingScreen />}>
-              <Switch>
-                <Route path="/a">
-                  <LoggedInComponent />
-                </Route>
-                <Route>
-                  <LoggedOutComponent />
-                </Route>
-              </Switch>
+              <Router />
             </Suspense>
           </MuiThemeProvider>
         </Provider>
