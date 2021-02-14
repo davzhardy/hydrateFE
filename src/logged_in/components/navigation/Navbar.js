@@ -184,7 +184,6 @@ function Navbar(props) {
                     className={classes.menuButton}
                     color="secondary"
                     onClick={() => {
-                      console.log(links)
                       links.current[index].click();
                     }}
                     aria-label={

@@ -29,7 +29,6 @@ function Main() {
     document.title = "DrInk - Graphs";
     setSelectedTab("Graphs"); 
   }
-  console.log(selectedTab)
 
   return (
     <>

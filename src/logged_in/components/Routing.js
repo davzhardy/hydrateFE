@@ -48,8 +48,6 @@ function Routing(props) {
     classes
   } = props;
 
-  console.log(userInfo)
-
   return (
     <div className={classes.wrapper}>
       <Switch>

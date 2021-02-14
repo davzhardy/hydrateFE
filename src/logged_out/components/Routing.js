@@ -8,12 +8,12 @@ import AboutMe from "./about/AboutMe";
 function Routing() {
   return (
     <Switch>
-      <PropsRoute path="/" component={Home} />
       <PropsRoute
         exact
         path="/about"
         component={AboutMe}
       />
+      <PropsRoute path="/" component={Home} />
     </Switch>
   );
 }
