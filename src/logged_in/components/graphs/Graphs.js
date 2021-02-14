@@ -75,7 +75,6 @@ function Graphs( props ) {
     return <BarchartHorizontalGraph data={dataInput}/>;
   })
 
-  // const scatterData = scatterDataConverter(mealsData)
   const packingData = packingDataConverter(mealsData.data.getAllMeals, 30)
   const barchartData = drinksConverter(drinksData.data.getAllDrinks, 200)
 
