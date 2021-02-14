@@ -20,7 +20,6 @@ export default function MealAutocomplete(props) {
 
   const {
     stateSetting,
-    defaultValue,
     potentialMeals,
   } = props
 
@@ -34,7 +33,7 @@ export default function MealAutocomplete(props) {
   const [dialogValue, setDialogValue] = useState({meal: ''});
 
   // the value prop for the material ui autocomplete needs to be within the component otherwise it does not recognise the state 
-  const [description, setDescription] = useState(null);
+  const [autoCompleteDescription, setAutocompleteDescription] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -42,11 +41,14 @@ export default function MealAutocomplete(props) {
     handleClose();
   };
 
+  console.log('dv', dialogValue)
+  console.log('des', autoCompleteDescription)
+
   return (
     <Grid container spacing={1} >
       <Grid item xs={12}>
         <Autocomplete
-          value={description}
+          value={autoCompleteDescription}
           onChange={(event, newValue) => {
             if (typeof newValue === 'string') {
               // timeout to avoid instant validation of the dialog's form.
@@ -63,6 +65,7 @@ export default function MealAutocomplete(props) {
               });
             } else {
               stateSetting(newValue);
+              setAutocompleteDescription(newValue)
             }
           }}
           filterOptions={(options, params) => {
