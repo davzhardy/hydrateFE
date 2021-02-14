@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { QueryClientProvider, QueryClient } from 'react-query'
 import LoadingScreen from './shared/LoadingScreen'
+import PrivateRoute from './shared/PrivateRoute'
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
 const LoggedOutComponent = lazy(() => import("./logged_out/components/Main"));
@@ -28,9 +29,7 @@ function App() {
             <GlobalStyles />
             <Suspense fallback={<LoadingScreen />}>
               <Switch>
-                <Route path="/a">
-                  <LoggedInComponent />
-                </Route>
+                <PrivateRoute component={<LoggedInComponent />} path="/a"/>
                 <Route>
                   <LoggedOutComponent />
                 </Route>
