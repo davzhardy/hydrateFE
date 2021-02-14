@@ -34,10 +34,10 @@ const Router = () => {
 
   return (
     <Switch>
-      <Route path="/dashboard">
+      <Route path="/loggedIn">
         <LoggedInComponent />
       </Route>
-      <Route>
+      <Route >
         <LoggedOutComponent />
       </Route>
     </Switch>

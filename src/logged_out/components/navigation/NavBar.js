@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
+import BookIcon from "@material-ui/icons/Book";
 import HowToRegIcon from "@material-ui/icons/HowToReg";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import NavigationDrawer from './NavigationDrawer'
@@ -52,11 +53,11 @@ function NavBar(props) {
       name: "Home",
       icon: <HomeIcon className="text-white" />
     },
-    // {
-    //   link: "/about",
-    //   name: "About",
-    //   icon: <BookIcon className="text-white" />
-    // },
+    {
+      link: "/about",
+      name: "About Me",
+      icon: <BookIcon className="text-white" />
+    },
     {
       name: "Register",
       onClick: openRegisterDialog,

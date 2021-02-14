@@ -78,7 +78,7 @@ function LoginDialog(props) {
         type: "SET_ACTIVE_USER",
         payload: payload
       })
-      history.push("/dashboard");
+      history.push("/loggedIn/dashboard");
       setDialogOpen(null);
 
     }
