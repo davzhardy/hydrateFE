@@ -78,7 +78,7 @@ function Navbar(props) {
 
   const menuItems = [
     {
-      link: "/a/dashboard",
+      link: "/loggedIn/dashboard",
       name: "Dashboard",
       icon: {
         desktop: (
@@ -102,7 +102,7 @@ function Navbar(props) {
       },
     },
     {
-      link: "/a/graphs",
+      link: "/loggedIn/graphs",
       name: "Graphs",
       icon: {
         desktop: (

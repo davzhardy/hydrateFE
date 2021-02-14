@@ -48,7 +48,6 @@ export default function MealAutocomplete(props) {
         <Autocomplete
           value={description}
           onChange={(event, newValue) => {
-            console.log('newValue', newValue)
             if (typeof newValue === 'string') {
               // timeout to avoid instant validation of the dialog's form.
               setTimeout(() => {
@@ -67,7 +66,6 @@ export default function MealAutocomplete(props) {
             }
           }}
           filterOptions={(options, params) => {
-            console.log(params)
             const filtered = filter(options, params);
             if (params.inputValue !== '') {
               filtered.push({

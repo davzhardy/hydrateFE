@@ -52,7 +52,7 @@ function Routing(props) {
     <div className={classes.wrapper}>
       <Switch>
         <PropsRoute
-          path="/a/graphs"
+          path="/loggedIn/graphs"
           component={Graphs}
           // EmojiTextArea={EmojiTextArea}
           // ImageCropper={ImageCropper}
@@ -64,7 +64,7 @@ function Routing(props) {
           selectGraphs={selectGraphs}
         />
         <PropsRoute
-          path=""
+          path="/loggedIn/dashboard"
           component={Dashboard}
           // toggleAccountActivation={toggleAccountActivation}
           // pushMessageToSnackbar={pushMessageToSnackbar}

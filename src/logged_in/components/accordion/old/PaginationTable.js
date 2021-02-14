@@ -12,8 +12,8 @@ import {
 import TableIcons from '../shared/TableIcons'
 import HeaderIcons from '../shared/HeaderIcons'
 import TableToolbar from '../shared/TableToolbar'
-import ModifyDialog from './ModifyDialog'
-import DeleteDialog from './DeleteDialog'
+import ModifyDialog from '../meal/ModifyDialog'
+import DeleteDialog from '../meal/DeleteDialog'
 import getSorting from '../../../functions/getSorting'
 import columnSort from '../../../functions/columnSort'
 import EnhancedTableHead from '../../../../shared/EnhancedTableHead';
