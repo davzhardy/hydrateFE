@@ -10,6 +10,7 @@ import {
   InputAdornment,
   TextField,
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import TextFieldInput from '../../../../shared/TextFieldInput';
@@ -23,7 +24,7 @@ export default function MealAutocomplete(props) {
     potentialMeals,
   } = props
 
-  const [open, toggleOpen] = useState(false);
+   const [open, toggleOpen] = useState(false);
 
   const handleClose = () => {
     setDialogValue({meal: ''});
@@ -33,13 +34,26 @@ export default function MealAutocomplete(props) {
   const [dialogValue, setDialogValue] = useState({meal: ''});
 
   // the value prop for the material ui autocomplete needs to be within the component otherwise it does not recognise the state 
-  const [autoCompleteDescription, setAutocompleteDescription] = useState(null);
+  const [autoCompleteDescription, setAutocompleteDescription] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     stateSetting(dialogValue.meal);
     handleClose();
   };
+
+  const dispatch = useDispatch();
+
+  const handleAdd = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: "UPDATE_POTENTIALMEALS",
+      payload: {
+        meal: dialogValue.meal
+      }
+    })
+    toggleOpen(false);
+  }
 
   return (
     <Grid container spacing={1} >
@@ -118,7 +132,7 @@ export default function MealAutocomplete(props) {
             <DialogTitle id="form-dialog-meal">Add a new meal</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Is there a meal missing from our list? Please, add it!
+                Is there a meal missing from the list? Please, add it!
               </DialogContentText>
               <TextField
                 autoFocus
@@ -134,7 +148,7 @@ export default function MealAutocomplete(props) {
               <Button onClick={handleClose} color="primary">
                 Cancel
               </Button>
-              <Button type="submit" color="primary">
+              <Button type="submit" color="primary" onClick={(event) => handleAdd(event)}>
                 Add
               </Button>
             </DialogActions>

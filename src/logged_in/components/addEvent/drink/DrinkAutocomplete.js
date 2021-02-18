@@ -10,6 +10,7 @@ import {
   InputAdornment,
   TextField,
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
 import TextFieldInput from '../../../../shared/TextFieldInput';
@@ -27,6 +28,7 @@ export default function DrinkAutocomplete(props) {
   const [open, toggleOpen] = useState(false);
 
   const handleClose = () => {
+    console.log('ok')
     setDialogValue('');
     setDialogValue('');
     toggleOpen(false);
@@ -36,9 +38,23 @@ export default function DrinkAutocomplete(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log('here')
+    handleAdd(dialogValue)
     stateSetting(dialogValue);
     handleClose();
   };
+
+  const dispatch = useDispatch();
+
+  const handleAdd = (input) => {
+    console.log('aaa')
+    dispatch({
+      type: "UPDATE_POTENTIALMEALS",
+      payload: {
+        meal: input
+      }
+    })
+  }
 
   return (
     <Grid container spacing={1} >
@@ -54,11 +70,9 @@ export default function DrinkAutocomplete(props) {
                 setDialogValue(newValue);
               });
             } else if (newValue && newValue.inputValue) {
-              console.log(2)
               toggleOpen(true);
               setDialogValue(newValue.inputValue);
             } else {
-              console.log(3)
               stateSetting(newValue.drink);
             }
           }}
@@ -112,27 +126,32 @@ export default function DrinkAutocomplete(props) {
           )}
         />
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-drink">
-          <form onSubmit={handleSubmit}>
+          <form 
+          // onSubmit={handleSubmit}
+          >
             <DialogTitle id="form-dialog-drink">Add a new drink</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Is there a drink missing from our list? Please, add it!
+                Is there a drink missing from the list? Please, add it!
               </DialogContentText>
               <TextField
                 autoFocus
                 margin="dense"
                 id="name"
                 value={dialogValue}
-                onChange={(event) => setDialogValue(...dialogValue, event.target.value)}
+                onChange={(event) => setDialogValue(event.target.value)}
                 label="Drink"
                 type="text"
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} color="primary">
+              <Button color="primary">
                 Cancel
               </Button>
-              <Button type="submit" color="primary">
+              <Button type="submit" color="primary" onClick={() => {
+                console.log('hellothere')
+                handleSubmit()
+              }}>
                 Add
               </Button>
             </DialogActions>

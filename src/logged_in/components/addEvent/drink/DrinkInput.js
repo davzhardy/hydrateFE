@@ -12,18 +12,10 @@ export default function DrinkInput(props) {
     volumeValue,
     setVolumeValue,
     time,
-    setTime
+    setTime,
+    potentialDrinks,
   } = props
 
-  const potentialDrinks = [
-    { drink: 'Water' },
-    { drink: 'Black Tea' },
-    { drink: 'Herbal Tea' },
-    { drink: 'Fruit Juice' },
-    { drink: 'Coffee' },
-    { drink: 'Fizzy Drink' },
-    { drink: 'Ginger & Lemon Tea' },
-  ];
 
   return (
     <Fragment>

@@ -1,6 +1,19 @@
 const initialState = {
-  potentialMeals: false,
-  potentialDrinks: false,
+  potentialMeals: [
+    { meal: 'Breakfast' },
+    { meal: 'Lunch' },
+    { meal: 'Dinner' },
+    { meal: 'Snack' },
+  ],
+  potentialDrinks: [
+    { drink: 'Water' },
+    { drink: 'Black Tea' },
+    { drink: 'Herbal Tea' },
+    { drink: 'Fruit Juice' },
+    { drink: 'Coffee' },
+    { drink: 'Fizzy Drink' },
+    { drink: 'Ginger & Lemon Tea' },
+  ],
 }
 
 const autocompleteReducer = (state = initialState, action) => {
@@ -8,7 +21,7 @@ const autocompleteReducer = (state = initialState, action) => {
     case "UPDATE_POTENTIALMEALS":
       return {
         ...state,
-        potentialMeals: action.payload
+        potentialMeals: [...state.potentialMeals, action.payload]
       }
     case "UPDATE_POTENTIALDRINKS":
       return {

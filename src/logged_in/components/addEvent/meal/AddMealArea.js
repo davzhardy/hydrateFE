@@ -82,7 +82,7 @@ function AddMealArea(props) {
   )
 
   const addEvent = () => {
-    if (mealValue.length && description.length) {
+    if (mealValue.length && description.meal.length) {
       payload.meal = payload.meal.map(el =>el.trim())
       mealMutation.mutate(mutations.POST_MEAL(payload))
       setDescription('')

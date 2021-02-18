@@ -26,12 +26,8 @@ function Dashboard( { selectDashboard, userInfo }) {
     'allTime': 0,
   }
 
-  const potentialMeals = [
-    { meal: 'Breakfast' },
-    { meal: 'Lunch' },
-    { meal: 'Dinner' },
-    { meal: 'Snack' },
-  ];
+  const potentialMeals = useSelector((state) => state.autocomplete.potentialMeals);
+  const potentialDrinks = useSelector((state) => state.autocomplete.potentialDrinks);
 
   const mealColumns = [
     { id: 'time', label: 'Date', minWidth: 50, numeric: false,
@@ -102,7 +98,7 @@ function Dashboard( { selectDashboard, userInfo }) {
       </Grid>
       <Grid container spacing ={6} style={{marginBottom: 15}}>
         <Grid item xs={12} sm={6} style={{display: 'flex'}}>
-          <AddDrinkArea UserId={UserId}/>
+          <AddDrinkArea UserId={UserId} potentialDrinks={potentialDrinks}/>
         </Grid>
         <Grid item xs={12} sm={6} style={{display: 'flex'}}>
           <AddMealArea UserId={UserId} potentialMeals={potentialMeals}/>
