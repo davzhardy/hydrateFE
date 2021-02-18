@@ -21,46 +21,45 @@ export default function DrinkAutocomplete(props) {
 
   const {
     stateSetting,
-    defaultValue,
     potentialDrinks,
   } = props
 
   const [open, toggleOpen] = useState(false);
+  const [dialogValue, setDialogValue] = useState('');
+  const [autoCompleteDescription, setAutocompleteDescription] = useState('');
+
+  console.log('a',autoCompleteDescription)
+  console.log('d', dialogValue)
 
   const handleClose = () => {
-    console.log('ok')
-    setDialogValue('');
     setDialogValue('');
     toggleOpen(false);
   };
 
-  const [dialogValue, setDialogValue] = useState('');
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('here')
-    handleAdd(dialogValue)
     stateSetting(dialogValue);
     handleClose();
   };
 
   const dispatch = useDispatch();
 
-  const handleAdd = (input) => {
-    console.log('aaa')
+  const handleAdd = (event) => {
+    event.preventDefault();
     dispatch({
-      type: "UPDATE_POTENTIALMEALS",
+      type: "UPDATE_POTENTIALDRINKS",
       payload: {
-        meal: input
+        drink: dialogValue
       }
-    })
+    });
+    toggleOpen(false);
   }
 
   return (
     <Grid container spacing={1} >
       <Grid item xs={12}>
         <Autocomplete
-          value={defaultValue}
+          value={autoCompleteDescription}
           onChange={(event, newValue) => {
             if (typeof newValue === 'string') {
               console.log(1)
@@ -73,19 +72,18 @@ export default function DrinkAutocomplete(props) {
               toggleOpen(true);
               setDialogValue(newValue.inputValue);
             } else {
-              stateSetting(newValue.drink);
+              stateSetting(newValue);
+              setAutocompleteDescription(newValue);
             }
           }}
           filterOptions={(options, params) => {
             const filtered = filter(options, params);
-
             if (params.inputValue !== '') {
               filtered.push({
                 inputValue: params.inputValue,
                 drink: `Add "${params.inputValue}"`,
               });
             }
-
             return filtered;
           }}
           id="Drink-Adder"
@@ -107,7 +105,8 @@ export default function DrinkAutocomplete(props) {
           style={{ width: '100%'}}
           freeSolo
           renderInput={(params) => (
-            <TextFieldInput params={params} label="Drink Type" variant="standard" 
+            <TextFieldInput params={params} label="Drink Type" variant="standard"
+              stateSetting={stateSetting}
               InputProps={{
                 ...params.InputProps,
                 startAdornment: (
@@ -127,7 +126,7 @@ export default function DrinkAutocomplete(props) {
         />
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-drink">
           <form 
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           >
             <DialogTitle id="form-dialog-drink">Add a new drink</DialogTitle>
             <DialogContent>
@@ -148,10 +147,7 @@ export default function DrinkAutocomplete(props) {
               <Button color="primary">
                 Cancel
               </Button>
-              <Button type="submit" color="primary" onClick={() => {
-                console.log('hellothere')
-                handleSubmit()
-              }}>
+              <Button type="submit" color="primary" onClick={(event) => handleAdd(event)}>
                 Add
               </Button>
             </DialogActions>

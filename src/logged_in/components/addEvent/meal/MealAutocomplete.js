@@ -51,7 +51,7 @@ export default function MealAutocomplete(props) {
       payload: {
         meal: dialogValue.meal
       }
-    })
+    });
     toggleOpen(false);
   }
 

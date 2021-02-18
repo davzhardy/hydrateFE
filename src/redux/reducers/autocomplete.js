@@ -26,7 +26,7 @@ const autocompleteReducer = (state = initialState, action) => {
     case "UPDATE_POTENTIALDRINKS":
       return {
         ...state,
-        potentialDrinks: action.payload
+        potentialDrinks: [...state.potentialDrinks, action.payload]
       }
     default:
       return state;

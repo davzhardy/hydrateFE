@@ -48,7 +48,7 @@ const styles = theme => ({
 
 function AddDrinkArea(props) {
 
-  const { UserId, classes } = props;
+  const { UserId, classes, potentialDrinks } = props;
   const date = currentTime();
 
   const [drinkType, setDrinkType] = useState('');
@@ -60,7 +60,7 @@ function AddDrinkArea(props) {
 
   const payload = {
     UserId: UserId,
-    drink: drinkType,
+    drink: drinkType.drink,
     cups: +cupsValue,
     volume: +volumeValue,
     time: time,
@@ -79,7 +79,7 @@ function AddDrinkArea(props) {
   )
 
   const addHydrationEvent = () => {
-    if (drinkType.length && (cupsValue.length || volumeValue.length)) {
+    if (drinkType.drink.length && (cupsValue.length || volumeValue.length)) {
       drinkMutation.mutate(mutations.POST_DRINK(payload))
       setDrinkType('')
       setCupsValue('')
@@ -131,6 +131,7 @@ function AddDrinkArea(props) {
           setVolumeValue={setVolumeValue}
           time={time}
           setTime={setTime}
+          potentialDrinks={potentialDrinks}
         />
       </Box>
     </Card>
