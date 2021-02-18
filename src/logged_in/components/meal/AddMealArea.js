@@ -7,8 +7,9 @@ import {
   withStyles
 } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
-import MealInputs from './MealInputs'
-import currentTime from '../../functions/currentTime'
+import MealInputs from './MealInputs';
+import InputDialog from './InputDialog';
+import currentTime from '../../functions/currentTime';
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../api'
 
@@ -58,6 +59,7 @@ function AddMealArea(props) {
   const [description, setDescription] = useState('');
   const [mealValue, setMealValue] = useState('');
   const [time, setTime] = useState(date);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const regex = /(,|\n)/g
 
@@ -80,16 +82,30 @@ function AddMealArea(props) {
   )
 
   const addEvent = () => {
-    payload.meal = payload.meal.map(el =>el.trim())
-    mealMutation.mutate(mutations.POST_MEAL(payload))
-    setDescription('')
-    setMealValue('')
-    setTime(date)
+    if (mealValue.length && description.length) {
+      payload.meal = payload.meal.map(el =>el.trim())
+      mealMutation.mutate(mutations.POST_MEAL(payload))
+      setDescription('')
+      setMealValue('')
+      setTime(date)
+    }
+    else {
+      setDialogOpen(true)
+    }
+  }
+
+  const onDialogSubmit = () => {
+    setDialogOpen(false)
   }
 
   return (
     <Card className={classes.card}>
       <Box className={classes.boxA}>
+      {dialogOpen ?
+      <InputDialog
+        onClose={onDialogSubmit}
+      />
+      : null}
         <Button 
           variant="contained" 
           color="primary" 

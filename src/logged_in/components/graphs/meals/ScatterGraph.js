@@ -124,7 +124,7 @@ function ScatterGraph({data}) {
           mouseOver(displayedTooltip ,event, d)
         })
         .on("mousemove", (event, d) => {
-          const tooltipTextFormat = `${d.description}: ${d.meal.join(', ')}`
+          const tooltipTextFormat = `${d.meal.join(', ')}`
           mouseMove(displayedTooltip, tooltipTextFormat, event, d)
         })
         .on("mouseleave",(event, d) => {
@@ -157,9 +157,6 @@ function ScatterGraph({data}) {
         .attr("dy", 15)
         // .attr("alignment-baseline", "baseline")
         .text((d, i) => `${d}`);
-
-
-
 
     const titleText = 'Meals eaten over time'
     const titleG = svg.selectAll(".scatter")

@@ -41,9 +41,6 @@ export default function MealAutocomplete(props) {
     handleClose();
   };
 
-  console.log('dv', dialogValue)
-  console.log('des', autoCompleteDescription)
-
   return (
     <Grid container spacing={1} >
       <Grid item xs={12}>

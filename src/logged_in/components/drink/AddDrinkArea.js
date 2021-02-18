@@ -8,7 +8,8 @@ import {
 } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import DrinkInput from './DrinkInput';
-import currentTime from '../../functions/currentTime'
+import InputDialog from './InputDialog';
+import currentTime from '../../functions/currentTime';
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../api'
 
@@ -54,6 +55,8 @@ function AddDrinkArea(props) {
   const [cupsValue, setCupsValue] = useState('');
   const [volumeValue, setVolumeValue] = useState('');
   const [time, setTime] = useState(date);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [missingFields, setmissingFields] = useState([])
 
   const payload = {
     UserId: UserId,
@@ -76,16 +79,36 @@ function AddDrinkArea(props) {
   )
 
   const addHydrationEvent = () => {
-    drinkMutation.mutate(mutations.POST_DRINK(payload))
-    setDrinkType('')
-    setCupsValue('')
-    setVolumeValue('')
-    setTime(date)
+    if (drinkType.length && (cupsValue.length || volumeValue.length)) {
+      drinkMutation.mutate(mutations.POST_DRINK(payload))
+      setDrinkType('')
+      setCupsValue('')
+      setVolumeValue('')
+      setTime(date)
+    }
+    else {
+      let missingFields = [];
+      if (!drinkType.length) missingFields.push('Drink Type')
+      if (!cupsValue.length) missingFields.push('Cups')
+      if (!volumeValue.length) missingFields.push('Volume')
+      setmissingFields(missingFields)
+      setDialogOpen(true)
+    }
+  }
+
+  const onDialogSubmit = () => {
+    setDialogOpen(false)
   }
 
   return (
     <Card className={classes.card}>
       <Box className={classes.boxA}>
+      {dialogOpen ?
+      <InputDialog
+        onClose={onDialogSubmit}
+        missingFields={missingFields}
+      />
+      : null}
         <Button 
           variant="contained" 
           color="primary" 
