@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import MealAutocomplete from './MealAutocomplete';
-import TextFieldInput from '../../../shared/TextFieldInput';
+import TextFieldInput from '../../../../shared/TextFieldInput';
 
 function MealInputs(props) {
 

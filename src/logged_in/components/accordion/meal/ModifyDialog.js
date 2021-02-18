@@ -4,7 +4,7 @@ import ButtonCircularProgress from "../../../../shared/ButtonCircularProgress";
 import {
   Button,
 } from "@material-ui/core";
-import MealInputs from '../../meal/MealInputs'
+import MealInputs from '../../addEvent/meal/MealInputs'
 
 function ModifyDialog(props) {
 

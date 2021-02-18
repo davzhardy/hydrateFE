@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import FormDialog from '../../../shared/FormDialog'
+import FormDialog from '../../../../shared/FormDialog'
 import {
   Button,
   withStyles,
@@ -25,7 +25,6 @@ const styles = (theme) => ({
 function InputDialog(props) {
   const { 
     classes,
-    missingFields,
     onClose
   } = props;
 
@@ -39,8 +38,8 @@ function InputDialog(props) {
           onClose()
         }}
         hideBackdrop
-        headline="Please complete further fields to submit your drink"
-        content={`Please fill in the ${missingFields.length > 1 ? missingFields.join(", ") : missingFields.join('')} section${missingFields.length > 1 ? 's' :''}`}
+        headline="Please complete all fields to submit your meal"
+        // content={'HELLO'}
         actions={
           <Fragment>
             <Button

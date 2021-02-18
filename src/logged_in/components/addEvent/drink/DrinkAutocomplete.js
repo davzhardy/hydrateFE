@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import FreeBreakfastIcon from '@material-ui/icons/FreeBreakfast';
-import TextFieldInput from '../../../shared/TextFieldInput';
+import TextFieldInput from '../../../../shared/TextFieldInput';
 
 const filter = createFilterOptions();
 
@@ -27,6 +27,7 @@ export default function DrinkAutocomplete(props) {
   const [open, toggleOpen] = useState(false);
 
   const handleClose = () => {
+    setDialogValue('');
     setDialogValue('');
     toggleOpen(false);
   };
@@ -46,15 +47,18 @@ export default function DrinkAutocomplete(props) {
           value={defaultValue}
           onChange={(event, newValue) => {
             if (typeof newValue === 'string') {
+              console.log(1)
               // timeout to avoid instant validation of the dialog's form.
               setTimeout(() => {
                 toggleOpen(true);
                 setDialogValue(newValue);
               });
             } else if (newValue && newValue.inputValue) {
+              console.log(2)
               toggleOpen(true);
               setDialogValue(newValue.inputValue);
             } else {
+              console.log(3)
               stateSetting(newValue.drink);
             }
           }}

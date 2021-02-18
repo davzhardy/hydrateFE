@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Grid } from '@material-ui/core'
+import { useSelector } from 'react-redux';
 import Welcome from './Welcome'
 import Summary from './Summary'
-import AddDrinkArea from "../drink/AddDrinkArea"
-import AddMealArea from "../meal/AddMealArea"
+import AddDrinkArea from "../addEvent/drink/AddDrinkArea"
+import AddMealArea from "../addEvent/meal/AddMealArea"
 import AccordionTable from "../accordion/AccordionTable"
 import mealsCalculation from '../../functions/mealsCalculation'
 import drinksCalculation from '../../functions/drinksCalculation'

@@ -9,9 +9,9 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import DrinkInput from './DrinkInput';
 import InputDialog from './InputDialog';
-import currentTime from '../../functions/currentTime';
+import currentTime from '../../../functions/currentTime';
 import { useMutation, useQueryClient } from "react-query";
-import { endpoint, mutations, mutateOptions } from '../../../api'
+import { endpoint, mutations, mutateOptions } from '../../../../api'
 
 const styles = theme => ({
   card: {

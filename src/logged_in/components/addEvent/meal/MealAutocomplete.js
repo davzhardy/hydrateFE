@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
-import TextFieldInput from '../../../shared/TextFieldInput';
+import TextFieldInput from '../../../../shared/TextFieldInput';
 
 const filter = createFilterOptions();
 
