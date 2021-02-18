@@ -15,7 +15,6 @@ const styles = theme => ({
 function PackingGraph(props) {
   const {
     data,
-    classes
   } = props
 
   const svgRef = useRef()
@@ -29,7 +28,6 @@ function PackingGraph(props) {
     const innerHeight = height - margin.top - margin.bottom
 
     const titleText = 'Total meals registered'
-    const names = new Set(data.map(d => d.meal))
     const descriptions = new Set(data.map(d => d.description))
     const values = new Set(data.map(d => d.value))
 

@@ -9,7 +9,7 @@ function BarchartGraph({data}) {
 
   useEffect(() => {
 
-    data = data.sort((a,b) => {
+    data.sort((a,b) => {
       let aDate = dayjs(`${a['time']+':00.000Z'}`).valueOf()
       let bDate = dayjs(`${b['time']+':00.000Z'}`).valueOf()
       return aDate -bDate
@@ -44,8 +44,6 @@ function BarchartGraph({data}) {
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
 
-    const now = new Date
-    // const color = "steelblue"
     function sequence (length) {
       return Array.apply(null, {length: length}).map((d, i) => i);
     }
@@ -86,11 +84,12 @@ function BarchartGraph({data}) {
     
     const bars = g.selectAll("rect").data(data)
       .enter().append("rect")
-        .attr("x", d => x(0))
-        .attr("y", (d, i) => y(i))
-        .attr("height", y.bandwidth())
-        .attr("width", d => x(d.value) - x(0))
-        .attr("fill", (d, i) => color(i))
+    
+    bars.attr("x", d => x(0))
+      .attr("y", (d, i) => y(i))
+      .attr("height", y.bandwidth())
+      .attr("width", d => x(d.value) - x(0))
+      .attr("fill", (d, i) => color(i))
 
     const format = x.tickFormat(20, data.format)
 

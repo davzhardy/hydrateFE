@@ -1,12 +1,14 @@
-import React, { Fragment, useRef, useEffect, useState } from 'react';
+import React, { Fragment, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
 function WaffleGraph({data}) {
 
   const svgRef = useRef()
   const wrapperRef = useRef();
-  const [whole, setWhole] = useState('true')
-  const [isRect, setIsRect] = useState('true')
+  // const [whole, setWhole] = useState('true')
+  // const [isRect, setIsRect] = useState('true')
+  const whole = true;
+  const isRect = true
 
   let shape;
   isRect ? shape = 'rect' : shape = 'circle'
@@ -205,7 +207,7 @@ function WaffleGraph({data}) {
       .style("font-size", "1rem")
       // .attr('y', 10)
 
-  },[data])
+  },[data, isRect, shape, whole])
 
 
   return (

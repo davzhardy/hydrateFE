@@ -3,7 +3,6 @@ import mealsFormatter from './mealsFormatter'
 const packingDataConverter = (data) => {
 
   let formattedMealData = [];
-  let elCount = 0
   data.forEach(el => {
     const array = mealsFormatter(el);
     array.forEach(formattedEl => {
@@ -12,7 +11,6 @@ const packingDataConverter = (data) => {
       obj.description = el.description
       formattedMealData.push(obj)
     });
-    elCount++
   });
 
   let array = [];

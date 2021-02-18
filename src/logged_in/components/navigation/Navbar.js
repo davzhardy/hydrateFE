@@ -70,7 +70,6 @@ function Navbar(props) {
 
   const { 
     selectedTab,
-    userInfo,
     classes
   } = props;
 

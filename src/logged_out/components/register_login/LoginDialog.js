@@ -82,7 +82,7 @@ function LoginDialog(props) {
       setDialogOpen(null);
 
     }
-  }, [setIsLoading, loginEmail, dispatch, loginPassword, history, setStatus]);
+  }, [setIsLoading, loginEmail, dispatch, loginPassword, history, setStatus, setDialogOpen]);
 
   return (
     <Fragment>

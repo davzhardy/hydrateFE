@@ -2,7 +2,7 @@ const mealsFormatter = (data) => {
   
   const formattedArray = [];
   const numberRegex = /([0-9]\/[0-9])|[0-9]/g;
-  const nonWordRegex = /[\-()/+]|(\set\s)/gi;
+  const nonWordRegex = /[-()/+]|(\set\s)/gi;
 
   const mealsInputNoNumbers = data.meal.map(el => el.replace(numberRegex,''));
   const mealsInputNoNonWord = mealsInputNoNumbers.map(el => el.replace(nonWordRegex,','));

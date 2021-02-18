@@ -31,7 +31,7 @@ function ScatterGraph({data}) {
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
 
-    const now = new Date
+    const now = new Date()
     const descriptions = new Set(data.map(d => d.description))
     function sequence (length) {
       return Array.apply(null, {length: length}).map((d, i) => i);
