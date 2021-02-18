@@ -34,8 +34,8 @@ function BarchartGraph({data}) {
     input === 'cumVolume' ? titleText = 'Total volume drunk' : titleText = 'Total cups drunk'
 
     const names = new Set(data.map(d => d.drink))
-    data = Array.from(names, drink => ({drink, value: counterObj[drink][input]}));
-    data.sort((a, b) => d3.descending(a.value, b.value));
+    const barData = Array.from(names, drink => ({drink, value: counterObj[drink][input]}));
+    barData.sort((a, b) => d3.descending(a.value, b.value));
 
     const svg = d3.select(svgRef.current)      
 
@@ -49,22 +49,22 @@ function BarchartGraph({data}) {
     }
 
     const color = d3.scaleOrdinal(d3.schemeTableau10)
-      .domain(sequence(data.length))
+      .domain(sequence(barData.length))
 
     const y = d3.scaleBand()
-      .domain(d3.range(data.length))
+      .domain(d3.range(barData.length))
       .range([innerHeight,0])
       .padding(0.1)
 
     const x = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.value)])
+      .domain([0, d3.max(barData, d => d.value)])
       .range([0, innerWidth-margin.right])
       .nice()
       
     const yAxis = g => g
       .attr('class', 'y-axis')
       .call(
-        d3.axisLeft(y).tickFormat(i => data[i].drink)
+        d3.axisLeft(y).tickFormat(i => barData[i].drink)
         .tickSize([0,0])
       )
       .style("font","10px cabin")
@@ -74,7 +74,7 @@ function BarchartGraph({data}) {
     const xAxis = g => g
       .attr("transform", `translate(0,${innerHeight})`)
       .attr('class', 'x-axis')
-      .call(d3.axisBottom(x).ticks(null, data.format))
+      .call(d3.axisBottom(x).ticks(null, barData.format))
       .style("font","10px cabin")
 
 
@@ -82,7 +82,7 @@ function BarchartGraph({data}) {
       .attr('class', 'barchart')
       .attr('transform', `translate(${margin.left},${margin.top})`)
     
-    const bars = g.selectAll("rect").data(data)
+    const bars = g.selectAll("rect").data(barData)
       .enter().append("rect")
     
     bars.attr("x", d => x(0))
@@ -91,10 +91,10 @@ function BarchartGraph({data}) {
       .attr("width", d => x(d.value) - x(0))
       .attr("fill", (d, i) => color(i))
 
-    const format = x.tickFormat(20, data.format)
+    const format = x.tickFormat(20, barData.format)
 
     g.selectAll("text")
-      .data(data)
+      .data(barData)
       .join("text")
         .attr("x", d => x(d.value))
         .attr("y", (d, i) => y(i) + y.bandwidth() / 2)

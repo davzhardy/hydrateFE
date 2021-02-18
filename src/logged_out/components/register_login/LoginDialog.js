@@ -53,18 +53,20 @@ function LoginDialog(props) {
   const loginPassword = useRef();
   const dispatch = useDispatch()
 
-  const setDialogOpen = (dialog) => {
+  const setDialogOpen = useCallback((dialog) => {
     dispatch({
       type: "SET_OPEN_DIALOG",
       payload: dialog
     });
-  }
+  },[dispatch])
 
   const login = useCallback( async () => {
     setIsLoading(true);
     setStatus(null);
+
     const userInfo = await getUser({email: loginEmail.current.value, password: loginPassword.current.value})
     const payload = {}
+
     if (!userInfo.data.getUser.emailExists) {
       setStatus("invalidEmail");
       setIsLoading(false);
