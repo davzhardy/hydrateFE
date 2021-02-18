@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
 import { 
   Box,
   Fade,
@@ -14,7 +13,6 @@ import GraphCard from './GraphCard'
 import SwitchElement from './SwitchElement'
 import packingDataConverter from '../../functions/packingDataConverter'
 import drinksConverter from '../../functions/drinksConverter'
-import scatterDataConverter from '../../functions/scatterDataConverter'
 
 // https://juba.github.io/scatterD3/articles/introduction.html
 // https://github.com/juba/scatterD3/blob/master/inst/htmlwidgets/scatterD3-dots.js
@@ -35,9 +33,6 @@ function Graphs( props ) {
     drinkB: false,
   })
 
-  // const drinksData = queryClient.getQueryData('drinks')
-  const UserId = useSelector((state) => state.user.UserId);
-
   const handleSwitchChange = () => {
     setSwitchChecked(!switchChecked)
   }
@@ -47,13 +42,6 @@ function Graphs( props ) {
   const handleDrinksChange = (e) => {
     setDrinksChecked({...drinksChecked, [e.target.name]: e.target.checked})
   }
-
-  const potentialMeals = [
-    { meal: 'Breakfast', value: 1 },
-    { meal: 'Lunch', value: 2 },
-    { meal: 'Dinner', value: 4 },
-    { meal: 'Snack', value: 3 },
-  ];
 
   const queryClient = useQueryClient();
   const mealsData = queryClient.getQueryData('meals');

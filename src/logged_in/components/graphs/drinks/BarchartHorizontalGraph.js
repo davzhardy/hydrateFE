@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useEffect, memo } from 'react';
+import React, { Fragment, useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import * as dayjs from 'dayjs';
 

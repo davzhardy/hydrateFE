@@ -16,7 +16,6 @@ const useStyles = makeStyles(
       alignItems:'center',
       [theme.breakpoints.up("xs")]: {
         width: '100%',
-
       },
       [theme.breakpoints.up("sm")]: {
         width: '75%',

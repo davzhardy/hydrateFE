@@ -1,5 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import { endpoint, queries, getOptions, mutations, mutateOptions } from '../../../api'
+import { useQuery } from "react-query";
+import { endpoint, queries, getOptions } from '../../../api'
 
 
 function GetMeals (UserId) {

@@ -1,14 +1,10 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import {
-  AppBar,
   Box,
-  Toolbar,
   Typography,
-
   withStyles,
 } from "@material-ui/core";
-import Emoji from '../../../shared/Emoji'
+import Emoji from '../../../shared/Emoji';
 
 const styles = theme => ({
   welcome: {

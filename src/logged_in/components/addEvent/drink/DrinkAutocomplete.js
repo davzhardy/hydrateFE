@@ -28,9 +28,6 @@ export default function DrinkAutocomplete(props) {
   const [dialogValue, setDialogValue] = useState('');
   const [autoCompleteDescription, setAutocompleteDescription] = useState('');
 
-  console.log('a',autoCompleteDescription)
-  console.log('d', dialogValue)
-
   const handleClose = () => {
     setDialogValue('');
     toggleOpen(false);

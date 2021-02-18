@@ -24,7 +24,6 @@ const styles = (theme) => ({
 
 function InputDialog(props) {
   const { 
-    classes,
     missingFields,
     onClose
   } = props;

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { 
   Box,
   Grid,
@@ -91,9 +91,8 @@ function Summary(props) {
               >
                   <Typography 
                     variant="body2"
-                    className={classes.listItemTypography}
                     selected={selectedTimeframe === 'month'}
-                    className={selectedTimeframe === 'month' ? classes.listItemTypographySelected : null}
+                    className={selectedTimeframe === 'month' ? [classes.listItemTypographySelected, classes.listItemTypography] : null}
                     align='center'
                   >
                     Last month
@@ -109,9 +108,8 @@ function Summary(props) {
                 >
                     <Typography 
                       variant="body2"
-                      className={classes.listItemTypography}
                       selected={selectedTimeframe === 'allTime'}
-                      className={selectedTimeframe === 'allTime' ? classes.listItemTypographySelected : null}
+                      className={selectedTimeframe === 'allTime' ? [classes.listItemTypographySelected, classes.listItemTypography] : null}
                       align='center'
                     >
                       All time

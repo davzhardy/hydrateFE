@@ -7,7 +7,7 @@ import {
 import DrinkTable from './drink/PaginationTable'
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MealTable from './meal/PaginationTable'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 function AccordionTable (props) {
 
@@ -42,7 +42,6 @@ function AccordionTable (props) {
     setDrinkSearchClosed();
     setMealSearchClosed();
   }
-  const searchState = useSelector((state) => state.search.mealSearchState)
 
   return (
     <Accordion expanded={expanded} onChange={clickHandler()}>
