@@ -86,7 +86,7 @@ function Navbar(props) {
               selectedTab === "Dashboard" ? "secondary" : "primary"
             }
             fontSize={
-              selectedTab === "Dashboard" ? "large" : "medium"
+              selectedTab === "Dashboard" ? "large" : "small"
             }
           />
         ),
@@ -95,7 +95,7 @@ function Navbar(props) {
             color={
               selectedTab === "Dashboard" ? "secondary" : "primary"
             }
-            fontSize="medium"
+            fontSize="small"
           />
         ),
       },
@@ -110,7 +110,7 @@ function Navbar(props) {
               selectedTab === "Graphs" ? "secondary" : "primary"
             }
             fontSize={
-              selectedTab === "Graphs" ? "large" : "medium"
+              selectedTab === "Graphs" ? "large" : "small"
             }
           />
         ),
@@ -119,7 +119,7 @@ function Navbar(props) {
              color={
               selectedTab === "Graphs" ? "secondary" : "primary"
             }
-            fontSize="medium"
+            fontSize="small"
           />
         ),
       },
@@ -129,9 +129,9 @@ function Navbar(props) {
       name: "Logout",
       icon: {
         desktop: (
-          <PowerSettingsNewIcon color="primary" fontSize="medium" />
+          <PowerSettingsNewIcon color="primary" fontSize="small" />
         ),
-        mobile: <PowerSettingsNewIcon color="primary" fontSize="medium" />,
+        mobile: <PowerSettingsNewIcon color="primary" fontSize="small" />,
       },
     },
   ];
