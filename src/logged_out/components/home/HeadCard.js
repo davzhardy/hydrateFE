@@ -88,7 +88,7 @@ function HeadCard(props) {
             </Box>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               fullWidth
               className={classes.extraLargeButtonTop}
               classes={{ label: classes.extraLargeButtonLabel }}
@@ -109,7 +109,7 @@ function HeadCard(props) {
             </Box>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               fullWidth
               className={classes.extraLargeButtonBottom}
               classes={{ label: classes.extraLargeButtonLabel }}

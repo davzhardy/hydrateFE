@@ -92,7 +92,7 @@ function Summary(props) {
                   <Typography 
                     variant="body2"
                     selected={selectedTimeframe === 'month'}
-                    className={selectedTimeframe === 'month' ? [classes.listItemTypographySelected, classes.listItemTypography] : null}
+                    className={selectedTimeframe === 'month' ? classes.listItemTypographySelected : null}
                     align='center'
                   >
                     Last month
@@ -109,7 +109,7 @@ function Summary(props) {
                     <Typography 
                       variant="body2"
                       selected={selectedTimeframe === 'allTime'}
-                      className={selectedTimeframe === 'allTime' ? [classes.listItemTypographySelected, classes.listItemTypography] : null}
+                      className={selectedTimeframe === 'allTime' ? classes.listItemTypographySelected : null}
                       align='center'
                     >
                       All time
@@ -134,8 +134,7 @@ function Summary(props) {
         </Box>
       </Box>
     </Fragment>
-  )
-  
+  )  
 }
 
 export default withStyles(styles, { withTheme: true })(Summary);

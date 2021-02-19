@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { QueryClientProvider, QueryClient } from 'react-query'
-import LoadingScreen from './shared/LoadingScreen'
+import LoadingScreen from './loading/LoadingScreen'
 import PrivateRoute from './shared/PrivateRoute'
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
