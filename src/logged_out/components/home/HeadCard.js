@@ -5,13 +5,13 @@ import {
   Typography,
   Button,
   Box,
-  Card,
   CardMedia,
   withStyles,
   Hidden,
   withWidth,
   isWidthUp,
 } from "@material-ui/core";
+import DrinkingImage from '../../../gifs/drinking.jpg'
 
 const styles = (theme) => ({
   extraLargeButtonLabel: {
@@ -131,12 +131,19 @@ function HeadCard(props) {
           height="100%"
         >
           <div>
-            <iframe 
+            <CardMedia
+              component="img"
+              alt="Woman drinking water"
+              // height="140"
+              image={DrinkingImage}
+              title="Woman drinking water"
+            />
+            {/* <iframe 
               src="https://www.youtube.com/embed/FD78fHjs5BA" 
               frameborder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowfullscreen 
-            />
+            /> */}
           </div>
         </Box>
       </Grid>
