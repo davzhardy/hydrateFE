@@ -5,6 +5,8 @@ import {
   Typography,
   Button,
   Box,
+  Card,
+  CardMedia,
   withStyles,
   Hidden,
   withWidth,
@@ -129,25 +131,12 @@ function HeadCard(props) {
           height="100%"
         >
           <div>
-            <Box mb={2}>
-              <Typography
-                variant={isWidthUp("lg", width) ? "h6" : "body1"}
-                color="textSecondary"
-                align="center"
-              >
-                Or register here
-              </Typography>
-            </Box>
-            <Button
-              variant="contained"
-              color="secondary"
-              fullWidth
-              className={classes.extraLargeButton}
-              classes={{ label: classes.extraLargeButtonLabel }}
-              onClick={()=>setDialogOpen('register')}
-            >
-              Register
-            </Button>
+            <iframe 
+              src="https://www.youtube.com/embed/FD78fHjs5BA" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen 
+            />
           </div>
         </Box>
       </Grid>

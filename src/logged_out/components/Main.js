@@ -20,7 +20,8 @@ function Main(props) {
   const dispatch = useDispatch();
   const dialogOpen = useSelector((state) => state.dialog.dialog);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(null);
+  // const [selectedTab, setSelectedTab] = useState(null);
+  const selectedTab = null;
 
   const setDialogOpen = useCallback((dialog) => {
     dispatch({

@@ -1,9 +1,21 @@
-# To-dos
+# Frontend of a drink and meal tracking website
 
-- Logged-out navbar
-- Footer
-- When registerdialog opens query all usernames and email addresses so you dont hav to send server request to find out if it is taken or not
-- Textfieldinput in autocomplete currently takes the Muiformcontrol full width, needs to be removed
-- Standardise meal and drink area into one component
+In production at https://hydrate-app-dh.netlify.app/
 
-1) Move potentialDrinks from DrinkInput.js into state (and do same for meals)
+
+# Overview
+
+A website designed to track a users drinking and eating habits.
+
+Inspired by the health difficulties of someone close to my heart and their need to track the amount they drink and eat.
+
+You can find the backend code here: 
+
+# Tech Stack
+
+- React: Framework
+- React Query: Server state management
+- Redux: Local state management
+- React Router: Routing
+- Material UI: Component library
+- d3.js: Data visualisation

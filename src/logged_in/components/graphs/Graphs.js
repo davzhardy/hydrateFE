@@ -78,7 +78,7 @@ function Graphs( props ) {
 
 
   return (
-    <Fragment>
+    <Fragment >
       <SwitchElement 
         name1={'Drinks'}
         name2={'Meals'}
