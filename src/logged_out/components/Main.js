@@ -1,10 +1,12 @@
-import React, {useCallback, useState, memo} from "react";
+import React, {useCallback, useState, memo, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { withStyles } from "@material-ui/core";
 import Routing from "./Routing";
 import Footer from './footer/Footer'
 import NavBar from './navigation/NavBar'
 import DialogSelector from "./register_login/DialogSelector";
+import historyTracker from '../../shared/historyTracker'
+import ReactGA from 'react-ga';
 
 const styles = (theme) => ({
   wrapper: {
@@ -15,7 +17,14 @@ const styles = (theme) => ({
 
 function Main(props) {
 
-  const { classes } = props;
+  const { 
+    classes,
+  } = props;
+
+  useEffect(()=>{
+    ReactGA.pageview(historyTracker.location.pathname)
+  },[])
+
 
   const dispatch = useDispatch();
   const dialogOpen = useSelector((state) => state.dialog.dialog);

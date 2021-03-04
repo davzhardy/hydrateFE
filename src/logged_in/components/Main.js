@@ -4,7 +4,7 @@ import Navbar from "./navigation/Navbar";
 import Routing from "./Routing";
 import smoothScrollTop from '../../shared/smoothScrollTop'
 
-function Main() {
+function Main () {
 
   const userInfo = {
     UserId: null,
