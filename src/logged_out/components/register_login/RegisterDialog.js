@@ -15,6 +15,7 @@ import ButtonCircularProgress from "../../../shared/ButtonCircularProgress";
 import VisibilityPasswordTextField from "../../../shared/VisibilityPasswordTextField";
 import { useMutation } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../api'
+import ReactGA from 'react-ga';
 
 const styles = (theme) => ({
   link: {
@@ -84,10 +85,14 @@ function RegisterDialog(props) {
     if (userMutation.isError) setStatus(null);
     if (userMutation.isSuccess) {
       // need to add logic for cehcking if email was OK etc.
+      ReactGA.event({
+        category: 'User',
+        action: 'Created Account',
+      })
       setStatus('accountCreated')
       setTimeout(() => {
         setDialogOpen('login')
-      },2500)
+      },1500)
     }
   }, [
     setStatus,

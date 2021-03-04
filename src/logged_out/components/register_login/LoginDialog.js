@@ -14,7 +14,8 @@ import FormDialog from "../../../shared/FormDialog";
 import HighlightedInformation from "../../../shared/HighlightedInformation";
 import ButtonCircularProgress from "../../../shared/ButtonCircularProgress";
 import VisibilityPasswordTextField from "../../../shared/VisibilityPasswordTextField";
-import { getUser  } from '../../../api'
+import { getUser  } from '../../../api';
+import ReactGA from 'react-ga';
 
 const styles = (theme) => ({
   forgotPassword: {
@@ -80,9 +81,13 @@ function LoginDialog(props) {
         type: "SET_ACTIVE_USER",
         payload: payload
       })
+      ReactGA.event({
+        category: 'User',
+        action: 'Logged-in',
+        label: `${payload.username}`
+      })
       history.push("/a/dashboard");
       setDialogOpen(null);
-
     }
   }, [setIsLoading, loginEmail, dispatch, loginPassword, history, setStatus, setDialogOpen]);
 
