@@ -10,7 +10,7 @@ import LoadingScreen from './loading/LoadingScreen'
 import PrivateRoute from './shared/PrivateRoute'
 import ReactGA from 'react-ga';
 
-ReactGA.initialize(process.env.ANALYTICS_ID || undefined);
+ReactGA.initialize(process.env.REACT_APP_ANALYTICS_ID || undefined);
 
 const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
 const LoggedOutComponent = lazy(() => import("./logged_out/components/Main"));
