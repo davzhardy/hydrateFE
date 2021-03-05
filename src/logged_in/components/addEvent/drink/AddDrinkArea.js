@@ -84,7 +84,7 @@ function AddDrinkArea(props) {
       drinkMutation.mutate(mutations.POST_DRINK(payload))
       ReactGA.event({
         category: 'Add Drink',
-        action: `User: ${payload.UserId} ,Drink: ${payload.drink}`,
+        action: `User: ${payload.UserId}, Drink: ${payload.drink}`,
         label: `${payload.time}`
       })
       setDrinkType('')
