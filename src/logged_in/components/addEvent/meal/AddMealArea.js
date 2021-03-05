@@ -12,6 +12,7 @@ import InputDialog from './InputDialog';
 import currentTime from '../../../functions/currentTime';
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../../api'
+import ReactGA from 'react-ga';
 
 const styles = theme => ({
   card: {
@@ -85,6 +86,11 @@ function AddMealArea(props) {
     if (mealValue.length && description.meal.length) {
       payload.meal = payload.meal.map(el =>el.trim())
       mealMutation.mutate(mutations.POST_MEAL(payload))
+      ReactGA.event({
+        category: 'Add Meal',
+        action: `User: ${payload.UserId}, Meal: ${payload.description}`,
+        label: `${payload.time}`
+      })
       setDescription('')
       setMealValue('')
       setTime(date)

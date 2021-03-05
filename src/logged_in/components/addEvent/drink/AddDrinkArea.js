@@ -12,6 +12,7 @@ import InputDialog from './InputDialog';
 import currentTime from '../../../functions/currentTime';
 import { useMutation, useQueryClient } from "react-query";
 import { endpoint, mutations, mutateOptions } from '../../../../api'
+import ReactGA from 'react-ga';
 
 const styles = theme => ({
   card: {
@@ -81,6 +82,11 @@ function AddDrinkArea(props) {
   const addHydrationEvent = () => {
     if (drinkType.drink.length && (cupsValue.length || volumeValue.length)) {
       drinkMutation.mutate(mutations.POST_DRINK(payload))
+      ReactGA.event({
+        category: 'Add Drink',
+        action: `User: ${payload.UserId} ,Drink: ${payload.drink}`,
+        label: `${payload.time}`
+      })
       setDrinkType('')
       setCupsValue('')
       setVolumeValue('')
