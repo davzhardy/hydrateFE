@@ -47,7 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "dotenv-webpack": "^6.0.4"
-  }
+  "devDependencies": {}
 }
