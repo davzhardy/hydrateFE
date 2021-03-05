@@ -20,3 +20,4 @@ You can find the backend code here: https://github.com/davzhardy/hydrateBE
 - React Router: Routing
 - Material UI: Component library
 - d3.js: Data visualisation
+- Google analytics: Event and user analytics
